@@ -10,13 +10,15 @@ type literals =
   | "symbol"
   | "bigint";
 
-function validateDefined(input: any, property: string, optional: boolean) {
+type inputs = null | string | number | boolean;
+
+function validateDefined(input: inputs, property: string, optional: boolean) {
   if (!optional && (typeof input === "undefined" || input === null)) {
     throw new MissingProperty(property);
   }
 }
 
-function validateDatatype(input: any, property: string, datatype: literals) {
+function validateDatatype(input: inputs, property: string, datatype: literals) {
   if (typeof input !== datatype) {
     throw new InvalidProperty(property, datatype);
   }
