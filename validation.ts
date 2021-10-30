@@ -60,6 +60,24 @@ export function validateUUID(
   }
 }
 
+export function validateEmail(
+  input: string | null,
+  property: string,
+  optional = false,
+): void {
+  validateDefined(input, property, optional);
+  validateDatatype(input, property, "string");
+
+  // Copied RegExp from https://deno.land/x/validasaur@v0.15.0/src/rules/is_email.ts
+  const regex = new RegExp(
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/gi,
+  );
+
+  if (!regex.test(input!)) {
+    throw new InvalidProperty(property, "email");
+  }
+}
+
 export function validateTime(
   input: string | null,
   property: string,
