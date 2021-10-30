@@ -6,7 +6,6 @@ import InterfaceMapper from "./InterfaceMapper.ts";
 
 export default class UserMapper implements InterfaceMapper {
   public mapObject(row: Record<string, never>): UserEntity {
-    
     const uuid = restoreUUID(row.uuid);
     const user = new UserEntity(uuid);
 

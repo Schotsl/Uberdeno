@@ -1,8 +1,5 @@
 import { Client } from "https://deno.land/x/mysql@v2.10.1/mod.ts";
-import {
-  DuplicateResource,
-  MissingResource,
-} from "../errors.ts";
+import { DuplicateResource, MissingResource } from "../errors.ts";
 
 import UserEntity from "../entity/UserEntity.ts";
 import UserMapper from "../mapper/UserMapper.ts";
