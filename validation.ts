@@ -1,14 +1,14 @@
 import { InvalidProperty, MissingProperty } from "./errors.ts";
 
-// type literals =
-//   | "undefined"
-//   | "object"
-//   | "boolean"
-//   | "number"
-//   | "string"
-//   | "function"
-//   | "symbol"
-//   | "bigint";
+type literals =
+  | "undefined"
+  | "object"
+  | "boolean"
+  | "number"
+  | "string"
+  | "function"
+  | "symbol"
+  | "bigint";
 
 function validateDefined(input: any, property: string, optional: boolean) {
   if (!optional && (typeof input === "undefined" || input === null)) {
@@ -16,7 +16,7 @@ function validateDefined(input: any, property: string, optional: boolean) {
   }
 }
 
-function validateDatatype(input: any, property: string, datatype: string) {
+function validateDatatype(input: any, property: string, datatype: literals) {
   if (typeof input !== datatype) {
     throw new InvalidProperty(property, datatype);
   }
