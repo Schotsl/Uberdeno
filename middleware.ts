@@ -5,7 +5,7 @@ import {
   InvalidHeader,
   MissingBody,
   UberdenoError,
-} from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
+} from "./errors.ts";
 
 export async function postHandler(
   ctx: Context,
