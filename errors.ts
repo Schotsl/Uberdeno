@@ -1,4 +1,8 @@
-export class MissingResource extends Error {
+export class UberdenoError extends Error {
+  public statusError = 500;
+}
+
+export class MissingResource extends UberdenoError {
   public statusError = 404;
 
   constructor(resource: string) {
@@ -6,7 +10,7 @@ export class MissingResource extends Error {
   }
 }
 
-export class DuplicateResource extends Error {
+export class DuplicateResource extends UberdenoError {
   public statusError = 409;
 
   constructor(resource: string) {
@@ -14,7 +18,7 @@ export class DuplicateResource extends Error {
   }
 }
 
-export class InvalidProperty extends Error {
+export class InvalidProperty extends UberdenoError {
   public statusError = 400;
 
   constructor(
@@ -36,7 +40,7 @@ export class InvalidProperty extends Error {
   }
 }
 
-export class MissingProperty extends Error {
+export class MissingProperty extends UberdenoError {
   public statusError = 400;
 
   constructor(
@@ -46,7 +50,7 @@ export class MissingProperty extends Error {
   }
 }
 
-export class MissingBody extends Error {
+export class MissingBody extends UberdenoError {
   public statusError = 400;
 
   constructor() {
@@ -54,7 +58,7 @@ export class MissingBody extends Error {
   }
 }
 
-export class InvalidBody extends Error {
+export class InvalidBody extends UberdenoError {
   public statusError = 400;
 
   constructor() {
@@ -62,7 +66,7 @@ export class InvalidBody extends Error {
   }
 }
 
-export class InvalidHeader extends Error {
+export class InvalidHeader extends UberdenoError {
   public statusError = 415;
 
   constructor() {
