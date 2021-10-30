@@ -2,7 +2,7 @@ import { Client } from "https://deno.land/x/mysql@v2.10.1/mod.ts";
 import { Request, Response } from "https://deno.land/x/oak@v9.0.1/mod.ts";
 
 import { InvalidProperty } from "../errors.ts";
-import { validateNumber, validateVarchar } from "../validation.ts";
+import { validateNumber, validateVarchar, validateEmail } from "../validation.ts";
 
 import UserEntity from "../entity/UserEntity.ts";
 import UserRepository from "../repository/UserRepository.ts";
@@ -61,9 +61,7 @@ export default class UserController implements InterfaceController {
     const body = await request.body();
     const value = await body.value;
 
-    // TODO: Implement email validation
-    validateVarchar(value.email, "email", true);
-
+    validateEmail(value.email, "email", true);
     validateNumber(value.discord, "discord", true);
     validateVarchar(value.lastname, "lastname", true);
     validateVarchar(value.firstname, "firstname", true);
@@ -83,9 +81,7 @@ export default class UserController implements InterfaceController {
 
     delete value.uuid;
 
-    // TODO: Implement email validation
-    validateVarchar(value.email, "email");
-
+    validateEmail(value.email, "email");
     validateNumber(value.discord, "discord", true);
     validateVarchar(value.lastname, "lastname");
     validateVarchar(value.firstname, "firstname");
