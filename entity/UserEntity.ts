@@ -1,4 +1,4 @@
-import BaseEntity from "../BaseEntity.ts";
+import BaseEntity from "./BaseEntity.ts";
 
 export default class UserEntity extends BaseEntity {
   public email: null | number = null;
