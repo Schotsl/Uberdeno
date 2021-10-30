@@ -23,18 +23,7 @@ export class InvalidProperty extends UberdenoError {
 
   constructor(
     property: string,
-    datatype:
-      | "date"
-      | "time"
-      | "uuidv4"
-      | "email"
-      | "length"
-      | "number"
-      | "string"
-      | "boolean"
-      | "missing"
-      | "password"
-      | "extension",
+    datatype: string,
   ) {
     super(`Property '${property}' should be a ${datatype}.`);
   }
