@@ -32,7 +32,6 @@ export default class UserController implements InterfaceController {
     limit = Number(limit);
     offset = Number(offset);
 
-    response.status = 200;
     response.body = await this.userRepository.getCollection(
       offset,
       limit,
@@ -70,7 +69,6 @@ export default class UserController implements InterfaceController {
     Object.assign(user, value);
 
     response.body = await this.userRepository.updateObject(user);
-    response.status = 200;
   }
 
   async addObject(
@@ -90,6 +88,5 @@ export default class UserController implements InterfaceController {
     Object.assign(user, value);
 
     response.body = await this.userRepository.addObject(user);
-    response.status = 200;
   }
 }
