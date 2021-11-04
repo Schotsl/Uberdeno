@@ -36,7 +36,9 @@ export async function errorHandler(
 ): Promise<void> {
   await next().catch(
     (error: UberdenoError) => {
-      if (error.statusError === 500) {
+      if (
+        error.statusError === 500 || typeof error.statusError === "undefined"
+      ) {
         ctx.response.body = "Internal Server Error";
         ctx.response.status = 500;
 
