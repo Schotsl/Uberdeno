@@ -82,8 +82,8 @@ export async function limitHandler(
       ? ctx.request.url.searchParams.get(`offset`)
       : `0`;
 
-    if (isNaN(+limit!)) throw new InvalidProperty("limit", "number");
-    if (isNaN(+offset!)) throw new InvalidProperty("offset", "number");
+    if (isNaN(+limit!) || Number(limit) < 0) throw new InvalidProperty("limit", "number");
+    if (isNaN(+offset!) || Number(offset) < 0) throw new InvalidProperty("offset", "number");
 
     if (Number(limit) > 99) {
       throw new LimitExceeded();
