@@ -27,7 +27,7 @@ export default class UserRepository implements InterfaceRepository {
     ));
 
     promises.push(this.mysqlClient.execute(
-      `SELECT COUNT(uuid) AS total from user`,
+      `SELECT COUNT(uuid) AS total FROM user`,
     ));
 
     const data = await Promise.all(promises);

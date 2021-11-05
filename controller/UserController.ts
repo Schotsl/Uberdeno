@@ -2,7 +2,11 @@ import { Client } from "https://deno.land/x/mysql@v2.10.1/mod.ts";
 import { Request, Response } from "https://deno.land/x/oak@v9.0.1/mod.ts";
 
 import { InvalidProperty } from "../errors.ts";
-import { validateNumber, validateVarchar, validateEmail } from "../validation.ts";
+import {
+  validateEmail,
+  validateNumber,
+  validateVarchar,
+} from "../validation.ts";
 
 import UserEntity from "../entity/UserEntity.ts";
 import UserRepository from "../repository/UserRepository.ts";
