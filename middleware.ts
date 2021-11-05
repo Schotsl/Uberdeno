@@ -3,6 +3,8 @@ import { Context } from "https://deno.land/x/oak@v9.0.1/mod.ts";
 import {
   InvalidBody,
   InvalidHeader,
+  InvalidProperty,
+  LimitExceeded,
   MissingBody,
   UberdenoError,
 } from "./errors.ts";
@@ -65,4 +67,32 @@ export async function errorHandler(
       };
     },
   );
+}
+
+export async function limitHandler(
+  ctx: Context,
+  next: () => Promise<unknown>,
+): Promise<void> {
+  if (ctx.request.method === "GET") {
+    const limit = ctx.request.url.searchParams.get(`limit`)
+      ? ctx.request.url.searchParams.get(`limit`)
+      : `5`;
+
+    const offset = ctx.request.url.searchParams.get(`offset`)
+      ? ctx.request.url.searchParams.get(`offset`)
+      : `0`;
+
+    if (isNaN(+limit!)) throw new InvalidProperty("limit", "number");
+    if (isNaN(+offset!)) throw new InvalidProperty("offset", "number");
+
+    if (Number(limit) > 99) {
+      throw new LimitExceeded();
+    }
+
+    ctx.request.url.searchParams.set(`limit`, limit!);
+    ctx.request.url.searchParams.set(`offset`, offset!);
+  }
+
+  await next();
+  return;
 }

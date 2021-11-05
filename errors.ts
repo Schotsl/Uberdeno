@@ -62,3 +62,11 @@ export class InvalidHeader extends UberdenoError {
     super("Request isn't using the 'Content-Type: application/json' header.");
   }
 }
+
+export class LimitExceeded extends UberdenoError {
+  public statusError = 403;
+
+  constructor() {
+    super("GET request 'limit' may not exceed 99");
+  }
+}
