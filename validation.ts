@@ -1,3 +1,7 @@
+// deno-lint-ignore-file valid-typeof
+
+// TODO: ^ Fix this linting error
+
 import { InvalidProperty, MissingProperty } from "./errors.ts";
 
 type literals =
@@ -112,6 +116,11 @@ export function validateNumber(
 ): void {
   validateDefined(input, property, optional);
   validateDatatype(input, property, "number");
+
+  // Only allow positive numbers
+  if (input! < 0) {
+    throw new InvalidProperty(property, "number");
+  }
 }
 
 export function validateVarchar(
