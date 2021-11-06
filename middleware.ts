@@ -32,6 +32,8 @@ export async function postHandler(
   return;
 }
 
+// TODO: "Invalid JSON body" error doesn't pass to the user
+
 export async function errorHandler(
   ctx: Context,
   next: () => Promise<unknown>,
@@ -82,8 +84,12 @@ export async function limitHandler(
       ? ctx.request.url.searchParams.get(`offset`)
       : `0`;
 
-    if (isNaN(+limit!) || Number(limit) < 0) throw new InvalidProperty("limit", "number");
-    if (isNaN(+offset!) || Number(offset) < 0) throw new InvalidProperty("offset", "number");
+    if (isNaN(+limit!) || Number(limit) < 0) {
+      throw new InvalidProperty("limit", "number");
+    }
+    if (isNaN(+offset!) || Number(offset) < 0) {
+      throw new InvalidProperty("offset", "number");
+    }
 
     if (Number(limit) > 99) {
       throw new LimitExceeded();

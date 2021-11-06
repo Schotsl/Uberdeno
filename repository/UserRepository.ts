@@ -90,7 +90,6 @@ export default class UserRepository implements InterfaceRepository {
       const message = error.message;
       const ending = message.slice(-20);
 
-      // If the email is a duplicate
       if (ending === "for key 'user.email'") {
         throw new DuplicateResource("user");
       }

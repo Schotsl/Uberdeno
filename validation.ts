@@ -16,7 +16,11 @@ type literals =
 
 type inputs = null | string | number | boolean;
 
-function validateDefined(input: inputs, property: string, optional: boolean): boolean {
+function validateDefined(
+  input: inputs,
+  property: string,
+  optional: boolean,
+): boolean {
   if (!optional && (typeof input === "undefined" || input === null)) {
     throw new MissingProperty(property);
   }
