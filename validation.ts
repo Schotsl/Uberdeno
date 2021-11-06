@@ -16,10 +16,13 @@ type literals =
 
 type inputs = null | string | number | boolean;
 
-function validateDefined(input: inputs, property: string, optional: boolean) {
+function validateDefined(input: inputs, property: string, optional: boolean): boolean {
   if (!optional && (typeof input === "undefined" || input === null)) {
     throw new MissingProperty(property);
   }
+
+  if (optional) return true;
+  else return false;
 }
 
 function validateDatatype(input: inputs, property: string, datatype: literals) {
@@ -114,7 +117,8 @@ export function validateNumber(
   property: string,
   optional = false,
 ): void {
-  validateDefined(input, property, optional);
+  // TODO: Move this everywhere
+  if (validateDefined(input, property, optional)) return;
   validateDatatype(input, property, "number");
 
   // Only allow positive numbers
