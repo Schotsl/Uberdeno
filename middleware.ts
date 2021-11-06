@@ -1,5 +1,5 @@
 import { red } from "https://deno.land/std@0.110.0/fmt/colors.ts";
-import { Context } from "https://deno.land/x/oak@v9.0.1/mod.ts";
+import { Request, State, Response } from "https://deno.land/x/oak@v9.0.1/mod.ts";
 import {
   InvalidBody,
   InvalidHeader,
@@ -10,19 +10,21 @@ import {
 } from "./errors.ts";
 
 export async function postHandler(
-  ctx: Context,
+  { request }: {
+    request: Request;
+  },
   next: () => Promise<unknown>,
 ): Promise<void> {
-  if (ctx.request.method === "POST" || ctx.request.method === "PUT") {
-    if (!ctx.request.hasBody) {
+  if (request.method === "POST" || request.method === "PUT") {
+    if (!request.hasBody) {
       throw new MissingBody();
     }
 
-    if (ctx.request.headers.get("Content-Type") !== "application/json") {
+    if (request.headers.get("Content-Type") !== "application/json") {
       throw new InvalidHeader();
     }
 
-    const body = ctx.request.body({ type: "json" });
+    const body = request.body({ type: "json" });
     await body.value.catch(() => {
       throw new InvalidBody();
     });
@@ -35,7 +37,9 @@ export async function postHandler(
 // TODO: "Invalid JSON body" error doesn't pass to the user
 
 export async function errorHandler(
-  ctx: Context,
+  { response }: {
+    response: Response;
+  },
   next: () => Promise<unknown>,
 ): Promise<void> {
   await next().catch(
@@ -43,8 +47,8 @@ export async function errorHandler(
       if (
         error.statusError === 500 || typeof error.statusError === "undefined"
       ) {
-        ctx.response.body = "Internal Server Error";
-        ctx.response.status = 500;
+        response.body = "Internal Server Error";
+        response.status = 500;
 
         console.log(error.message);
         console.log(error.stack);
@@ -63,8 +67,8 @@ export async function errorHandler(
         return;
       }
 
-      ctx.response.status = error.statusError;
-      ctx.response.body = {
+      response.status = error.statusError;
+      response.body = {
         message: error.message,
       };
     },
@@ -72,16 +76,19 @@ export async function errorHandler(
 }
 
 export async function limitHandler(
-  ctx: Context,
+  { request, state }: {
+    request: Request;
+    state: State;
+  },
   next: () => Promise<unknown>,
 ): Promise<void> {
-  if (ctx.request.method === "GET") {
-    let limit = ctx.request.url.searchParams.get(`limit`)
-      ? ctx.request.url.searchParams.get(`limit`)
+  if (request.method === "GET") {
+    let limit = request.url.searchParams.get(`limit`)
+      ? request.url.searchParams.get(`limit`)
       : 5;
 
-    let offset = ctx.request.url.searchParams.get(`offset`)
-      ? ctx.request.url.searchParams.get(`offset`)
+    let offset = request.url.searchParams.get(`offset`)
+      ? request.url.searchParams.get(`offset`)
       : 0;
 
     if (isNaN(+limit!) || Number(limit) < 0) {
@@ -99,7 +106,7 @@ export async function limitHandler(
       throw new LimitExceeded();
     }
 
-    ctx.state = { limit, offset };
+    state = { limit, offset };
   }
 
   await next();
