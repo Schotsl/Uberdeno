@@ -21,12 +21,13 @@ function validateDefined(
   property: string,
   optional: boolean,
 ): boolean {
-  if (!optional && (typeof input === "undefined" || input === null)) {
+  if (typeof input === "undefined" || input === null) {
+    // If the property isn't required return true and "escape" the parent function
+    if (optional) return true;
     throw new MissingProperty(property);
   }
 
-  if (optional) return true;
-  else return false;
+  return false;
 }
 
 function validateDatatype(input: inputs, property: string, datatype: literals) {
@@ -40,7 +41,7 @@ export function validateDate(
   property: string,
   optional = false,
 ): void {
-  validateDefined(input, property, optional);
+  if (validateDefined(input, property, optional)) return;
   validateDatatype(input, property, "string");
 
   // Copied and modified RegExp from https://stackoverflow.com/a/58878432/9615506
@@ -58,7 +59,7 @@ export function validateUUID(
   property: string,
   optional = false,
 ): void {
-  validateDefined(input, property, optional);
+  if (validateDefined(input, property, optional)) return;
   validateDatatype(input, property, "string");
 
   // Copied RegExp from https://melvingeorge.me/blog/check-if-string-valid-uuid-regex-javascript
@@ -76,7 +77,7 @@ export function validateEmail(
   property: string,
   optional = false,
 ): void {
-  validateDefined(input, property, optional);
+  if (validateDefined(input, property, optional)) return;
   validateDatatype(input, property, "string");
 
   // Copied RegExp from https://deno.land/x/validasaur@v0.15.0/src/rules/is_email.ts
@@ -94,7 +95,7 @@ export function validateTime(
   property: string,
   optional = false,
 ): void {
-  validateDefined(input, property, optional);
+  if (validateDefined(input, property, optional)) return;
   validateDatatype(input, property, "string");
 
   // Copied RegExp from https://stackoverflow.com/a/5563222/9615506
@@ -112,23 +113,8 @@ export function validateBoolean(
   property: string,
   optional = false,
 ): void {
-  validateDefined(input, property, optional);
-  validateDatatype(input, property, "boolean");
-}
-
-export function validateNumber(
-  input: number | null,
-  property: string,
-  optional = false,
-): void {
-  // TODO: Move this everywhere
   if (validateDefined(input, property, optional)) return;
-  validateDatatype(input, property, "number");
-
-  // Only allow positive numbers
-  if (input! < 0) {
-    throw new InvalidProperty(property, "number");
-  }
+  validateDatatype(input, property, "boolean");
 }
 
 export function validateVarchar(
@@ -136,11 +122,77 @@ export function validateVarchar(
   property: string,
   optional = false,
 ): void {
-  validateDefined(input, property, optional);
+  if (validateDefined(input, property, optional)) return;
   validateDatatype(input, property, "string");
 
   // Make sure the string is a correct length
   if (input!.length < 3 || input!.length > 255) {
     throw new InvalidProperty(property, "length");
+  }
+}
+
+export function validateNumber(
+  input: number | null,
+  property: string,
+  optional = false,
+): void {
+  if (validateDefined(input, property, optional)) return;
+
+  validateDatatype(input, property, "number");
+}
+
+export function validateTinyint(
+  input: number | null,
+  property: string,
+  optional = false,
+): void {
+  if (validateDefined(input, property, optional)) return;
+
+  validateDatatype(input, property, "number");
+
+  if (input! < -128 || input! > 127) {
+    throw new InvalidProperty(property, "tinyint");
+  }
+}
+
+export function validateSmallint(
+  input: number | null,
+  property: string,
+  optional = false,
+): void {
+  if (validateDefined(input, property, optional)) return;
+
+  validateDatatype(input, property, "number");
+
+  if (input! < -32768 || input! > 32767) {
+    throw new InvalidProperty(property, "smallint");
+  }
+}
+
+export function validateInt(
+  input: number | null,
+  property: string,
+  optional = false,
+): void {
+  if (validateDefined(input, property, optional)) return;
+
+  validateDatatype(input, property, "number");
+
+  if (input! < -2147483648 || input! > 2147483647) {
+    throw new InvalidProperty(property, "int");
+  }
+}
+
+export function validateBigint(
+  input: number | null,
+  property: string,
+  optional = false,
+): void {
+  if (validateDefined(input, property, optional)) return;
+
+  validateDatatype(input, property, "number");
+
+  if (input! < -9223372036854775808 || input! > 9223372036854775807) {
+    throw new InvalidProperty(property, "bigint");
   }
 }
