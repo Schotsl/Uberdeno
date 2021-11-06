@@ -1,8 +1,16 @@
-import { Request, Response } from "https://deno.land/x/oak@v9.0.1/mod.ts";
+import {
+  Request,
+  Response,
+  State,
+} from "https://deno.land/x/oak@v9.0.1/mod.ts";
 
 export default interface InterfaceController {
   getCollection(
-    { request, response }: { request: Request; response: Response },
+    { request, response }: {
+      request?: Request;
+      response?: Response;
+      state?: State;
+    },
   ): void;
 
   removeObject(
