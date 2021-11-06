@@ -1,5 +1,9 @@
 import { red } from "https://deno.land/std@0.110.0/fmt/colors.ts";
-import { Request, State, Response } from "https://deno.land/x/oak@v9.0.1/mod.ts";
+import {
+  Request,
+  Response,
+  State,
+} from "https://deno.land/x/oak@v9.0.1/mod.ts";
 import {
   InvalidBody,
   InvalidHeader,
@@ -106,7 +110,8 @@ export async function limitHandler(
       throw new LimitExceeded();
     }
 
-    state = { limit, offset };
+    state.limit = limit;
+    state.offset = offset;
   }
 
   await next();
