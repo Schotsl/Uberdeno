@@ -76,27 +76,30 @@ export async function limitHandler(
   next: () => Promise<unknown>,
 ): Promise<void> {
   if (ctx.request.method === "GET") {
-    const limit = ctx.request.url.searchParams.get(`limit`)
+    let limit = ctx.request.url.searchParams.get(`limit`)
       ? ctx.request.url.searchParams.get(`limit`)
-      : `5`;
+      : 5;
 
-    const offset = ctx.request.url.searchParams.get(`offset`)
+      let offset = ctx.request.url.searchParams.get(`offset`)
       ? ctx.request.url.searchParams.get(`offset`)
-      : `0`;
+      : 0;
 
     if (isNaN(+limit!) || Number(limit) < 0) {
       throw new InvalidProperty("limit", "number");
     }
+
     if (isNaN(+offset!) || Number(offset) < 0) {
       throw new InvalidProperty("offset", "number");
     }
 
-    if (Number(limit) > 99) {
+    limit = Number(limit);
+    offset = Number(offset);
+
+    if (limit > 99) {
       throw new LimitExceeded();
     }
 
-    ctx.request.url.searchParams.set(`limit`, limit!);
-    ctx.request.url.searchParams.set(`offset`, offset!);
+    ctx.state = { limit, offset };
   }
 
   await next();
