@@ -80,7 +80,7 @@ export async function limitHandler(
       ? ctx.request.url.searchParams.get(`limit`)
       : 5;
 
-      let offset = ctx.request.url.searchParams.get(`offset`)
+    let offset = ctx.request.url.searchParams.get(`offset`)
       ? ctx.request.url.searchParams.get(`offset`)
       : 0;
 
