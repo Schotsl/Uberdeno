@@ -9,8 +9,8 @@ export default interface RepositoryInterface {
   ): Promise<BaseCollection>;
 
   updateObject(object: BaseEntity): Promise<BaseEntity>;
-  removeObject(uuid: string): Promise<void>;
+  removeObject(uuid: string, ...args: unknown[]): Promise<void>;
 
   addObject(object: Partial<BaseEntity>): Promise<BaseEntity>;
-  getObject(uuid: string): Promise<BaseEntity>;
+  getObject(uuid: string, ...args: unknown[]): Promise<BaseEntity>;
 }
