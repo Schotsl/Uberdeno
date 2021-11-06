@@ -70,3 +70,19 @@ export class LimitExceeded extends UberdenoError {
     super("GET request 'limit' may not exceed 99");
   }
 }
+
+export class InvalidAuthentication extends UberdenoError {
+  public statusError = 403;
+
+  constructor() {
+    super("Request has invalid 'Authentication' header");
+  }
+}
+
+export class MissingAuthentication extends UberdenoError {
+  public statusError = 401;
+
+  constructor() {
+    super("Request is missing 'Authentication' header");
+  }
+}
