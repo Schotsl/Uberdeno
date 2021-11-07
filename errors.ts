@@ -86,3 +86,11 @@ export class MissingAuthentication extends UberdenoError {
     super("Request is missing 'Authentication' header");
   }
 }
+
+export class MissingImplementation extends UberdenoError {
+  public statusError = 501;
+
+  constructor() {
+    super("This endpoint hasn't been implemented"); 
+  }
+}
