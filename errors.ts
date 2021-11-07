@@ -91,6 +91,6 @@ export class MissingImplementation extends UberdenoError {
   public statusError = 501;
 
   constructor() {
-    super("This endpoint hasn't been implemented"); 
+    super("This endpoint hasn't been implemented");
   }
 }
