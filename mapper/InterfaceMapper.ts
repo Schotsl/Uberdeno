@@ -1,4 +1,5 @@
 import BaseEntity from "../entity/BaseEntity.ts";
+import BareEntity from "../entity/BareEntity.ts";
 import BaseCollection from "../collection/BaseCollection.ts";
 
 export default interface InterfaceMapper {
@@ -11,9 +12,9 @@ export default interface InterfaceMapper {
 
   mapObject(
     row: Record<string, never>,
-  ): Promise<BaseEntity> | BaseEntity;
+  ): Promise<BaseEntity | BareEntity> | BaseEntity | BareEntity;
 
   mapArray(
     rows: Record<string, never>[],
-  ): Promise<BaseEntity[]> | BaseEntity[];
+  ): Promise<BaseEntity[] | BareEntity[]> | BaseEntity[] | BareEntity[];
 }
