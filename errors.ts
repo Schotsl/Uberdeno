@@ -2,6 +2,8 @@ export class UberdenoError extends Error {
   public statusError = 500;
 }
 
+// TODO: Double check status codes and messages
+
 export class MissingResource extends UberdenoError {
   public statusError = 404;
 
@@ -67,7 +69,7 @@ export class LimitExceeded extends UberdenoError {
   public statusError = 403;
 
   constructor() {
-    super("GET request 'limit' may not exceed 99");
+    super("GET request 'limit' may not exceed 99.");
   }
 }
 
@@ -75,7 +77,7 @@ export class InvalidAuthentication extends UberdenoError {
   public statusError = 403;
 
   constructor() {
-    super("Request has invalid 'Authentication' header");
+    super("Request has invalid 'Authentication' header.");
   }
 }
 
@@ -83,7 +85,7 @@ export class MissingAuthentication extends UberdenoError {
   public statusError = 401;
 
   constructor() {
-    super("Request is missing 'Authentication' header");
+    super("Request is missing 'Authentication' header.");
   }
 }
 
@@ -91,6 +93,6 @@ export class MissingImplementation extends UberdenoError {
   public statusError = 501;
 
   constructor() {
-    super("This endpoint hasn't been implemented");
+    super("This endpoint hasn't been implemented.");
   }
 }
