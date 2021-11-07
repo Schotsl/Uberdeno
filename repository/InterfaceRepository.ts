@@ -9,9 +9,13 @@ export default interface RepositoryInterface {
     ...args: unknown[]
   ): Promise<BaseCollection>;
 
-  updateObject(object: BaseEntity | BareEntity): Promise<BaseEntity | BareEntity>;
+  updateObject(
+    object: BaseEntity | BareEntity,
+  ): Promise<BaseEntity | BareEntity>;
   removeObject(uuid: string, ...args: unknown[]): Promise<void>;
 
-  addObject(object: Partial<BaseEntity | BareEntity>): Promise<BaseEntity | BareEntity>;
+  addObject(
+    object: Partial<BaseEntity | BareEntity>,
+  ): Promise<BaseEntity | BareEntity>;
   getObject(uuid: string, ...args: unknown[]): Promise<BaseEntity | BareEntity>;
 }
