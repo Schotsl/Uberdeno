@@ -17,11 +17,11 @@ await configLogger({ enable: false });
 const mysqlClient = new Client();
 
 mysqlClient.connect({
-  hostname: Deno.env.get("SLURP_SERVER_MYSQL_HOSTNAME")!,
-  username: Deno.env.get("SLURP_SERVER_MYSQL_USERNAME")!,
-  password: Deno.env.get("SLURP_SERVER_MYSQL_PASSWORD")!,
-  port: +Deno.env.get("SLURP_SERVER_MYSQL_PORT")!,
-  db: Deno.env.get("SLURP_SERVER_MYSQL_DATABASE")!,
+  hostname: Deno.env.get("MYSQL_HOSTNAME")!,
+  username: Deno.env.get("MYSQL_USERNAME")!,
+  password: Deno.env.get("MYSQL_PASSWORD")!,
+  port: +Deno.env.get("MYSQL_PORT")!,
+  db: Deno.env.get("MYSQL_DATABASE")!,
 });
 
 await testMysql(mysqlClient);
