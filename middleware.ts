@@ -65,8 +65,10 @@ export async function errorHandler(
           fixed: false,
         });
 
-        fetch(`https://api.bot-ross.com/v1/log`, { headers, method, body })
-          .catch(() => console.log(red(`Couldn't report log to Bot-Ross`)));
+        if (Deno.env.get("DENO_DEPLOYMENT_ID") !== undefined) {
+          fetch(`https://api.bot-ross.com/v1/log`, { headers, method, body })
+            .catch(() => console.log(red(`Couldn't report log to Bot-Ross`)));
+        }
 
         return;
       }
