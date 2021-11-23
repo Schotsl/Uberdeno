@@ -16,7 +16,7 @@ type literals =
 
 type inputs = null | string | number | boolean;
 
-function validateDefined(
+export function validateDefined(
   input: inputs,
   property: string,
   optional: boolean,
@@ -30,7 +30,7 @@ function validateDefined(
   return false;
 }
 
-function validateDatatype(input: inputs, property: string, datatype: literals) {
+export function validateDatatype(input: inputs, property: string, datatype: literals) {
   if (typeof input !== datatype) {
     throw new InvalidProperty(property, datatype);
   }
