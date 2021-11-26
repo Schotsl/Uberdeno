@@ -6,16 +6,11 @@ export async function testMysql(mysqlClient: Client) {
   const port = mysqlClient.config.port!;
   const host = mysqlClient.config.hostname!;
 
-  console.log(gray(`Attempting connecting to ${host}:${port}`));
-
   const timeout = setTimeout(() => {
-    console.log(red(`Couldn't connect to ${host}:${port}`));
-    Deno.exit();
+    throw Error(`Couldn't connect to ${host}:${port}`);
   }, 1000);
 
   await mysqlClient.query("SHOW VARIABLES LIKE 'version%';");
 
   clearTimeout(timeout);
-
-  console.log(green(`Successfully connected to ${host}:${port}`));
 }

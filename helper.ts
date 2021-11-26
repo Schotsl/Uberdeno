@@ -1,5 +1,4 @@
 import { config } from "https://deno.land/x/dotenv@v3.0.0/mod.ts";
-import { red } from "https://deno.land/std@0.110.0/fmt/colors.ts";
 
 export function initializeEnv(variables: string[]) {
   if (Deno.env.get("DENO_DEPLOYMENT_ID") === undefined) {
@@ -8,8 +7,7 @@ export function initializeEnv(variables: string[]) {
 
   variables.forEach((variable: string) => {
     if (!Deno.env.get(variable)) {
-      console.log(red(`${variable} .env variable must be set.`));
-      Deno.exit();
+      throw Error(`${variable} .env variable must be set.`);
     }
   });
 }
