@@ -6,7 +6,7 @@ export async function testMysql(mysqlClient: Client) {
 
   const timeout = setTimeout(() => {
     throw Error(`Couldn't connect to ${host}:${port}`);
-  }, 1000);
+  }, 10000);
 
   await mysqlClient.query("SHOW VARIABLES LIKE 'version%';");
 
