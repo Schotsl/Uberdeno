@@ -2,8 +2,8 @@ import { validationTester } from "./helper.ts";
 import {
   validateInt,
   validateNumber,
-  validateSmallint,
-  validateTinyint,
+  validateSmall,
+  validateTiny,
 } from "../../validation/number.ts";
 
 Deno.test("number validation", () => {
@@ -19,14 +19,14 @@ Deno.test("tinyint validation", () => {
   const validTiny = [-128, 127];
   const invalidTiny = [-129, 128];
 
-  validationTester(validTiny, invalidTiny, "tinyint", validateTinyint);
+  validationTester(validTiny, invalidTiny, "tinyint", validateTiny);
 });
 
 Deno.test("smallint validation", () => {
   const validSmall = [-32768, 32767];
   const invalidSmall = [-32769, 32768];
 
-  validationTester(validSmall, invalidSmall, "smallint", validateSmallint);
+  validationTester(validSmall, invalidSmall, "smallint", validateSmall);
 });
 
 Deno.test("int validation", () => {

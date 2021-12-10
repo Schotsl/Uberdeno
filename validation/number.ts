@@ -22,7 +22,7 @@ export function validateNumber(
   return false;
 }
 
-export function validateTinyint(
+export function validateTiny(
   input: unknown,
   label: string,
   optional = false,
@@ -36,7 +36,7 @@ export function validateTinyint(
   }
 }
 
-export function validateSmallint(
+export function validateSmall(
   input: unknown,
   label: string,
   optional = false,
