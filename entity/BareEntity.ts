@@ -1,11 +1,13 @@
+import { UUIDColumn } from "../other/Columns.ts";
+
 export default class BareEntity {
-  public uuid = ``;
+  public uuid: UUIDColumn;
 
   constructor(uuid?: string) {
     if (typeof uuid === "undefined") {
-      this.uuid = globalThis.crypto.randomUUID();
+      this.uuid = new UUIDColumn(globalThis.crypto.randomUUID());
     } else {
-      this.uuid = uuid;
+      this.uuid = new UUIDColumn(uuid);
     }
   }
 }

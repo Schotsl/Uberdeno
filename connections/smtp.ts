@@ -17,6 +17,4 @@ await smtpClient.connectTLS({
   port: +Deno.env.get("IMAP_PORT")!,
 });
 
-// TODO: Implement test SMTP function
-
 export default smtpClient;

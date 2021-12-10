@@ -2,8 +2,6 @@ export class UberdenoError extends Error {
   public statusError = 500;
 }
 
-// TODO: Double check status codes and messages
-
 export class MissingResource extends UberdenoError {
   public statusError = 404;
 

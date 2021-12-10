@@ -3,7 +3,7 @@ import {
   Request,
   Response,
   State,
-} from "https://deno.land/x/oak@v9.0.1/mod.ts";
+} from "https://deno.land/x/oak@v10.0.0/mod.ts";
 import {
   InvalidBody,
   InvalidHeader,
@@ -38,8 +38,6 @@ export async function postHandler(
   return;
 }
 
-// TODO: "Invalid JSON body" error doesn't pass to the user
-
 export async function errorHandler(
   { response }: {
     response: Response;
@@ -48,6 +46,7 @@ export async function errorHandler(
 ): Promise<void> {
   await next().catch(
     (error: UberdenoError) => {
+      console.log(error.statusError);
       if (
         error.statusError === 500 || typeof error.statusError === "undefined"
       ) {

@@ -2,7 +2,7 @@ import {
   Request,
   Response,
   State,
-} from "https://deno.land/x/oak@v9.0.1/mod.ts";
+} from "https://deno.land/x/oak@v10.0.0/mod.ts";
 
 export default interface InterfaceController {
   getCollection(
@@ -17,9 +17,9 @@ export default interface InterfaceController {
     { params, response }: { params: { uuid: string }; response: Response },
   ): void;
 
-  updateObject(
-    { params, response }: { params: { uuid: string }; response: Response },
-  ): void;
+  // updateObject(
+  //   { params, response }: { params: { uuid: string }; response: Response },
+  // ): void;
 
   addObject(
     { request, response }: { request: Request; response: Response },
