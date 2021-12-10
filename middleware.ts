@@ -46,7 +46,6 @@ export async function errorHandler(
 ): Promise<void> {
   await next().catch(
     (error: UberdenoError) => {
-      console.log(error.statusError);
       if (
         error.statusError === 500 || typeof error.statusError === "undefined"
       ) {

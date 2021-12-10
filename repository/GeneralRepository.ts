@@ -62,8 +62,6 @@ export default class GeneralRepository implements InterfaceRepository {
   }
 
   public async addObject(object: BaseEntity): Promise<BaseEntity> {
-    // const values: string[] = [];
-    console.log(object);
     const insert = this.queryClient.insertQuery();
     const values = this.generalColumns.map((column) => {
       const title = column.title as keyof BaseEntity;
