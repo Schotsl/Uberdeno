@@ -1,3 +1,5 @@
+// deno-lint-ignore-file no-explicit-any
+
 import { config } from "https://deno.land/x/dotenv@v3.0.0/mod.ts";
 import { ColumnInfo, ColumnType } from "./types.ts";
 import {
