@@ -24,7 +24,7 @@ export default class GeneralController implements InterfaceController {
   private generalColumns: ColumnInfo[] = [];
   private generalRepository: GeneralRepository;
 
-  constructor(mysqlClient: Client, Entity: any, Collection: any, name: string) {
+  constructor(mysqlClient: Client, name: string, Entity: any, Collection: any) {
     this.Entity = Entity;
 
     this.generalColumns = generateColumns(Entity);
