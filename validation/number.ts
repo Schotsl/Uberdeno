@@ -63,3 +63,17 @@ export function validateInt(
     throw new InvalidProperty(label, "int");
   }
 }
+
+export function validateBinary(
+  input: unknown,
+  label: string,
+  optional = false,
+): void {
+  if (validateNumber(input, label, optional)) {
+    return;
+  }
+
+  if (input !== 0 && input !== 1) {
+    throw new InvalidProperty(label, "binary");
+  }
+}

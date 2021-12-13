@@ -4,6 +4,7 @@ import {
   validateNumber,
   validateSmall,
   validateTiny,
+  validateBinary,
 } from "../../validation/number.ts";
 
 Deno.test("number validation", () => {
@@ -34,4 +35,11 @@ Deno.test("int validation", () => {
   const invalidInt = [-2147483649, 2147483648];
 
   validationTester(validInt, invalidInt, "int", validateInt);
+});
+
+Deno.test("binary validation", () => {
+  const validBinary = [0, 1];
+  const invalidBinary = [-1, 2];
+
+  validationTester(validBinary, invalidBinary, "binary", validateBinary);
 });
