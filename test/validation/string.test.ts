@@ -3,9 +3,9 @@ import {
   validateEmail,
   validateString,
   validateTime,
+  validateTimestamp,
   validateUUID,
   validateVarchar,
-  validateTimestamp,
 } from "../../validation/string.ts";
 
 Deno.test("string validation", () => {
