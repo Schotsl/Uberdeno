@@ -3,6 +3,7 @@ export enum ColumnType {
   TimestampColumn = "TimestampColumn",
   UUIDColumn = "UUIDColumn",
   TimeColumn = "TimeColumn",
+  IPv64Column = "IPv64Column",
   TinyColumn = "TinyColumn",
   SmallColumn = "SmallColumn",
   EmailColumn = "EmailColumn",

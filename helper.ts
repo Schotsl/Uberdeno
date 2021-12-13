@@ -6,6 +6,7 @@ import {
   BooleanColumn,
   EmailColumn,
   IntColumn,
+  IPv64Column,
   NumberColumn,
   SmallColumn,
   StringColumn,
@@ -65,7 +66,7 @@ export function renderREST(input: any): any {
       value instanceof EmailColumn || value instanceof SmallColumn ||
       value instanceof NumberColumn || value instanceof StringColumn ||
       value instanceof BooleanColumn ||
-      value instanceof VarcharColumn
+      value instanceof VarcharColumn || value instanceof IPv64Column
     ) {
       input[key] = value.value;
     }
@@ -103,6 +104,8 @@ export function generateColumns(Entity: any): ColumnInfo[] {
       type = ColumnType.BooleanColumn;
     } else if (instance[title] instanceof VarcharColumn) {
       type = ColumnType.VarcharColumn;
+    } else if (instance[title] instanceof IPv64Column) {
+      type = ColumnType.IPv64Column;
     }
 
     return {
@@ -151,6 +154,8 @@ export function populateInstance(
       instance[title] = new BooleanColumn(body[title], title);
     } else if (type === ColumnType.VarcharColumn) {
       instance[title] = new VarcharColumn(body[title], title);
+    } else if (type === ColumnType.IPv64Column) {
+      instance[title] = new IPv64Column(body[title], title);
     }
   });
 

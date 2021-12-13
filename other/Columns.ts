@@ -1,6 +1,7 @@
 // String validation
 import {
   validateEmail,
+  validateIPv64,
   validateString,
   validateTime,
   validateTimestamp,
@@ -85,6 +86,20 @@ export class VarcharColumn {
 
     if (typeof value !== "undefined") {
       validateVarchar(this.value!, this.title!);
+    }
+  }
+}
+
+export class IPv64Column {
+  public value?: string;
+  public title?: string;
+
+  constructor(value?: string, title?: string) {
+    this.value = value;
+    this.title = title !== "undefined" ? title : "unknown";
+
+    if (typeof value !== "undefined") {
+      validateIPv64(this.value!, this.title!);
     }
   }
 }
