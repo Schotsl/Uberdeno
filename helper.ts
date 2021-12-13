@@ -4,13 +4,13 @@ import { config } from "https://deno.land/x/dotenv@v3.0.0/mod.ts";
 import { ColumnInfo, ColumnType } from "./types.ts";
 import {
   BooleanColumn,
-  TimestampColumn,
   EmailColumn,
   IntColumn,
   NumberColumn,
   SmallColumn,
   StringColumn,
   TimeColumn,
+  TimestampColumn,
   TinyColumn,
   UUIDColumn,
   VarcharColumn,
@@ -18,10 +18,10 @@ import {
 
 // String validation
 import {
-  validateTimestamp,
   validateEmail,
   validateString,
   validateTime,
+  validateTimestamp,
   validateUUID,
   validateVarchar,
 } from "./validation/string.ts";
