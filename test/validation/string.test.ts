@@ -6,6 +6,7 @@ import {
   validateTimestamp,
   validateUUID,
   validateVarchar,
+  validateIPv64,
 } from "../../validation/string.ts";
 
 Deno.test("string validation", () => {
@@ -38,7 +39,7 @@ Deno.test("time validation", () => {
   validationTester(validTime, invalidTime, "time", validateTime);
 });
 
-Deno.test("uuid validation", () => {
+Deno.test("UUID validation", () => {
   const validUUID = ["272e1c01-237a-48e3-b88a-96a6fe9d3edb"];
   const invalidUUID = ["272e1c01-237a-48e3-b88a-96a6e9d3edb"];
 
@@ -57,4 +58,11 @@ Deno.test("varchar validation", () => {
   ];
 
   validationTester(validVarchar, invalidVarchar, "varchar", validateVarchar);
+});
+
+Deno.test("IPv64 validation", () => {
+  const validIPv64 = ["FE80:0000:0000:0000:0202:B3FF:FE1E:8329", "192.167.255.255"];
+  const invalidIPv64 = ["1200:0000:AB00:1234:O000:2552:7777:1313", "192.167.255.288"];
+
+  validationTester(validIPv64, invalidIPv64, "IPv64", validateIPv64);
 });
