@@ -4,7 +4,7 @@ import { config } from "https://deno.land/x/dotenv@v3.0.0/mod.ts";
 import { ColumnInfo, ColumnType } from "./types.ts";
 import {
   BooleanColumn,
-  DateColumn,
+  TimestampColumn,
   EmailColumn,
   IntColumn,
   NumberColumn,
@@ -81,7 +81,7 @@ export function renderREST(input: any): any {
     // Transform the column wrappers back into their strings, number or booleans
     if (
       value instanceof IntColumn || value instanceof TinyColumn ||
-      value instanceof TimeColumn || value instanceof DateColumn ||
+      value instanceof TimeColumn || value instanceof TimestampColumn ||
       value instanceof UUIDColumn ||
       value instanceof EmailColumn || value instanceof SmallColumn ||
       value instanceof NumberColumn || value instanceof StringColumn ||
@@ -108,8 +108,8 @@ export function generateColumns(Entity: any): ColumnInfo[] {
       type = ColumnType.TinyColumn;
     } else if (instance[title] instanceof TimeColumn) {
       type = ColumnType.TimeColumn;
-    } else if (instance[title] instanceof DateColumn) {
-      type = ColumnType.DateColumn;
+    } else if (instance[title] instanceof TimestampColumn) {
+      type = ColumnType.TimestampColumn;
     } else if (instance[title] instanceof UUIDColumn) {
       type = ColumnType.UUIDColumn;
     } else if (instance[title] instanceof EmailColumn) {
@@ -157,7 +157,7 @@ export function validateInstance(
       validateTiny(value, title, optional);
     } else if (type === ColumnType.TimeColumn) {
       validateTime(value, title, optional);
-    } else if (type === ColumnType.DateColumn) {
+    } else if (type === ColumnType.TimestampColumn) {
       validateDate(value, title, optional);
     } else if (type === ColumnType.UUIDColumn) {
       validateUUID(value, title, optional);
@@ -200,8 +200,8 @@ export function populateInstance(
       instance[title] = new TinyColumn(body[title]);
     } else if (type === ColumnType.TimeColumn) {
       instance[title] = new TimeColumn(body[title]);
-    } else if (type === ColumnType.DateColumn) {
-      instance[title] = new DateColumn(body[title]);
+    } else if (type === ColumnType.TimestampColumn) {
+      instance[title] = new TimestampColumn(body[title]);
     } else if (type === ColumnType.UUIDColumn) {
       instance[title] = new UUIDColumn(body[title]);
     } else if (type === ColumnType.EmailColumn) {

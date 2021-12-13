@@ -1,8 +1,8 @@
 import BareEntity from "./BareEntity.ts";
 
-import { DateColumn } from "../other/Columns.ts";
+import { TimestampColumn } from "../other/Columns.ts";
 
 export default class BaseEntity extends BareEntity {
-  public created = new DateColumn();
-  public updated = new DateColumn();
+  public created = new TimestampColumn();
+  public updated = new TimestampColumn();
 }

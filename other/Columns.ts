@@ -6,7 +6,7 @@ export class StringColumn {
   }
 }
 
-export class DateColumn {
+export class TimestampColumn {
   public value = new Date();
 
   constructor(value?: Date) {

@@ -1,6 +1,6 @@
 export enum ColumnType {
   IntColumn = "IntColumn",
-  DateColumn = "DateColumn",
+  TimestampColumn = "TimestampColumn",
   UUIDColumn = "UUIDColumn",
   TimeColumn = "TimeColumn",
   TinyColumn = "TinyColumn",
