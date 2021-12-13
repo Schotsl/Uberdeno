@@ -1,7 +1,7 @@
 export class StringColumn {
-  public value: string;
+  public value?: string;
 
-  constructor(value: string) {
+  constructor(value?: string) {
     this.value = value;
   }
 }
@@ -10,23 +10,42 @@ export class TimestampColumn {
   public value = new Date();
 
   constructor(value?: Date) {
-    if (typeof value !== "undefined") this.value = value;
+    if (typeof value !== "undefined") {
+      if (typeof value === "string") {
+        // We gotta translate the ISO string back into a JavaScript Date object
+        const milli = Date.parse(value);
+        const date = new Date(milli);
+
+        this.value = date;
+      } else {
+        // Just store it if it's a date
+        this.value = value;
+      }
+    }
   }
 }
 
 export class NumberColumn {
-  public value: number;
+  public value?: number;
 
-  constructor(value: number) {
+  constructor(value?: number) {
     this.value = value;
   }
 }
 
 export class BooleanColumn {
-  public value: boolean;
+  public value?: boolean;
 
-  constructor(value: boolean) {
-    this.value = value;
+  constructor(value?: boolean) {
+    if (typeof value === "number") {
+      // We gotta translate the number back into a boolean type
+      const boolean = value === 1;
+
+      this.value = boolean;
+    } else {
+      // Just store it if it's a boolean
+      this.value = value;
+    }
   }
 }
 
