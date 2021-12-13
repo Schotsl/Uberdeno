@@ -13,7 +13,7 @@ within Deno deploy for almost instant deployments.
 **Valid input:** `"This is a test"`\
 **Invalid input:** `true`
 
-### `validateDate(input: unknown, label: string, optional = false)`
+### `validateTimestamp(input: unknown, label: string, optional = false)`
 
 **Valid input:** `"2021-11-29T15:46:12.367Z"`\
 **Invalid input:** `"29/11/2021"`

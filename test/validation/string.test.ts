@@ -1,6 +1,6 @@
 import { validationTester } from "./helper.ts";
 import {
-  validateDate,
+  validateTimestamp,
   validateEmail,
   validateString,
   validateTime,
@@ -21,7 +21,7 @@ Deno.test("date validation", () => {
   const validDates = ["2019-11-15T13:34:22.178Z"];
   const invalidDates = ["09/09/2020", "09-09/2020"];
 
-  validationTester(validDates, invalidDates, "date", validateDate);
+  validationTester(validDates, invalidDates, "date", validateTimestamp);
 });
 
 Deno.test("email validation", () => {

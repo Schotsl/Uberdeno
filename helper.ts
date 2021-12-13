@@ -18,7 +18,7 @@ import {
 
 // String validation
 import {
-  validateDate,
+  validateTimestamp,
   validateEmail,
   validateString,
   validateTime,
@@ -158,7 +158,7 @@ export function validateInstance(
     } else if (type === ColumnType.TimeColumn) {
       validateTime(value, title, optional);
     } else if (type === ColumnType.TimestampColumn) {
-      validateDate(value, title, optional);
+      validateTimestamp(value, title, optional);
     } else if (type === ColumnType.UUIDColumn) {
       validateUUID(value, title, optional);
     } else if (type === ColumnType.EmailColumn) {

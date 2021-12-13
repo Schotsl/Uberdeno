@@ -22,7 +22,7 @@ export function validateString(
   return false;
 }
 
-export function validateDate(
+export function validateTimestamp(
   input: unknown,
   label: string,
   optional = false,
@@ -59,6 +59,8 @@ export function validateUUID(
     throw new InvalidProperty(label, "uuid");
   }
 }
+
+// Check length
 
 export function validateEmail(
   input: unknown,
