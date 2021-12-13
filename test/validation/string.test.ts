@@ -1,12 +1,12 @@
 import { validationTester } from "./helper.ts";
 import {
   validateEmail,
+  validateIPv64,
   validateString,
   validateTime,
   validateTimestamp,
   validateUUID,
   validateVarchar,
-  validateIPv64,
 } from "../../validation/string.ts";
 
 Deno.test("string validation", () => {
@@ -61,8 +61,14 @@ Deno.test("varchar validation", () => {
 });
 
 Deno.test("IPv64 validation", () => {
-  const validIPv64 = ["FE80:0000:0000:0000:0202:B3FF:FE1E:8329", "192.167.255.255"];
-  const invalidIPv64 = ["1200:0000:AB00:1234:O000:2552:7777:1313", "192.167.255.288"];
+  const validIPv64 = [
+    "FE80:0000:0000:0000:0202:B3FF:FE1E:8329",
+    "192.167.255.255",
+  ];
+  const invalidIPv64 = [
+    "1200:0000:AB00:1234:O000:2552:7777:1313",
+    "192.167.255.288",
+  ];
 
   validationTester(validIPv64, invalidIPv64, "IPv64", validateIPv64);
 });

@@ -2,11 +2,15 @@ import { ColumnInfo, ColumnType } from "../types.ts";
 
 export default class Querries {
   private table: string;
-  private names: string;
   private values: string;
 
+  private setNames: string;
+  private getNames: string;
+
   constructor(columns: Array<ColumnInfo>, table: string) {
-    const names: string[] = [];
+    const setNames: string[] = [];
+    const getNames: string[] = [];
+
     const values: string[] = [];
 
     columns.forEach((column) => {
@@ -16,16 +20,27 @@ export default class Querries {
       values.push(
         type === ColumnType.UUIDColumn ? `UNHEX(REPLACE(?, '-', ''))` : `?`,
       );
-      names.push(`\`${title}\``);
+
+      getNames.push(
+        type === ColumnType.UUIDColumn
+          ? `HEX(\`${title}\`) AS \`${title}\``
+          : `\`${title}\``,
+      );
+
+      setNames.push(
+        `\`${title}\``,
+      );
     });
 
     this.table = table;
-    this.names = names.join(", ");
     this.values = values.join(", ");
+    
+    this.getNames = getNames.join(", ");
+    this.setNames = setNames.join(", ");
   }
 
   getQuery() {
-    return `SELECT ${this.names} FROM ${this.table} WHERE uuid = UNHEX(REPLACE(?, '-', ''))`;
+    return `SELECT ${this.getNames} FROM ${this.table} WHERE uuid = UNHEX(REPLACE(?, '-', ''))`;
   }
 
   countQuery() {
@@ -33,7 +48,7 @@ export default class Querries {
   }
 
   fetchQuery() {
-    return `SELECT ${this.names} FROM ${this.table} ORDER BY created DESC LIMIT ? OFFSET ?`;
+    return `SELECT ${this.getNames} FROM ${this.table} ORDER BY created DESC LIMIT ? OFFSET ?`;
   }
 
   removeQuery() {
@@ -41,6 +56,6 @@ export default class Querries {
   }
 
   insertQuery() {
-    return `INSERT INTO ${this.table} (${this.names}) VALUES (${this.values})`;
+    return `INSERT INTO ${this.table} (${this.setNames}) VALUES (${this.values})`;
   }
 }

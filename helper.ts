@@ -16,27 +16,6 @@ import {
   VarcharColumn,
 } from "./other/Columns.ts";
 
-// String validation
-import {
-  validateEmail,
-  validateString,
-  validateTime,
-  validateTimestamp,
-  validateUUID,
-  validateVarchar,
-} from "./validation/string.ts";
-
-// Number validation
-import {
-  validateInt,
-  validateNumber,
-  validateSmall,
-  validateTiny,
-} from "./validation/number.ts";
-
-// Boolean validation
-import { validateBoolean } from "./validation/boolean.ts";
-
 export function initializeEnv(variables: string[]) {
   // Don't read the .env file if we're running on Deno Deploy
   if (Deno.env.get("DENO_DEPLOYMENT_ID") === undefined) {
@@ -133,50 +112,6 @@ export function generateColumns(Entity: any): ColumnInfo[] {
   });
 }
 
-export function validateInstance(
-  body: Record<string, never>,
-  columns: ColumnInfo[],
-  optional = false,
-) {
-  columns.forEach((column: any) => {
-    const { type, title } = column;
-
-    const value = body[title];
-    const exclude = [
-      "updated",
-      "created",
-      "uuid",
-    ];
-
-    // We don't need to validate these properties since the system provides them
-    if (exclude.includes(title)) return;
-
-    if (type === ColumnType.IntColumn) {
-      validateInt(value, title, optional);
-    } else if (type === ColumnType.TinyColumn) {
-      validateTiny(value, title, optional);
-    } else if (type === ColumnType.TimeColumn) {
-      validateTime(value, title, optional);
-    } else if (type === ColumnType.TimestampColumn) {
-      validateTimestamp(value, title, optional);
-    } else if (type === ColumnType.UUIDColumn) {
-      validateUUID(value, title, optional);
-    } else if (type === ColumnType.EmailColumn) {
-      validateEmail(value, title, optional);
-    } else if (type === ColumnType.SmallColumn) {
-      validateSmall(value, title, optional);
-    } else if (type === ColumnType.NumberColumn) {
-      validateNumber(value, title, optional);
-    } else if (type === ColumnType.StringColumn) {
-      validateString(value, title, optional);
-    } else if (type === ColumnType.BooleanColumn) {
-      validateBoolean(value, title, optional);
-    } else if (type === ColumnType.VarcharColumn) {
-      validateVarchar(value, title, optional);
-    }
-  });
-}
-
 export function populateInstance(
   body: Record<string, never>,
   columns: ColumnInfo[],
@@ -195,27 +130,27 @@ export function populateInstance(
     // TODO: Could probably use the value wrapper
 
     if (type === ColumnType.IntColumn) {
-      instance[title] = new IntColumn(body[title]);
+      instance[title] = new IntColumn(body[title], title);
     } else if (type === ColumnType.TinyColumn) {
-      instance[title] = new TinyColumn(body[title]);
+      instance[title] = new TinyColumn(body[title], title);
     } else if (type === ColumnType.TimeColumn) {
-      instance[title] = new TimeColumn(body[title]);
+      instance[title] = new TimeColumn(body[title], title);
     } else if (type === ColumnType.TimestampColumn) {
-      instance[title] = new TimestampColumn(body[title]);
+      instance[title] = new TimestampColumn(body[title], title);
     } else if (type === ColumnType.UUIDColumn) {
-      instance[title] = new UUIDColumn(body[title]);
+      instance[title] = new UUIDColumn(body[title], title);
     } else if (type === ColumnType.EmailColumn) {
-      instance[title] = new EmailColumn(body[title]);
+      instance[title] = new EmailColumn(body[title], title);
     } else if (type === ColumnType.SmallColumn) {
-      instance[title] = new SmallColumn(body[title]);
+      instance[title] = new SmallColumn(body[title], title);
     } else if (type === ColumnType.NumberColumn) {
-      instance[title] = new NumberColumn(body[title]);
+      instance[title] = new NumberColumn(body[title], title);
     } else if (type === ColumnType.StringColumn) {
-      instance[title] = new StringColumn(body[title]);
+      instance[title] = new StringColumn(body[title], title);
     } else if (type === ColumnType.BooleanColumn) {
-      instance[title] = new BooleanColumn(body[title]);
+      instance[title] = new BooleanColumn(body[title], title);
     } else if (type === ColumnType.VarcharColumn) {
-      instance[title] = new VarcharColumn(body[title]);
+      instance[title] = new VarcharColumn(body[title], title);
     }
   });
 

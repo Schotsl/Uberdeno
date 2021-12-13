@@ -1,10 +1,10 @@
 import { validationTester } from "./helper.ts";
 import {
+  validateBinary,
   validateInt,
   validateNumber,
   validateSmall,
   validateTiny,
-  validateBinary,
 } from "../../validation/number.ts";
 
 Deno.test("number validation", () => {

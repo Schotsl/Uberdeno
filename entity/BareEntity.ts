@@ -5,9 +5,9 @@ export default class BareEntity {
 
   constructor(uuid?: string) {
     if (typeof uuid === "undefined") {
-      this.uuid = new UUIDColumn(globalThis.crypto.randomUUID());
+      this.uuid = new UUIDColumn(globalThis.crypto.randomUUID(), "uuid");
     } else {
-      this.uuid = new UUIDColumn(uuid);
+      this.uuid = new UUIDColumn(uuid, "uuid");
     }
   }
 }

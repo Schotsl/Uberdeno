@@ -8,12 +8,7 @@ import {
   Response,
   State,
 } from "https://deno.land/x/oak@v10.0.0/mod.ts";
-import {
-  generateColumns,
-  populateInstance,
-  renderREST,
-  validateInstance,
-} from "../helper.ts";
+import { generateColumns, populateInstance, renderREST } from "../helper.ts";
 import InterfaceController from "./InterfaceController.ts";
 
 import GeneralRepository from "../repository/GeneralRepository.ts";
@@ -70,7 +65,6 @@ export default class GeneralController implements InterfaceController {
     const value = await body.value;
     const object = new this.Entity();
 
-    validateInstance(value, this.generalColumns);
     populateInstance(value, this.generalColumns, object);
 
     const result = await this.generalRepository.addObject(object);
