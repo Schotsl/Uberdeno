@@ -16,7 +16,7 @@ export default class Querries {
       values.push(
         type === ColumnType.UUIDColumn ? `UNHEX(REPLACE(?, '-', ''))` : `?`,
       );
-      names.push(title);
+      names.push(`\`${title}\``);
     });
 
     this.table = table;
