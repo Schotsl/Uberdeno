@@ -34,7 +34,7 @@ export function validateTiny(
   if (input as number < -128 || input as number > 127) {
     throw new InvalidProperty(label, "tinyint");
   }
-  
+
   return true;
 }
 
