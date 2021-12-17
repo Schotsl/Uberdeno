@@ -8,7 +8,7 @@ export function validateBoolean(
   if (typeof input === "undefined" || input === null) {
     // If the input isn't required return true and "escape" the parent function
     if (!required) {
-      return true;
+      return false;
     }
 
     // Throw an error if the input is missing
@@ -19,5 +19,5 @@ export function validateBoolean(
     throw new InvalidProperty(label, "boolean");
   }
 
-  return false;
+  return true;
 }

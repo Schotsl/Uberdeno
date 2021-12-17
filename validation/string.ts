@@ -8,7 +8,7 @@ export function validateString(
   if (typeof input === "undefined" || input === null) {
     // If the input isn't required return true and "escape" the parent function
     if (!required) {
-      return true;
+      return false;
     }
 
     // Throw an error if the input is missing
@@ -19,16 +19,16 @@ export function validateString(
     throw new InvalidProperty(label, "string");
   }
 
-  return false;
+  return true;
 }
 
 export function validateTimestamp(
   input: unknown,
   label: string,
   required = true,
-): void {
-  if (validateString(input, label, required)) {
-    return;
+): boolean {
+  if (!validateString(input, label, required)) {
+    return false;
   }
 
   // Copied and modified RegExp from https://stackoverflow.com/a/58878432/9615506
@@ -39,15 +39,17 @@ export function validateTimestamp(
   if (!regex.test(input as string)) {
     throw new InvalidProperty(label, "date");
   }
+
+  return true;
 }
 
 export function validateUUID(
   input: unknown,
   label: string,
   required = true,
-): void {
-  if (validateString(input, label, required)) {
-    return;
+): boolean {
+  if (!validateString(input, label, required)) {
+    return false;
   }
 
   // Copied RegExp from https://melvingeorge.me/blog/check-if-string-valid-uuid-regex-javascript
@@ -58,6 +60,8 @@ export function validateUUID(
   if (!regex.test(input as string)) {
     throw new InvalidProperty(label, "uuid");
   }
+
+  return true;
 }
 
 // Check length
@@ -66,9 +70,9 @@ export function validateEmail(
   input: unknown,
   label: string,
   required = true,
-): void {
-  if (validateString(input, label, required)) {
-    return;
+): boolean {
+  if (!validateString(input, label, required)) {
+    return false;
   }
 
   // Copied RegExp from https://deno.land/x/validasaur@v0.15.0/src/rules/is_email.ts
@@ -79,15 +83,17 @@ export function validateEmail(
   if (!regex.test(input as string)) {
     throw new InvalidProperty(label, "email");
   }
+
+  return true;
 }
 
 export function validateTime(
   input: unknown,
   label: string,
   required = true,
-): void {
-  if (validateString(input, label, required)) {
-    return;
+): boolean {
+  if (!validateString(input, label, required)) {
+    return false;
   }
 
   // Copied RegExp from https://stackoverflow.com/a/5563222/9615506
@@ -98,15 +104,17 @@ export function validateTime(
   if (!regex.test(input as string)) {
     throw new InvalidProperty(label, "time");
   }
+
+  return true;
 }
 
 export function validateVarchar(
   input: unknown,
   label: string,
   required = true,
-): void {
-  if (validateString(input, label, required)) {
-    return;
+): boolean {
+  if (!validateString(input, label, required)) {
+    return false;
   }
 
   const string = input as string;
@@ -115,15 +123,17 @@ export function validateVarchar(
   if (length < 3 || length > 255) {
     throw new InvalidProperty(label, "varchar");
   }
+
+  return true;
 }
 
 export function validateIPv64(
   input: unknown,
   label: string,
   required = true,
-): void {
-  if (validateString(input, label, required)) {
-    return;
+): boolean {
+  if (!validateString(input, label, required)) {
+    return false;
   }
 
   // Copied RegExp from https://www.regextester.com/104038
@@ -134,4 +144,6 @@ export function validateIPv64(
   if (!regex.test(input as string)) {
     throw new InvalidProperty(label, "IPv64");
   }
+
+  return true;
 }

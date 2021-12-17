@@ -17,6 +17,8 @@ import {
   VarcharColumn,
 } from "./other/Columns.ts";
 
+import BaseEntity from "./entity/BaseEntity.ts";
+
 export function initializeEnv(variables: string[]) {
   // Don't read the .env file if we're running on Deno Deploy
   if (Deno.env.get("DENO_DEPLOYMENT_ID") === undefined) {
@@ -120,44 +122,19 @@ export function generateColumns(Entity: any): ColumnInfo[] {
 export function populateInstance(
   body: Record<string, never>,
   columns: ColumnInfo[],
-  instance: any,
+  instance: BaseEntity,
 ) {
-  columns.forEach((column: any) => {
-    const { type, title } = column;
-    const exclude = [
-      "updated",
-      "created",
-      "uuid",
-    ];
+  // console.log(instance);
 
-    if (exclude.includes(title)) return;
+  columns.forEach((column: ColumnInfo) => {
+    const type = column.type;
+    const title = column.title as keyof BaseEntity;
 
-    // TODO: Could probably use the value wrapper
+    const value = body[title];
+    const target = instance[title];
 
-    if (type === ColumnType.IntColumn) {
-      instance[title].setValue(body[title]);
-    } else if (type === ColumnType.TinyColumn) {
-      instance[title].setValue(body[title]);
-    } else if (type === ColumnType.TimeColumn) {
-      instance[title].setValue(body[title]);
-    } else if (type === ColumnType.TimestampColumn) {
-      instance[title].setValue(body[title]);
-    } else if (type === ColumnType.UUIDColumn) {
-      instance[title].setValue(body[title]);
-    } else if (type === ColumnType.EmailColumn) {
-      instance[title].setValue(body[title]);
-    } else if (type === ColumnType.SmallColumn) {
-      instance[title].setValue(body[title]);
-    } else if (type === ColumnType.NumberColumn) {
-      instance[title].setValue(body[title]);
-    } else if (type === ColumnType.StringColumn) {
-      instance[title].setValue(body[title]);
-    } else if (type === ColumnType.BooleanColumn) {
-      instance[title].setValue(body[title]);
-    } else if (type === ColumnType.VarcharColumn) {
-      instance[title].setValue(body[title]);
-    } else if (type === ColumnType.IPv64Column) {
-      instance[title].setValue(body[title]);
+    if (type !== ColumnType.UnknownColumn) {
+      target.setValue(value);
     }
   });
 

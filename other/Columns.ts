@@ -18,6 +18,8 @@ import {
   validateTiny,
 } from "../validation/number.ts";
 
+import { restoreUUID } from "../helper.ts";
+
 // Below are the string types
 
 export class StringColumn {
@@ -35,8 +37,12 @@ export class StringColumn {
   }
 
   setValue(value?: string) {
-    validateString(value, this.title, this.required);
-    this.value = value;
+    const required = this.required && typeof this.value === "undefined";
+    const result = validateString(value, this.title, required);
+
+    if (result) {
+      this.value = value;
+    }
   }
 
   getValue() {
@@ -46,36 +52,70 @@ export class StringColumn {
 
 export class EmailColumn extends StringColumn {
   setValue(value?: string) {
-    validateEmail(value, this.title, this.required);
-    this.value = value;
+    const required = this.required && typeof this.value === "undefined";
+    const result = validateEmail(value, this.title, required);
+
+    if (result) {
+      this.value = value;
+    }
   }
 }
 
 export class TimeColumn extends StringColumn {
   setValue(value?: string) {
-    validateTime(value, this.title, this.required);
-    this.value = value;
+    const required = this.required && typeof this.value === "undefined";
+    const result = validateTime(value, this.title, required);
+
+    if (result) {
+      this.value = value;
+    }
   }
 }
 
 export class UUIDColumn extends StringColumn {
   setValue(value?: string) {
-    validateUUID(value, this.title, this.required);
-    this.value = value;
+    if (typeof value === "string") {
+      const regex = new RegExp(
+        /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/i,
+      );
+
+      if (regex.test(value)) {
+        this.value = value;
+        return;
+      }
+
+      value = restoreUUID(value);
+    }
+
+    const required = this.required && typeof this.value === "undefined";
+    const result = validateUUID(value, this.title, required);
+
+    if (result) {
+      this.value = value;
+      return;
+    }
   }
 }
 
 export class VarcharColumn extends StringColumn {
   setValue(value?: string) {
-    validateVarchar(value, this.title, this.required);
-    this.value = value;
+    const required = this.required && typeof this.value === "undefined";
+    const result = validateVarchar(value, this.title, required);
+
+    if (result) {
+      this.value = value;
+    }
   }
 }
 
 export class IPv64Column extends StringColumn {
   setValue(value?: string) {
-    validateIPv64(value, this.title, this.required);
-    this.value = value;
+    const required = this.required && typeof this.value === "undefined";
+    const result = validateIPv64(value, this.title, required);
+
+    if (result) {
+      this.value = value;
+    }
   }
 }
 
@@ -96,8 +136,12 @@ export class NumberColumn {
   }
 
   setValue(value?: number) {
-    validateNumber(value, this.title, this.required);
-    this.value = value;
+    const required = this.required && typeof this.value === "undefined";
+    const result = validateNumber(value, this.title, required);
+
+    if (result) {
+      this.value = value;
+    }
   }
 
   getValue() {
@@ -107,22 +151,34 @@ export class NumberColumn {
 
 export class TinyColumn extends NumberColumn {
   setValue(value?: number) {
-    validateTiny(value, this.title, this.required);
-    this.value = value;
+    const required = this.required && typeof this.value === "undefined";
+    const result = validateTiny(value, this.title, required);
+
+    if (result) {
+      this.value = value;
+    }
   }
 }
 
 export class SmallColumn extends NumberColumn {
   setValue(value?: number) {
-    validateSmall(value, this.title, this.required);
-    this.value = value;
+    const required = this.required && typeof this.value === "undefined";
+    const result = validateSmall(value, this.title, required);
+
+    if (result) {
+      this.value = value;
+    }
   }
 }
 
 export class IntColumn extends NumberColumn {
   setValue(value?: number) {
-    validateInt(value, this.title, this.required);
-    this.value = value;
+    const required = this.required && typeof this.value === "undefined";
+    const result = validateInt(value, this.title, required);
+
+    if (result) {
+      this.value = value;
+    }
   }
 }
 
@@ -148,13 +204,16 @@ export class TimestampColumn {
       return;
     }
 
-    validateTimestamp(value, this.title, this.required);
+    const required = this.required && typeof this.value === "undefined";
+    const result = validateTimestamp(value, this.title, required);
 
-    // We gotta translate the ISO string back into a JavaScript Date object
-    const time = Date.parse(value!);
-    const date = new Date(time);
+    if (result) {
+      // We gotta translate the ISO string back into a JavaScript Date object
+      const time = Date.parse(value!);
+      const date = new Date(time);
 
-    this.value = date;
+      this.value = date;
+    }
   }
 
   getValue() {
@@ -184,9 +243,12 @@ export class BooleanColumn {
       return;
     }
 
-    validateBinary(value, this.title, this.required);
+    const required = this.required && typeof this.value === "undefined";
+    const result = validateBinary(value, this.title, required);
 
-    this.value = value === 1;
+    if (result) {
+      this.value = value === 1;
+    }
   }
 
   getValue() {
