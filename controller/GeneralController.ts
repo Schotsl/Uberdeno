@@ -2,7 +2,6 @@
 
 import { Client } from "https://deno.land/x/mysql@v2.10.1/mod.ts";
 import { ColumnInfo } from "../types.ts";
-import { UUIDColumn } from "../other/Columns.ts";
 import {
   Request,
   Response,
@@ -52,7 +51,7 @@ export default class GeneralController implements InterfaceController {
       response: Response;
     },
   ) {
-    const uuid = new UUIDColumn(params.uuid);
+    const uuid = params.uuid;
     await this.generalRepository.removeObject(uuid);
 
     response.status = 204;

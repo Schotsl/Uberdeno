@@ -21,190 +21,175 @@ import {
 // Below are the string types
 
 export class StringColumn {
+  public required: boolean;
   public value?: string;
-  public title?: string;
+  public title: string;
 
-  constructor(value?: string, title?: string) {
-    this.value = value;
-    this.title = title !== "undefined" ? title : "unknown";
+  constructor(title: string, required = true, value?: string) {
+    this.required = required;
+    this.title = title;
 
     if (typeof value !== "undefined") {
-      validateString(this.value!, this.title!);
+      this.setValue(value);
     }
+  }
+
+  setValue(value?: string) {
+    validateString(value, this.title, this.required);
+    this.value = value;
+  }
+
+  getValue() {
+    return this.value;
   }
 }
 
-export class EmailColumn {
-  public value?: string;
-  public title?: string;
-
-  constructor(value?: string, title?: string) {
+export class EmailColumn extends StringColumn {
+  setValue(value?: string) {
+    validateEmail(value, this.title, this.required);
     this.value = value;
-    this.title = title !== "undefined" ? title : "unknown";
-
-    if (typeof value !== "undefined") {
-      validateEmail(this.value!, this.title!);
-    }
   }
 }
 
-export class TimeColumn {
-  public value?: string;
-  public title?: string;
-
-  constructor(value?: string, title?: string) {
+export class TimeColumn extends StringColumn {
+  setValue(value?: string) {
+    validateTime(value, this.title, this.required);
     this.value = value;
-    this.title = title !== "undefined" ? title : "unknown";
-
-    if (typeof value !== "undefined") {
-      validateTime(this.value!, this.title!);
-    }
   }
 }
 
-export class UUIDColumn {
-  public value?: string;
-  public title?: string;
-
-  constructor(value?: string, title?: string) {
+export class UUIDColumn extends StringColumn {
+  setValue(value?: string) {
+    validateUUID(value, this.title, this.required);
     this.value = value;
-    this.title = title !== "undefined" ? title : "unknown";
-
-    if (typeof value !== "undefined") {
-      validateUUID(this.value!, this.title!);
-    }
   }
 }
 
-export class VarcharColumn {
-  public value?: string;
-  public title?: string;
-
-  constructor(value?: string, title?: string) {
+export class VarcharColumn extends StringColumn {
+  setValue(value?: string) {
+    validateVarchar(value, this.title, this.required);
     this.value = value;
-    this.title = title !== "undefined" ? title : "unknown";
-
-    if (typeof value !== "undefined") {
-      validateVarchar(this.value!, this.title!);
-    }
   }
 }
 
-export class IPv64Column {
-  public value?: string;
-  public title?: string;
-
-  constructor(value?: string, title?: string) {
+export class IPv64Column extends StringColumn {
+  setValue(value?: string) {
+    validateIPv64(value, this.title, this.required);
     this.value = value;
-    this.title = title !== "undefined" ? title : "unknown";
-
-    if (typeof value !== "undefined") {
-      validateIPv64(this.value!, this.title!);
-    }
-  }
-}
-
-// Below are the date types
-
-export class TimestampColumn {
-  public value?: Date;
-  public title?: string;
-
-  constructor(value?: Date, title?: string) {
-    this.value = value;
-    this.title = title !== "undefined" ? title : "unknown";
-
-    if (value instanceof Date) {
-      // Skip the validation and set the date if it's already a Date object
-      this.value = value;
-    } else if (typeof value !== "undefined") {
-      validateTimestamp(this.value!, this.title!);
-
-      // We gotta translate the ISO string back into a JavaScript Date object
-      const time = Date.parse(value);
-      const date = new Date(time);
-
-      this.value = date;
-    }
   }
 }
 
 // Below are the number types
 
 export class NumberColumn {
+  public required: boolean;
   public value?: number;
-  public title?: string;
+  public title: string;
 
-  constructor(value?: number, title?: string) {
-    this.value = value;
-    this.title = title !== "undefined" ? title : "unknown";
+  constructor(title: string, required = true, value?: number) {
+    this.required = required;
+    this.title = title;
 
     if (typeof value !== "undefined") {
-      validateNumber(this.value!, this.title!);
+      this.setValue(value);
     }
+  }
+
+  setValue(value?: number) {
+    validateNumber(value, this.title, this.required);
+    this.value = value;
+  }
+
+  getValue() {
+    return this.value;
   }
 }
 
-export class TinyColumn {
-  public value?: number;
-  public title?: string;
-
-  constructor(value?: number, title?: string) {
+export class TinyColumn extends NumberColumn {
+  setValue(value?: number) {
+    validateTiny(value, this.title, this.required);
     this.value = value;
-    this.title = title !== "undefined" ? title : "unknown";
-
-    if (typeof value !== "undefined") {
-      validateTiny(this.value!, this.title!);
-    }
   }
 }
 
-export class SmallColumn {
-  public value?: number;
-  public title?: string;
-
-  constructor(value?: number, title?: string) {
+export class SmallColumn extends NumberColumn {
+  setValue(value?: number) {
+    validateSmall(value, this.title, this.required);
     this.value = value;
-    this.title = title !== "undefined" ? title : "unknown";
-
-    if (typeof value !== "undefined") {
-      validateSmall(this.value!, this.title!);
-    }
   }
 }
 
-export class IntColumn {
-  public value?: number;
-  public title?: string;
-
-  constructor(value?: number, title?: string) {
+export class IntColumn extends NumberColumn {
+  setValue(value?: number) {
+    validateInt(value, this.title, this.required);
     this.value = value;
-    this.title = title !== "undefined" ? title : "unknown";
+  }
+}
+
+// Below are the date types
+
+export class TimestampColumn {
+  public required: boolean;
+  public value?: Date;
+  public title: string;
+
+  constructor(title: string, required = true, value?: string | Date) {
+    this.required = required;
+    this.title = title;
 
     if (typeof value !== "undefined") {
-      validateInt(this.value!, this.title!);
+      this.setValue(value);
     }
+  }
+
+  setValue(value?: string | Date) {
+    if (value instanceof Date) {
+      this.value = value;
+      return;
+    }
+
+    validateTimestamp(value, this.title, this.required);
+
+    // We gotta translate the ISO string back into a JavaScript Date object
+    const time = Date.parse(value!);
+    const date = new Date(time);
+
+    this.value = date;
+  }
+
+  getValue() {
+    return this.value;
   }
 }
 
 // Below are the boolean types
 
 export class BooleanColumn {
+  public required: boolean;
   public value?: boolean;
-  public title?: string;
+  public title: string;
 
-  constructor(value?: boolean, title?: string) {
-    this.value = value;
-    this.title = title !== "undefined" ? title : "unknown";
+  constructor(title: string, required = true, value?: boolean | number) {
+    this.required = required;
+    this.title = title;
 
-    if (typeof value === "boolean") {
-      // Skip the validation and set the date if it's already a boolean
-      this.value = value;
-    } else if (typeof value !== "undefined") {
-      // MySQL returns a number instead of a boolean so we have to check for that
-      validateBinary(this.value!, this.title!);
-
-      this.value = value === 1;
+    if (typeof value !== "undefined") {
+      this.setValue(value);
     }
+  }
+
+  setValue(value?: boolean | number) {
+    if (typeof value === "boolean") {
+      this.value = value;
+      return;
+    }
+
+    validateBinary(value, this.title, this.required);
+
+    this.value = value === 1;
+  }
+
+  getValue() {
+    return this.value;
   }
 }

@@ -14,7 +14,7 @@ export default interface RepositoryInterface {
   //   object: BaseEntity | BareEntity,
   // ): Promise<BaseEntity | BareEntity>;
 
-  removeObject(uuid: UUIDColumn, ...args: unknown[]): Promise<void>;
+  removeObject(uuid: string, ...args: unknown[]): Promise<void>;
 
   addObject(
     object: Partial<BaseEntity | BareEntity>,

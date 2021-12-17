@@ -3,11 +3,11 @@ import { InvalidProperty, MissingProperty } from "../errors.ts";
 export function validateNumber(
   input: unknown,
   label: string,
-  optional = false,
+  required = true,
 ): boolean {
   if (typeof input === "undefined" || input === null) {
     // If the input isn't required return true and "escape" the parent function
-    if (optional) {
+    if (!required) {
       return true;
     }
 
@@ -25,9 +25,9 @@ export function validateNumber(
 export function validateTiny(
   input: unknown,
   label: string,
-  optional = false,
+  required = true,
 ): void {
-  if (validateNumber(input, label, optional)) {
+  if (validateNumber(input, label, required)) {
     return;
   }
 
@@ -39,9 +39,9 @@ export function validateTiny(
 export function validateSmall(
   input: unknown,
   label: string,
-  optional = false,
+  required = true,
 ): void {
-  if (validateNumber(input, label, optional)) {
+  if (validateNumber(input, label, required)) {
     return;
   }
 
@@ -53,9 +53,9 @@ export function validateSmall(
 export function validateInt(
   input: unknown,
   label: string,
-  optional = false,
+  required = true,
 ): void {
-  if (validateNumber(input, label, optional)) {
+  if (validateNumber(input, label, required)) {
     return;
   }
 
@@ -67,9 +67,9 @@ export function validateInt(
 export function validateBinary(
   input: unknown,
   label: string,
-  optional = false,
+  required = true,
 ): void {
-  if (validateNumber(input, label, optional)) {
+  if (validateNumber(input, label, required)) {
     return;
   }
 

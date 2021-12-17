@@ -19,11 +19,11 @@ export default class GeneralRepository implements InterfaceRepository {
   private mysqlClient: Client;
   private queryClient: Querries;
 
- constructor(
+  constructor(
     mysqlClient: Client,
     name: string,
-    Entity: {new(): BaseEntity },
-    Collection: {new(): BaseCollection},
+    Entity: { new (): BaseEntity },
+    Collection: { new (): BaseCollection },
   ) {
     this.generalName = name;
     this.generalMapper = new GeneralMapper(Entity, Collection);
@@ -52,7 +52,7 @@ export default class GeneralRepository implements InterfaceRepository {
     return this.generalMapper.mapCollection(rows, offset, limit, total);
   }
 
-  public async removeObject(uuid: UUIDColumn): Promise<void> {
+  public async removeObject(uuid: string): Promise<void> {
     const remove = this.queryClient.removeQuery();
     const data = await this.mysqlClient.execute(remove, [uuid]);
 

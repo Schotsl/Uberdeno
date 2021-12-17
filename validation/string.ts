@@ -3,11 +3,11 @@ import { InvalidProperty, MissingProperty } from "../errors.ts";
 export function validateString(
   input: unknown,
   label: string,
-  optional = false,
+  required = true,
 ): boolean {
   if (typeof input === "undefined" || input === null) {
     // If the input isn't required return true and "escape" the parent function
-    if (optional) {
+    if (!required) {
       return true;
     }
 
@@ -25,9 +25,9 @@ export function validateString(
 export function validateTimestamp(
   input: unknown,
   label: string,
-  optional = false,
+  required = true,
 ): void {
-  if (validateString(input, label, optional)) {
+  if (validateString(input, label, required)) {
     return;
   }
 
@@ -44,9 +44,9 @@ export function validateTimestamp(
 export function validateUUID(
   input: unknown,
   label: string,
-  optional = false,
+  required = true,
 ): void {
-  if (validateString(input, label, optional)) {
+  if (validateString(input, label, required)) {
     return;
   }
 
@@ -65,9 +65,9 @@ export function validateUUID(
 export function validateEmail(
   input: unknown,
   label: string,
-  optional = false,
+  required = true,
 ): void {
-  if (validateString(input, label, optional)) {
+  if (validateString(input, label, required)) {
     return;
   }
 
@@ -84,9 +84,9 @@ export function validateEmail(
 export function validateTime(
   input: unknown,
   label: string,
-  optional = false,
+  required = true,
 ): void {
-  if (validateString(input, label, optional)) {
+  if (validateString(input, label, required)) {
     return;
   }
 
@@ -103,9 +103,9 @@ export function validateTime(
 export function validateVarchar(
   input: unknown,
   label: string,
-  optional = false,
+  required = true,
 ): void {
-  if (validateString(input, label, optional)) {
+  if (validateString(input, label, required)) {
     return;
   }
 
@@ -120,9 +120,9 @@ export function validateVarchar(
 export function validateIPv64(
   input: unknown,
   label: string,
-  optional = false,
+  required = true,
 ): void {
-  if (validateString(input, label, optional)) {
+  if (validateString(input, label, required)) {
     return;
   }
 

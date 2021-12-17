@@ -3,11 +3,11 @@ import { InvalidProperty, MissingProperty } from "../errors.ts";
 export function validateBoolean(
   input: unknown,
   label: string,
-  optional = false,
+  required = true,
 ): boolean {
   if (typeof input === "undefined" || input === null) {
     // If the input isn't required return true and "escape" the parent function
-    if (optional) {
+    if (!required) {
       return true;
     }
 

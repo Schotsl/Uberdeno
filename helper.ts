@@ -68,7 +68,7 @@ export function renderREST(input: any): any {
       value instanceof BooleanColumn ||
       value instanceof VarcharColumn || value instanceof IPv64Column
     ) {
-      input[key] = value.value;
+      input[key] = value.getValue();
     }
   });
 
@@ -96,16 +96,18 @@ export function generateColumns(Entity: any): ColumnInfo[] {
       type = ColumnType.EmailColumn;
     } else if (instance[title] instanceof SmallColumn) {
       type = ColumnType.SmallColumn;
-    } else if (instance[title] instanceof NumberColumn) {
-      type = ColumnType.NumberColumn;
-    } else if (instance[title] instanceof StringColumn) {
-      type = ColumnType.StringColumn;
     } else if (instance[title] instanceof BooleanColumn) {
       type = ColumnType.BooleanColumn;
     } else if (instance[title] instanceof VarcharColumn) {
       type = ColumnType.VarcharColumn;
     } else if (instance[title] instanceof IPv64Column) {
       type = ColumnType.IPv64Column;
+
+      // Numbers and String have to be very last since most Columns are extended from either of these
+    } else if (instance[title] instanceof StringColumn) {
+      type = ColumnType.StringColumn;
+    } else if (instance[title] instanceof NumberColumn) {
+      type = ColumnType.NumberColumn;
     }
 
     return {
@@ -133,29 +135,29 @@ export function populateInstance(
     // TODO: Could probably use the value wrapper
 
     if (type === ColumnType.IntColumn) {
-      instance[title] = new IntColumn(body[title], title);
+      instance[title].setValue(body[title]);
     } else if (type === ColumnType.TinyColumn) {
-      instance[title] = new TinyColumn(body[title], title);
+      instance[title].setValue(body[title]);
     } else if (type === ColumnType.TimeColumn) {
-      instance[title] = new TimeColumn(body[title], title);
+      instance[title].setValue(body[title]);
     } else if (type === ColumnType.TimestampColumn) {
-      instance[title] = new TimestampColumn(body[title], title);
+      instance[title].setValue(body[title]);
     } else if (type === ColumnType.UUIDColumn) {
-      instance[title] = new UUIDColumn(body[title], title);
+      instance[title].setValue(body[title]);
     } else if (type === ColumnType.EmailColumn) {
-      instance[title] = new EmailColumn(body[title], title);
+      instance[title].setValue(body[title]);
     } else if (type === ColumnType.SmallColumn) {
-      instance[title] = new SmallColumn(body[title], title);
+      instance[title].setValue(body[title]);
     } else if (type === ColumnType.NumberColumn) {
-      instance[title] = new NumberColumn(body[title], title);
+      instance[title].setValue(body[title]);
     } else if (type === ColumnType.StringColumn) {
-      instance[title] = new StringColumn(body[title], title);
+      instance[title].setValue(body[title]);
     } else if (type === ColumnType.BooleanColumn) {
-      instance[title] = new BooleanColumn(body[title], title);
+      instance[title].setValue(body[title]);
     } else if (type === ColumnType.VarcharColumn) {
-      instance[title] = new VarcharColumn(body[title], title);
+      instance[title].setValue(body[title]);
     } else if (type === ColumnType.IPv64Column) {
-      instance[title] = new IPv64Column(body[title], title);
+      instance[title].setValue(body[title]);
     }
   });
 

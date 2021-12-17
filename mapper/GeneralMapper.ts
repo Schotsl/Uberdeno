@@ -1,3 +1,5 @@
+// deno-lint-ignore-file no-explicit-any
+
 import { ColumnInfo } from "../types.ts";
 import { UUIDColumn } from "../other/Columns.ts";
 import { restoreUUID } from "../helper.ts";
@@ -38,7 +40,7 @@ export default class GeneralMapper implements InterfaceMapper {
 
   public mapObject(row: Record<string, never>): BaseEntity {
     // Transform the UUID back to a valid string and construct an entity using it
-    const uuid = new UUIDColumn(restoreUUID(row.uuid), "uuid");
+    const uuid = new UUIDColumn("uuid", true, restoreUUID(row.uuid));
     const entity = new this.Entity(uuid);
 
     // Transform strings and numbers into the column wrappers
