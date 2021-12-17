@@ -8,32 +8,32 @@ within Deno deploy for almost instant deployments.
 
 ## Strings [string.ts](https://github.com/Schotsl/Uberdeno/blob/main/validation/string.ts)
 
-### `validateString(input: unknown, label: string, optional = false)`
+### `validateString(input: unknown, label: string, required = true)`
 
 **Valid input:** `"This is a test"`\
 **Invalid input:** `true`
 
-### `validateTimestamp(input: unknown, label: string, optional = false)`
+### `validateTimestamp(input: unknown, label: string, required = true)`
 
 **Valid input:** `"2021-11-29T15:46:12.367Z"`\
 **Invalid input:** `"29/11/2021"`
 
-### `validateEmail(input: unknown, label: string, optional = false)`
+### `validateEmail(input: unknown, label: string, required = true)`
 
 **Valid input:** `"email@example.com"`\
 **Invalid input:** `"email.example.com"`
 
-### `validateTime(input: unknown, label: string, optional = false)`
+### `validateTime(input: unknown, label: string, required = true)`
 
 **Valid input:** `"23:59"`\
 **Invalid input:** `"24:00"`
 
-### `validateUUID(input: unknown, label: string, optional = false)`
+### `validateUUID(input: unknown, label: string, required = true)`
 
 **Valid input:** `"272e1c01-237a-48e3-b88a-96a6fe9d3edb"`\
 **Invalid input:** `"123"`
 
-### `validateVarchar(input: unknown, label: string, optional = false)`
+### `validateVarchar(input: unknown, label: string, required = true)`
 
 **Valid input:**
 `"This string is longer than 2 characters but shorter than 256"`\
@@ -41,29 +41,29 @@ within Deno deploy for almost instant deployments.
 
 ## Numbers [number.ts](https://github.com/Schotsl/Uberdeno/blob/main/validation/number.ts)
 
-### `validateNumber(input: unknown, label: string, optional = false)`
+### `validateNumber(input: unknown, label: string, required = true)`
 
 **Valid input:** `1`\
 **Invalid input:** `"1"`
 
-### `validateTiny(input: unknown, label: string, optional = false)`
+### `validateTiny(input: unknown, label: string, required = true)`
 
 **Valid input:** `-128`, `127`\
 **Invalid input:** `-129`, `128`
 
-### `validateSmall(input: unknown, label: string, optional = false)`
+### `validateSmall(input: unknown, label: string, required = true)`
 
 **Valid input:** `-32768`, `32767`\
 **Invalid input:** `-32769`, `32768`
 
-### `validateInt(input: unknown, label: string, optional = false)`
+### `validateInt(input: unknown, label: string, required = true)`
 
 **Valid input:** `-2147483648`, `2147483647`\
 **Invalid input:** `-2147483649`, `2147483648`
 
 ## Booleans [boolean.ts](https://github.com/Schotsl/Uberdeno/blob/main/validation/boolean.ts)
 
-### `validateBoolean(input: unknown, label: string, optional = false)`
+### `validateBoolean(input: unknown, label: string, required = true)`
 
 **Valid input:** `true`\
 **Invalid input:** `"true"`
