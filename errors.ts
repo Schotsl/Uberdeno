@@ -5,7 +5,7 @@ export class UberdenoError extends Error {
 export class CustomError extends UberdenoError {
   constructor(message: string, status: number) {
     super(message);
-    
+
     this.statusError = status;
   }
 }

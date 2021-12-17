@@ -39,7 +39,7 @@ export default class GeneralMapper implements InterfaceMapper {
 
   public mapObject(row: Record<string, never>): BaseEntity {
     const entity = new this.Entity();
-    
+
     // Transform strings and numbers into the column wrappers
     populateInstance(row, this.generalColumns, entity);
 
