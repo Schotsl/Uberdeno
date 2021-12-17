@@ -1,8 +1,4 @@
-// deno-lint-ignore-file no-explicit-any
-
 import { ColumnInfo } from "../types.ts";
-import { UUIDColumn } from "../other/Columns.ts";
-import { restoreUUID } from "../helper.ts";
 import { generateColumns, populateInstance } from "../helper.ts";
 
 import BaseEntity from "../entity/BaseEntity.ts";
@@ -10,13 +6,16 @@ import BaseCollection from "../collection/BaseCollection.ts";
 import InterfaceMapper from "./InterfaceMapper.ts";
 
 export default class GeneralMapper implements InterfaceMapper {
-  private Entity: any;
-  private Collection: any;
+  private Entity: { new (): BaseEntity };
+  private Collection: { new (): BaseCollection };
 
   private generalLabel: string;
   private generalColumns: ColumnInfo[] = [];
 
-  constructor(Entity: any, Collection: any) {
+  constructor(
+    Entity: { new (): BaseEntity },
+    Collection: { new (): BaseCollection },
+  ) {
     this.Entity = Entity;
     this.Collection = Collection;
 
@@ -40,9 +39,9 @@ export default class GeneralMapper implements InterfaceMapper {
 
   public mapObject(row: Record<string, never>): BaseEntity {
     // Transform the UUID back to a valid string and construct an entity using it
-    const uuid = new UUIDColumn("uuid", true, restoreUUID(row.uuid));
-    const entity = new this.Entity(uuid);
-
+    // const uuid = new UUIDColumn("uuid", true, restoreUUID(row.uuid));
+    const entity = new this.Entity();
+    // console.log(entity);
     // Transform strings and numbers into the column wrappers
     populateInstance(row, this.generalColumns, entity);
 

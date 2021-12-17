@@ -1,5 +1,3 @@
-// deno-lint-ignore-file no-explicit-any
-
 import { Client } from "https://deno.land/x/mysql@v2.10.1/mod.ts";
 import { ColumnInfo } from "../types.ts";
 import {
@@ -8,17 +6,24 @@ import {
   State,
 } from "https://deno.land/x/oak@v10.0.0/mod.ts";
 import { generateColumns, populateInstance, renderREST } from "../helper.ts";
+
+import BaseEntity from "../entity/BaseEntity.ts";
+import BaseCollection from "../collection/BaseCollection.ts";
+import GeneralRepository from "../repository/GeneralRepository.ts";
 import InterfaceController from "./InterfaceController.ts";
 
-import GeneralRepository from "../repository/GeneralRepository.ts";
-
 export default class GeneralController implements InterfaceController {
-  private Entity: any;
+  private Entity: { new (): BaseEntity };
 
   private generalColumns: ColumnInfo[] = [];
   private generalRepository: GeneralRepository;
 
-  constructor(mysqlClient: Client, name: string, Entity: any, Collection: any) {
+  constructor(
+    mysqlClient: Client,
+    name: string,
+    Entity: { new (): BaseEntity },
+    Collection: { new (): BaseCollection },
+  ) {
     this.Entity = Entity;
 
     this.generalColumns = generateColumns(Entity);
@@ -63,6 +68,8 @@ export default class GeneralController implements InterfaceController {
     const body = await request.body();
     const value = await body.value;
     const object = new this.Entity();
+
+    delete value.uuid;
 
     populateInstance(value, this.generalColumns, object);
 
