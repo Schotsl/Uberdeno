@@ -1,5 +1,5 @@
 import { SmtpClient } from "https://raw.githubusercontent.com/Schotsl/deno-smtp/master/smtp.ts";
-import { initializeEnv } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/helper.ts";
+import { initializeEnv } from "../helper.ts";
 
 initializeEnv([
   "IMAP_PORT",
