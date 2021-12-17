@@ -124,8 +124,6 @@ export function populateInstance(
   columns: ColumnInfo[],
   instance: BaseEntity,
 ) {
-  // console.log(instance);
-
   columns.forEach((column: ColumnInfo) => {
     const type = column.type;
     const title = column.title as keyof BaseEntity;

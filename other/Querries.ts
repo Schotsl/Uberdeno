@@ -14,6 +14,10 @@ export default class Querries {
     columns.forEach((column) => {
       const { title, type } = column;
 
+      if (type === ColumnType.UnknownColumn) {
+        return;
+      }
+
       switch (type) {
         case ColumnType.UUIDColumn:
           values.push(`UNHEX(REPLACE(?, '-', ''))`);

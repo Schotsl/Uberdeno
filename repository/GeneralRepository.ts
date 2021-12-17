@@ -2,6 +2,7 @@ import { Client } from "https://deno.land/x/mysql@v2.10.1/mod.ts";
 import { ColumnInfo } from "../types.ts";
 import { UUIDColumn } from "../other/Columns.ts";
 import { generateColumns } from "../helper.ts";
+import { ColumnType } from "../types.ts";
 import { DuplicateResource, MissingResource } from "../errors.ts";
 
 import BaseEntity from "../entity/BaseEntity.ts";
@@ -63,14 +64,17 @@ export default class GeneralRepository implements InterfaceRepository {
 
   public async addObject(object: BaseEntity): Promise<BaseEntity> {
     const insert = this.queryClient.insertQuery();
-    const values = this.generalColumns.map((column) => {
+    const values = this.generalColumns.filter((column) => {
+      const type = column.type;
+      return type !== ColumnType.UnknownColumn;
+    }).map((column) => {
       const title = column.title as keyof BaseEntity;
-      return object[title].value;
+      return object[title].getValue();
     });
 
     await this.mysqlClient.execute(insert, values).catch((error: Error) => {
       // Throw a duplicate error to the user if a unique key is already used
-      const regexp = new RegExp(/^for\skey\s'(.*)'$/);
+      const regexp = new RegExp(/for\skey\s'(.*)'$/);
       const message = error.message;
 
       if (regexp.test(message)) throw new DuplicateResource("user");
