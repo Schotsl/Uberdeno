@@ -38,10 +38,8 @@ export default class GeneralMapper implements InterfaceMapper {
   }
 
   public mapObject(row: Record<string, never>): BaseEntity {
-    // Transform the UUID back to a valid string and construct an entity using it
-    // const uuid = new UUIDColumn("uuid", true, restoreUUID(row.uuid));
     const entity = new this.Entity();
-    // console.log(entity);
+    
     // Transform strings and numbers into the column wrappers
     populateInstance(row, this.generalColumns, entity);
 
