@@ -1,5 +1,3 @@
-// deno-lint-ignore-file no-explicit-any
-
 import { Client } from "https://deno.land/x/mysql@v2.10.1/mod.ts";
 import { ColumnInfo } from "../types.ts";
 import { UUIDColumn } from "../other/Columns.ts";
@@ -21,11 +19,11 @@ export default class GeneralRepository implements InterfaceRepository {
   private mysqlClient: Client;
   private queryClient: Querries;
 
-  constructor(
+ constructor(
     mysqlClient: Client,
     name: string,
-    Entity: any,
-    Collection: any,
+    Entity: {new(): BaseEntity },
+    Collection: {new(): BaseCollection},
   ) {
     this.generalName = name;
     this.generalMapper = new GeneralMapper(Entity, Collection);
