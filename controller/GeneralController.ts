@@ -68,7 +68,6 @@ export default class GeneralController implements InterfaceController {
     const body = await request.body();
     const value = await body.value;
     const object = new this.Entity();
-
     delete value.uuid;
 
     populateInstance(value, this.generalColumns, object);
