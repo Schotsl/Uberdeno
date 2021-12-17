@@ -2,6 +2,14 @@ export class UberdenoError extends Error {
   public statusError = 500;
 }
 
+export class CustomError extends UberdenoError {
+  constructor(message: string, status: number) {
+    super(message);
+    
+    this.statusError = status;
+  }
+}
+
 export class MissingResource extends UberdenoError {
   public statusError = 404;
 
