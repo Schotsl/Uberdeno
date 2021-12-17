@@ -1,5 +1,3 @@
-// deno-lint-ignore-file no-explicit-any
-
 import { ColumnInfo } from "../types.ts";
 import { UUIDColumn } from "../other/Columns.ts";
 import { restoreUUID } from "../helper.ts";
