@@ -1,5 +1,5 @@
 import { ColumnInfo } from "../types.ts";
-import { generateColumns, populateInstance, findColumn } from "../helper.ts";
+import { findColumn, generateColumns, populateInstance } from "../helper.ts";
 
 import BaseEntity from "../entity/BaseEntity.ts";
 import BaseCollection from "../collection/BaseCollection.ts";

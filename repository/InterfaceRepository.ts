@@ -1,7 +1,6 @@
 import BaseEntity from "../entity/BaseEntity.ts";
 import BareEntity from "../entity/BareEntity.ts";
 import BaseCollection from "../collection/BaseCollection.ts";
-import { UUIDColumn } from "../other/Columns.ts";
 
 export default interface RepositoryInterface {
   getCollection(

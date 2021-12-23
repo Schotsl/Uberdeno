@@ -1,6 +1,5 @@
 import { Client } from "https://deno.land/x/mysql@v2.10.1/mod.ts";
 import { ColumnInfo } from "../types.ts";
-import { UUIDColumn } from "../other/Columns.ts";
 import { generateColumns } from "../helper.ts";
 import { ColumnType } from "../types.ts";
 import { DuplicateResource, MissingResource } from "../errors.ts";
