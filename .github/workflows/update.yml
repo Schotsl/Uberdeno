@@ -29,7 +29,7 @@ jobs:
           commit-message: "⬆️ Update dependencies"
           title: Update dependencies
           body: Dependencies updated by [udd](https://github.com/hayd/deno-udd).
-          branch: deno-dependency-updates
+          branch: updates
           author: GitHub <noreply@github.com>
           delete-branch: true
     
