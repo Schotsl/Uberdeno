@@ -82,13 +82,13 @@ export default class GeneralRepository implements InterfaceRepository {
       throw error;
     });
 
-    const result = await this.getObject(object.uuid);
+    const result = await this.getObject(object.uuid.getValue()!);
     return result!;
   }
 
-  public async getObject(uuid: UUIDColumn): Promise<BaseEntity> {
+  public async getObject(uuid: string): Promise<BaseEntity> {
     const get = this.queryClient.getQuery();
-    const data = await this.mysqlClient.execute(get, [uuid.value]);
+    const data = await this.mysqlClient.execute(get, [uuid]);
 
     if (typeof data.rows === "undefined" || data.rows.length === 0) {
       throw new MissingResource(this.generalName);

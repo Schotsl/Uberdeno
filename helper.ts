@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
 
-import { config } from "https://deno.land/x/dotenv@v3.0.0/mod.ts";
+import { config } from "https://deno.land/x/dotenv@v3.1.0/mod.ts";
 import { ColumnInfo, ColumnType } from "./types.ts";
 import {
   BooleanColumn,
@@ -18,6 +18,7 @@ import {
 } from "./other/Columns.ts";
 
 import BaseEntity from "./entity/BaseEntity.ts";
+import BaseCollection from "./collection/BaseCollection.ts";
 
 export function initializeEnv(variables: string[]) {
   // Don't read the .env file if we're running on Deno Deploy
@@ -31,6 +32,23 @@ export function initializeEnv(variables: string[]) {
       throw Error(`${variable} .env variable must be set.`);
     }
   });
+}
+
+export function findColumn(Collection: { new (): BaseCollection }): string {
+  // Find the property that isn't "total", "limit" or "offset"
+  const invalid = ["total", "limit", "offset"];
+  const instance = new Collection();
+  const columns = Object.keys(instance);
+
+  let label = ``;
+  let index = 0;
+
+  while (!label.length) {
+    label = invalid.includes(columns[index]) ? `` : columns[index];
+    index += 1;
+  }
+
+  return label;
 }
 
 export function restoreUUID(hex: string): string {

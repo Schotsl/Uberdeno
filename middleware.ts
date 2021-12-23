@@ -1,9 +1,10 @@
-import { red } from "https://deno.land/std@0.110.0/fmt/colors.ts";
+import { red } from "https://deno.land/std@0.119.0/fmt/colors.ts";
 import {
   Request,
   Response,
   State,
-} from "https://deno.land/x/oak@v10.0.0/mod.ts";
+} from "https://deno.land/x/oak@v10.1.0/mod.ts";
+
 import {
   InvalidBody,
   InvalidHeader,

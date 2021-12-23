@@ -1,5 +1,5 @@
 import { ColumnInfo } from "../types.ts";
-import { generateColumns, populateInstance } from "../helper.ts";
+import { generateColumns, populateInstance, findColumn } from "../helper.ts";
 
 import BaseEntity from "../entity/BaseEntity.ts";
 import BaseCollection from "../collection/BaseCollection.ts";
@@ -19,21 +19,7 @@ export default class GeneralMapper implements InterfaceMapper {
     this.Entity = Entity;
     this.Collection = Collection;
 
-    // Find the property that isn't "total", "limit" or "offset"
-    const invalid = ["total", "limit", "offset"];
-    const instance = new this.Collection();
-    const columns = Object.keys(instance);
-
-    let label = ``;
-    let index = 0;
-
-    while (!label.length) {
-      label = invalid.includes(columns[index]) ? `` : columns[index];
-      index += 1;
-    }
-
-    // Store the label for creating collections in the future
-    this.generalLabel = label;
+    this.generalLabel = findColumn(Collection);
     this.generalColumns = generateColumns(Entity);
   }
 

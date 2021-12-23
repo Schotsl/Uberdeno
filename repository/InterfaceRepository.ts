@@ -20,7 +20,7 @@ export default interface RepositoryInterface {
     object: Partial<BaseEntity | BareEntity>,
   ): Promise<BaseEntity | BareEntity>;
   getObject(
-    uuid: UUIDColumn,
+    uuid: string,
     ...args: unknown[]
   ): Promise<BaseEntity | BareEntity>;
 }
