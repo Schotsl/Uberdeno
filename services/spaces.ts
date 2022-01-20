@@ -24,7 +24,6 @@ class SpacesClient {
     const config = { contentEncoding: "base64" };
     
     await this.bucket.putObject(name, buffer, config);
-
     return buffer.byteLength;
   }
 
