@@ -21,24 +21,32 @@ class SpacesClient {
   }
 
   async signedGET(file: string) {
-    const headers = { 'Content-Type': 'application/json' };
+    const headers = { "Content-Type": "application/json" };
     const method = "POST";
     const body = JSON.stringify({ file });
-    
-    const response = await fetch('http://localhost:69/v1/signed/get', { headers, method, body });
+
+    const response = await fetch("http://localhost:69/v1/signed/get", {
+      headers,
+      method,
+      body,
+    });
     const parsed = await response.text();
-  
+
     return parsed;
   }
-  
+
   async signedPUT(file: string, type: string, size: number) {
-    const headers = { 'Content-Type': 'application/json' };
+    const headers = { "Content-Type": "application/json" };
     const method = "POST";
     const body = JSON.stringify({ file, type, size });
-    
-    const response = await fetch('http://localhost:69/v1/signed/put', { headers, method, body });
+
+    const response = await fetch("http://localhost:69/v1/signed/put", {
+      headers,
+      method,
+      body,
+    });
     const parsed = await response.text();
-  
+
     return parsed;
   }
 }
