@@ -18,6 +18,10 @@ export default class Querries {
         return;
       }
 
+      if (title === `updated` || title === `created`) {
+        return;
+      }
+
       switch (type) {
         case ColumnType.UUIDColumn:
           values.push(`UNHEX(REPLACE(?, '-', ''))`);
