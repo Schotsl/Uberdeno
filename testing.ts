@@ -1,4 +1,4 @@
-import { Client } from "https://deno.land/x/mysql@v2.10.1/mod.ts";
+import { Client } from "https://deno.land/x/mysql@v2.10.2/mod.ts";
 
 export async function testMysql(mysqlClient: Client) {
   const port = mysqlClient.config.port!;
