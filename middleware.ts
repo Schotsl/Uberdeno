@@ -56,19 +56,29 @@ export async function errorHandler(
         console.log(error.message);
         console.log(error.stack);
 
-        const headers = { "Content-Type": "application/json" };
-        const method = "POST";
-        const body = JSON.stringify({
-          error: error.message,
-          stack: error.stack,
-          fixed: false,
-        });
-
         if (
-          Deno.env.get("DENO_DEPLOYMENT_ID") !== undefined &&
-          Deno.env.get("DENO_DEPLOYMENT_ID") !== "oversight"
+          Deno.env.get("OVERSIGHT_UUID") === undefined &&
+          Deno.env.get("DENO_DEPLOYMENT_ID") === undefined
         ) {
-          fetch(`https://api.bot-ross.com/v1/log`, { headers, method, body })
+          console.log(`Application is missing a Oversight UUID`);
+        } else if (
+          Deno.env.get("DENO_DEPLOYMENT_ID") !== undefined &&
+          Deno.env.get("OVERSIGHT_UUID") !== undefined
+        ) {
+          const headers = { "Content-Type": "application/json" };
+          const method = "POST";
+          const body = JSON.stringify({
+            project: Deno.env.get("OVERSIGHT_UUID"),
+            message: error.message,
+            stack: error.stack,
+            fixed: false,
+          });
+  
+          fetch(`https://oversight.deno.dev/v1/error`, {
+            headers,
+            method,
+            body,
+          })
             .catch(() => console.log(red(`Couldn't report log to Bot-Ross`)));
         }
 
