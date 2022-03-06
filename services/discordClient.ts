@@ -1,5 +1,12 @@
 import { initializeEnv } from "../helper.ts";
-import { createBot, startBot, sendMessage, Bot, CreateBotOptions, CreateMessage } from "https://deno.land/x/discordeno@13.0.0-rc18/mod.ts";
+import {
+  Bot,
+  createBot,
+  CreateBotOptions,
+  CreateMessage,
+  sendMessage,
+  startBot,
+} from "https://deno.land/x/discordeno@13.0.0-rc18/mod.ts";
 
 initializeEnv([
   "DISCORD_ID",
