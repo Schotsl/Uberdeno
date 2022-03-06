@@ -1,7 +1,7 @@
 import { ColumnInfo } from "../types.ts";
 import { generateColumns } from "../helper.ts";
 import { ColumnType } from "../types.ts";
-import { DuplicateResource, MissingResource } from "../errors.ts";
+import { InvalidProperty, MissingResource, DuplicateResource } from "../errors.ts";
 
 import BaseEntity from "../entity/BaseEntity.ts";
 import BaseCollection from "../collection/BaseCollection.ts";
@@ -78,12 +78,24 @@ export default class GeneralRepository implements InterfaceRepository {
     });
 
     await mysqlClient.execute(insert, values).catch((error: Error) => {
-      // Throw a duplicate error to the user if a unique key is already used
-      const regexp = new RegExp(/for\skey\s'(.*)'$/);
       const message = error.message;
 
-      if (regexp.test(message)) throw new DuplicateResource("user");
+      const duplicate = new RegExp(/for\skey\s'(.*)'$/);
+      const refrence = new RegExp(/(?<=FOREIGN KEY \(`)(.*)(?=`\) REFERENCES)/g);
 
+      // Throw an error if the resource already exists
+      if (duplicate.test(message)) {
+        throw new DuplicateResource(this.generalName);
+      }
+
+      // Make sure we catch invalid UUID refrences
+      if (refrence.test(message)) {
+        const matches = message.match(refrence)!;
+        const property = matches[0];
+
+        throw new InvalidProperty(property, property);
+      }
+      
       throw error;
     });
 
