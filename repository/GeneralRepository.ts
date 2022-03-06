@@ -1,4 +1,3 @@
-import { Client } from "https://deno.land/x/mysql@v2.10.2/mod.ts";
 import { ColumnInfo } from "../types.ts";
 import { generateColumns } from "../helper.ts";
 import { ColumnType } from "../types.ts";
@@ -8,6 +7,7 @@ import BaseEntity from "../entity/BaseEntity.ts";
 import BaseCollection from "../collection/BaseCollection.ts";
 
 import Querries from "../other/Querries.ts";
+import mysqlClient from "../services/mysqlClient.ts";
 import GeneralMapper from "../mapper/GeneralMapper.ts";
 import InterfaceRepository from "./InterfaceRepository.ts";
 
@@ -16,11 +16,9 @@ export default class GeneralRepository implements InterfaceRepository {
   private generalMapper: GeneralMapper;
   private generalColumns: ColumnInfo[] = [];
 
-  private mysqlClient: Client;
   private queryClient: Querries;
 
   constructor(
-    mysqlClient: Client,
     name: string,
     Entity: { new (): BaseEntity },
     Collection: { new (): BaseCollection },
@@ -29,7 +27,6 @@ export default class GeneralRepository implements InterfaceRepository {
     this.generalMapper = new GeneralMapper(Entity, Collection);
     this.generalColumns = generateColumns(Entity);
 
-    this.mysqlClient = mysqlClient;
     this.queryClient = new Querries(this.generalColumns, this.generalName);
   }
 
@@ -41,8 +38,8 @@ export default class GeneralRepository implements InterfaceRepository {
     const count = this.queryClient.countQuery();
 
     const promises = [
-      this.mysqlClient.execute(fetch, [limit, offset]),
-      this.mysqlClient.execute(count),
+      mysqlClient.execute(fetch, [limit, offset]),
+      mysqlClient.execute(count),
     ];
 
     const data = await Promise.all(promises);
@@ -54,7 +51,7 @@ export default class GeneralRepository implements InterfaceRepository {
 
   public async removeObject(uuid: string): Promise<void> {
     const remove = this.queryClient.removeQuery();
-    const data = await this.mysqlClient.execute(remove, [uuid]);
+    const data = await mysqlClient.execute(remove, [uuid]);
 
     if (data.affectedRows === 0) {
       throw new MissingResource(this.generalName);
@@ -80,7 +77,7 @@ export default class GeneralRepository implements InterfaceRepository {
       return object[title].getValue();
     });
 
-    await this.mysqlClient.execute(insert, values).catch((error: Error) => {
+    await mysqlClient.execute(insert, values).catch((error: Error) => {
       // Throw a duplicate error to the user if a unique key is already used
       const regexp = new RegExp(/for\skey\s'(.*)'$/);
       const message = error.message;
@@ -96,7 +93,7 @@ export default class GeneralRepository implements InterfaceRepository {
 
   public async getObject(uuid: string): Promise<BaseEntity> {
     const get = this.queryClient.getQuery();
-    const data = await this.mysqlClient.execute(get, [uuid]);
+    const data = await mysqlClient.execute(get, [uuid]);
 
     if (typeof data.rows === "undefined" || data.rows.length === 0) {
       throw new MissingResource(this.generalName);
