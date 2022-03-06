@@ -24,7 +24,7 @@ class HelperClient {
     const method = "POST";
     const headers = { "Content-Type": "application/json" };
 
-    fetch(url, { method, headers }).then((response) => console.log(response));
+    fetch(url, { method, headers });
   }
 }
 
