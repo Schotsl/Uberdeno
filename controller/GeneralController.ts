@@ -1,4 +1,3 @@
-import { Client } from "https://deno.land/x/mysql@v2.10.2/mod.ts";
 import { ColumnInfo } from "../types.ts";
 import {
   Request,
@@ -9,26 +8,28 @@ import { generateColumns, populateInstance, renderREST } from "../helper.ts";
 
 import BaseEntity from "../entity/BaseEntity.ts";
 import BaseCollection from "../collection/BaseCollection.ts";
+import InterfaceFilter from "../filter/InterfaceFilter.ts";
 import GeneralRepository from "../repository/GeneralRepository.ts";
 import InterfaceController from "./InterfaceController.ts";
 
 export default class GeneralController implements InterfaceController {
   private Entity: { new (): BaseEntity };
+  private filter?: InterfaceFilter;
 
   private generalColumns: ColumnInfo[] = [];
   private generalRepository: GeneralRepository;
 
   constructor(
-    mysqlClient: Client,
     name: string,
     Entity: { new (): BaseEntity },
     Collection: { new (): BaseCollection },
+    filter?: InterfaceFilter,
   ) {
     this.Entity = Entity;
+    this.filter = filter;
 
     this.generalColumns = generateColumns(Entity);
     this.generalRepository = new GeneralRepository(
-      mysqlClient,
       name,
       Entity,
       Collection,
@@ -67,13 +68,23 @@ export default class GeneralController implements InterfaceController {
   ) {
     const body = await request.body();
     const value = await body.value;
-    const object = new this.Entity();
+
     delete value.uuid;
+
+    let object = new this.Entity();
 
     populateInstance(value, this.generalColumns, object);
 
+    if (this.filter?.beforeProcessing) {
+      object = this.filter.beforeProcessing(object);
+    }
+
     const result = await this.generalRepository.addObject(object);
     const parsed = renderREST(result);
+
+    if (this.filter?.beforeResponse) {
+      object = this.filter.beforeResponse(object);
+    }
 
     response.body = parsed;
   }
