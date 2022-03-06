@@ -1,8 +1,12 @@
-import { ColumnInfo,  } from "../types.ts";
+import { ColumnInfo } from "../types.ts";
 import { generateColumns } from "../helper.ts";
 import { UUIDColumn } from "../other/Columns.ts";
 import { ColumnType } from "../types.ts";
-import { InvalidProperty, MissingResource, DuplicateResource } from "../errors.ts";
+import {
+  DuplicateResource,
+  InvalidProperty,
+  MissingResource,
+} from "../errors.ts";
 
 import BaseEntity from "../entity/BaseEntity.ts";
 import BaseCollection from "../collection/BaseCollection.ts";
@@ -82,7 +86,9 @@ export default class GeneralRepository implements InterfaceRepository {
       const message = error.message;
 
       const duplicate = new RegExp(/for\skey\s'(.*)'$/);
-      const refrence = new RegExp(/(?<=FOREIGN KEY \(`)(.*)(?=`\) REFERENCES)/g);
+      const refrence = new RegExp(
+        /(?<=FOREIGN KEY \(`)(.*)(?=`\) REFERENCES)/g,
+      );
 
       // Throw an error if the resource already exists
       if (duplicate.test(message)) {
@@ -96,7 +102,7 @@ export default class GeneralRepository implements InterfaceRepository {
 
         throw new InvalidProperty(property, property);
       }
-      
+
       throw error;
     });
 

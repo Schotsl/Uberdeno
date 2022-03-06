@@ -20,7 +20,8 @@ class HelperClient {
   }
 
   async alert() {
-    const url = `http://helper.bot-ross.dev/v1/hue/alert?key=${this.helperKey}&ip=${this.helperIp}`;
+    const url =
+      `http://helper.bot-ross.dev/v1/hue/alert?key=${this.helperKey}&ip=${this.helperIp}`;
     const method = "POST";
     const headers = { "Content-Type": "application/json" };
 
