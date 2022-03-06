@@ -1,5 +1,6 @@
-import { ColumnInfo } from "../types.ts";
+import { ColumnInfo,  } from "../types.ts";
 import { generateColumns } from "../helper.ts";
+import { UUIDColumn } from "../other/Columns.ts";
 import { ColumnType } from "../types.ts";
 import { InvalidProperty, MissingResource, DuplicateResource } from "../errors.ts";
 
@@ -99,13 +100,13 @@ export default class GeneralRepository implements InterfaceRepository {
       throw error;
     });
 
-    const result = await this.getObject(object.uuid.getValue()!);
+    const result = await this.getObject(object.uuid);
     return result!;
   }
 
-  public async getObject(uuid: string): Promise<BaseEntity> {
+  public async getObject(uuid: UUIDColumn): Promise<BaseEntity> {
     const get = this.queryClient.getQuery();
-    const data = await mysqlClient.execute(get, [uuid]);
+    const data = await mysqlClient.execute(get, [uuid.getValue()]);
 
     if (typeof data.rows === "undefined" || data.rows.length === 0) {
       throw new MissingResource(this.generalName);

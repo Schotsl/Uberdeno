@@ -76,14 +76,14 @@ export default class GeneralController implements InterfaceController {
     populateInstance(value, this.generalColumns, object);
 
     if (this.filter?.beforeProcessing) {
-      object = this.filter.beforeProcessing(object);
+      object = await this.filter.beforeProcessing(object);
     }
 
     const result = await this.generalRepository.addObject(object);
     const parsed = renderREST(result);
 
     if (this.filter?.beforeResponse) {
-      object = this.filter.beforeResponse(object);
+      object = await this.filter.beforeResponse(object);
     }
 
     response.body = parsed;

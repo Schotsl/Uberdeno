@@ -1,3 +1,4 @@
+import { UUIDColumn } from "../other/Columns.ts";
 import BaseEntity from "../entity/BaseEntity.ts";
 import BaseCollection from "../collection/BaseCollection.ts";
 
@@ -18,7 +19,7 @@ export default interface RepositoryInterface {
     object: Partial<BaseEntity>,
   ): Promise<BaseEntity>;
   getObject(
-    uuid: string,
+    uuid: UUIDColumn,
     ...args: unknown[]
   ): Promise<BaseEntity>;
 }
