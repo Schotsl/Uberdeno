@@ -64,7 +64,10 @@ export async function errorHandler(
           fixed: false,
         });
 
-        if (Deno.env.get("DENO_DEPLOYMENT_ID") !== undefined && Deno.env.get("DENO_DEPLOYMENT_ID") !== "oversight") {
+        if (
+          Deno.env.get("DENO_DEPLOYMENT_ID") !== undefined &&
+          Deno.env.get("DENO_DEPLOYMENT_ID") !== "oversight"
+        ) {
           fetch(`https://api.bot-ross.com/v1/log`, { headers, method, body })
             .catch(() => console.log(red(`Couldn't report log to Bot-Ross`)));
         }
