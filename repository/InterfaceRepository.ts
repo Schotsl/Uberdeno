@@ -1,5 +1,4 @@
 import BaseEntity from "../entity/BaseEntity.ts";
-import BareEntity from "../entity/BareEntity.ts";
 import BaseCollection from "../collection/BaseCollection.ts";
 
 export default interface RepositoryInterface {
@@ -10,16 +9,16 @@ export default interface RepositoryInterface {
   ): Promise<BaseCollection>;
 
   // updateObject(
-  //   object: BaseEntity | BareEntity,
-  // ): Promise<BaseEntity | BareEntity>;
+  //   object: BaseEntity,
+  // ): Promise<BaseEntity>;
 
   removeObject(uuid: string, ...args: unknown[]): Promise<void>;
 
   addObject(
-    object: Partial<BaseEntity | BareEntity>,
-  ): Promise<BaseEntity | BareEntity>;
+    object: Partial<BaseEntity>,
+  ): Promise<BaseEntity>;
   getObject(
     uuid: string,
     ...args: unknown[]
-  ): Promise<BaseEntity | BareEntity>;
+  ): Promise<BaseEntity>;
 }
