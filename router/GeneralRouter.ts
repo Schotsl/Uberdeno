@@ -3,7 +3,7 @@ import { Router } from "https://deno.land/x/oak@v10.1.0/mod.ts";
 import BaseEntity from "../entity/BaseEntity.ts";
 import BaseCollection from "../collection/BaseCollection.ts";
 import InterfaceFilter from "../filter/InterfaceFilter.ts";
-import GeneralController from "../../Uberdeno/controller/GeneralController.ts";
+import GeneralController from "../controller/GeneralController.ts";
 
 export default class GeneralRouter {
   public router: Router;
