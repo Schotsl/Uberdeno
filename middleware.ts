@@ -73,7 +73,7 @@ export async function errorHandler(
             stack: error.stack,
             fixed: false,
           });
-  
+
           fetch(`https://oversight.deno.dev/v1/error`, {
             headers,
             method,

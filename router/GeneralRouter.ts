@@ -1,28 +1,18 @@
 import { Router } from "https://deno.land/x/oak@v10.1.0/mod.ts";
 
-import BaseEntity from "../entity/BaseEntity.ts";
-import BaseCollection from "../collection/BaseCollection.ts";
-import InterfaceFilter from "../filter/InterfaceFilter.ts";
-import GeneralController from "../controller/GeneralController.ts";
+// import BaseEntity from "../entity/BaseEntity.ts";
+// import BaseCollection from "../collection/BaseCollection.ts";
+// import InterfaceFilter from "../filter/InterfaceFilter.ts";
+import InterfaceController from "../controller/InterfaceController.ts";
 
 export default class GeneralRouter {
   public router: Router;
 
   constructor(
-    version: string,
+    controller: InterfaceController,
     path: string,
-    table: string,
-    entity: { new (): BaseEntity },
-    collection: { new (): BaseCollection },
-    filter?: InterfaceFilter,
+    version = "v1",
   ) {
-    const controller = new GeneralController(
-      table,
-      entity,
-      collection,
-      filter,
-    );
-
     this.router = new Router({ prefix: `/${version}/${path}` });
 
     const get = controller.getCollection.bind(controller);

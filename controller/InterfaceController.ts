@@ -16,7 +16,7 @@ export default interface InterfaceController {
   removeObject(
     { response, params }: {
       response: Response;
-      params: { uuid: string }
+      params: { uuid: string };
     },
   ): void;
 
