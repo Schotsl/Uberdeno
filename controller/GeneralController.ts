@@ -51,10 +51,9 @@ export default class GeneralController implements InterfaceController {
   }
 
   async removeObject(
-    { params, response }: {
-      request: Request;
-      params: { uuid: string };
+    { response, params }: {
       response: Response;
+      params: { uuid: string };
     },
   ) {
     const uuid = params.uuid;

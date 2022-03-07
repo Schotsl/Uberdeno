@@ -6,15 +6,18 @@ import {
 
 export default interface InterfaceController {
   getCollection(
-    { request, response }: {
-      request?: Request;
-      response?: Response;
-      state?: State;
+    { request, response, state }: {
+      request: Request;
+      response: Response;
+      state: State;
     },
   ): void;
 
   removeObject(
-    { params, response }: { params: { uuid: string }; response: Response },
+    { response, params }: {
+      response: Response;
+      params: { uuid: string }
+    },
   ): void;
 
   // updateObject(
