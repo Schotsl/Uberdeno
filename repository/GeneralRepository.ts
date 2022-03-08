@@ -55,7 +55,7 @@ export default class GeneralRepository implements InterfaceRepository {
   }
 
   public async removeObject(uuid: UUIDColumn | string): Promise<void> {
-    const parsed = typeof uuid === "string" ? uuid : uuid.getValue()!
+    const parsed = typeof uuid === "string" ? uuid : uuid.getValue()!;
     const query = this.queryClient.removeQuery();
     const data = await mysqlClient.execute(query, [parsed]);
 
@@ -114,7 +114,7 @@ export default class GeneralRepository implements InterfaceRepository {
   // TODO: Add uid: UUIDColumn | string to remove function
 
   public async getObject(uuid: UUIDColumn | string): Promise<BaseEntity> {
-    const parsed = typeof uuid === "string" ? uuid : uuid.getValue()!
+    const parsed = typeof uuid === "string" ? uuid : uuid.getValue()!;
     const query = this.queryClient.getQuery();
     const data = await mysqlClient.execute(query, [parsed]);
 

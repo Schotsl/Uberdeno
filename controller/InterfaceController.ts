@@ -32,9 +32,9 @@ export default interface InterfaceController {
   // ): void;
 
   addObject(
-    { request, response }:{
+    { request, response }: {
       request: Request;
-      response: Response
+      response: Response;
     },
   ): void;
 }
