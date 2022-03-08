@@ -13,6 +13,13 @@ export default interface InterfaceController {
     },
   ): void;
 
+  getObject(
+    { response, params }: {
+      response: Response;
+      params: { uuid: string };
+    },
+  ): void;
+
   removeObject(
     { response, params }: {
       response: Response;
@@ -25,6 +32,9 @@ export default interface InterfaceController {
   // ): void;
 
   addObject(
-    { request, response }: { request: Request; response: Response },
+    { request, response }:{
+      request: Request;
+      response: Response
+    },
   ): void;
 }

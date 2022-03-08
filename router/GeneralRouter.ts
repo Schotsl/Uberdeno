@@ -15,11 +15,13 @@ export default class GeneralRouter {
   ) {
     this.router = new Router({ prefix: `/${version}/${path}` });
 
-    const get = controller.getCollection.bind(controller);
-    const post = controller.addObject.bind(controller);
+    const collection = controller.getCollection.bind(controller);
+    const object = controller.getObject.bind(controller);
     const remove = controller.removeObject.bind(controller);
-
-    this.router.get("/", get);
+    const post = controller.addObject.bind(controller);
+    
+    this.router.get("/", collection);
+    this.router.get("/:uuid", object);
     this.router.post("/", post);
     this.router.delete("/:uuid", remove);
   }

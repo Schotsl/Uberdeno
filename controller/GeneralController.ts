@@ -50,6 +50,20 @@ export default class GeneralController implements InterfaceController {
     response.body = parsed;
   }
 
+  async getObject(
+    { response, params }: {
+      response: Response;
+      params: { uuid: string };
+    },
+  ) {
+    const uuid = params.uuid;
+
+    const result = await this.generalRepository.getObject(uuid);
+    const parsed = renderREST(result);
+
+    response.body = parsed;
+  }
+
   async removeObject(
     { response, params }: {
       response: Response;
