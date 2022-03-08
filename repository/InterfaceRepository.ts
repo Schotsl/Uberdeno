@@ -13,13 +13,17 @@ export default interface RepositoryInterface {
   //   object: BaseEntity,
   // ): Promise<BaseEntity>;
 
-  removeObject(uuid: string, ...args: unknown[]): Promise<void>;
+  removeObject(
+    uuid: UUIDColumn | string,
+    ...args: unknown[]
+  ): Promise<void>;
 
   addObject(
     object: Partial<BaseEntity>,
   ): Promise<BaseEntity>;
+
   getObject(
-    uuid: UUIDColumn,
+    uuid: UUIDColumn | string,
     ...args: unknown[]
   ): Promise<BaseEntity>;
 }

@@ -54,9 +54,10 @@ export default class GeneralRepository implements InterfaceRepository {
     return this.generalMapper.mapCollection(rows, offset, limit, total);
   }
 
-  public async removeObject(uuid: string): Promise<void> {
-    const remove = this.queryClient.removeQuery();
-    const data = await mysqlClient.execute(remove, [uuid]);
+  public async removeObject(uuid: UUIDColumn | string): Promise<void> {
+    const parsed = typeof uuid === "string" ? uuid : uuid.getValue()!
+    const query = this.queryClient.removeQuery();
+    const data = await mysqlClient.execute(query, [parsed]);
 
     if (data.affectedRows === 0) {
       throw new MissingResource(this.generalName);
@@ -110,9 +111,12 @@ export default class GeneralRepository implements InterfaceRepository {
     return result!;
   }
 
-  public async getObject(uuid: UUIDColumn): Promise<BaseEntity> {
-    const get = this.queryClient.getQuery();
-    const data = await mysqlClient.execute(get, [uuid.getValue()]);
+  // TODO: Add uid: UUIDColumn | string to remove function
+
+  public async getObject(uuid: UUIDColumn | string): Promise<BaseEntity> {
+    const parsed = typeof uuid === "string" ? uuid : uuid.getValue()!
+    const query = this.queryClient.getQuery();
+    const data = await mysqlClient.execute(query, [parsed]);
 
     if (typeof data.rows === "undefined" || data.rows.length === 0) {
       throw new MissingResource(this.generalName);
