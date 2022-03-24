@@ -79,10 +79,11 @@ export default class GeneralController implements InterfaceController {
   }
 
   async addObject<T>(
-    { request, response, value }: {
+    { request, response, value, uuid }: {
       request: Request;
       response: Response;
       value?: any;
+      uuid?: string;
     },
   ): Promise<any> {
     // If the body hasn't been consumed will consume it our self
@@ -94,6 +95,10 @@ export default class GeneralController implements InterfaceController {
     }
 
     delete value.uuid;
+
+    if (typeof uuid !== "undefined") {
+      value.uuid = uuid;
+    }
 
     let object = new this.Entity();
 
