@@ -1,3 +1,5 @@
+// deno-lint-ignore-file no-explicit-any
+
 import { ColumnInfo } from "../types.ts";
 import {
   Request,
