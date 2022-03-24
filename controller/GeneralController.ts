@@ -77,9 +77,12 @@ export default class GeneralController implements InterfaceController {
   }
 
   async addObject<T>(
-    { request, response, value }: { request: Request; response: Response, value?: any },
+    { request, response, value }: {
+      request: Request;
+      response: Response;
+      value?: any;
+    },
   ): Promise<any> {
-
     // If the body hasn't been consumed will consume it our self
     if (typeof value === "undefined") {
       const body = await request.body();
