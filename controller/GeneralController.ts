@@ -76,11 +76,17 @@ export default class GeneralController implements InterfaceController {
     response.status = 204;
   }
 
-  async addObject(
-    { request, response }: { request: Request; response: Response },
-  ) {
-    const body = await request.body();
-    const value = await body.value;
+  async addObject<T>(
+    { request, response, value }: { request: Request; response: Response, value?: any },
+  ): Promise<any> {
+
+    // If the body hasn't been consumed will consume it our self
+    if (typeof value === "undefined") {
+      const body = await request.body();
+      const fetch = await body.value;
+
+      value = fetch;
+    }
 
     delete value.uuid;
 
@@ -100,5 +106,7 @@ export default class GeneralController implements InterfaceController {
     }
 
     response.body = parsed;
+
+    return result;
   }
 }
