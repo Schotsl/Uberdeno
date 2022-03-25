@@ -25,7 +25,8 @@ class HelperClient {
     const method = "POST";
     const headers = { "Content-Type": "application/json" };
 
-    await fetch(url, { method, headers }).catch(() => {
+    await fetch(url, { method, headers }).catch((error) => {
+      console.log(error);
       console.log(`Couldn't reach helper`);
     });
   }
