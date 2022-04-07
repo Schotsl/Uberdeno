@@ -2,10 +2,10 @@ import { SmtpClient } from "https://raw.githubusercontent.com/Schotsl/denomailer
 import { initializeEnv } from "../helper.ts";
 
 initializeEnv([
-  "IMAP_PORT",
-  "IMAP_HOSTNAME",
-  "IMAP_USERNAME",
-  "IMAP_PASSWORD",
+  "SMTP_PORT",
+  "SMTP_HOSTNAME",
+  "SMTP_USERNAME",
+  "SMTP_PASSWORD",
 ]);
 
 const smtpClient = new SmtpClient();
