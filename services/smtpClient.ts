@@ -10,10 +10,10 @@ initializeEnv([
 
 const smtpClient = new SmtpClient();
 await smtpClient.connectTLS({
-  hostname: Deno.env.get("IMAP_HOSTNAME")!,
-  username: Deno.env.get("IMAP_USERNAME")!,
-  password: Deno.env.get("IMAP_PASSWORD")!,
-  port: +Deno.env.get("IMAP_PORT")!,
+  hostname: Deno.env.get("SMTP_HOSTNAME")!,
+  username: Deno.env.get("SMTP_USERNAME")!,
+  password: Deno.env.get("SMTP_PASSWORD")!,
+  port: +Deno.env.get("SMTP_PORT")!,
 });
 
 export default smtpClient;
