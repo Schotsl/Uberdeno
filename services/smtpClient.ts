@@ -10,10 +10,10 @@ initializeEnv([
 
 const smtpClient = new SmtpClient();
 await smtpClient.connectTLS({
-  hostname: Deno.env.get("SMTP_HOSTNAME")!,
-  username: Deno.env.get("SMTP_USERNAME")!,
+  hostname: "mail.flevohost.eu",
+  username: "svanholst@corvusconsultancy.nl",
   password: Deno.env.get("SMTP_PASSWORD")!,
-  port: +Deno.env.get("SMTP_PORT")!,
+  port: 465,
 });
 
 export default smtpClient;
