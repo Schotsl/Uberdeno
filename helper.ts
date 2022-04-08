@@ -23,7 +23,7 @@ import BaseCollection from "./collection/BaseCollection.ts";
 export function initializeEnv(variables: string[]) {
   // Don't read the .env file if we're running on Deno Deploy
   if (Deno.env.get("DENO_DEPLOYMENT_ID") === undefined) {
-    config({ export: true, path: ".env", defaults: ".env" });
+    config({ export: true, path: ".env", defaults: ".env.defaults" });
   }
 
   // Check if every variable has been set
