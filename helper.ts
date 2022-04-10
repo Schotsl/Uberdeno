@@ -5,6 +5,7 @@ import { ColumnInfo, ColumnType } from "./types.ts";
 import {
   BooleanColumn,
   EmailColumn,
+  LargeColumn,
   IntColumn,
   IPv64Column,
   NumberColumn,
@@ -82,7 +83,7 @@ export function renderREST(input: any): any {
     if (
       value instanceof IntColumn || value instanceof TinyColumn ||
       value instanceof TimeColumn || value instanceof TimestampColumn ||
-      value instanceof UUIDColumn ||
+      value instanceof UUIDColumn || value instanceof LargeColumn ||
       value instanceof EmailColumn || value instanceof SmallColumn ||
       value instanceof NumberColumn || value instanceof StringColumn ||
       value instanceof BooleanColumn ||
@@ -114,6 +115,8 @@ export function generateColumns(Entity: any): ColumnInfo[] {
       type = ColumnType.UUIDColumn;
     } else if (instance[title] instanceof EmailColumn) {
       type = ColumnType.EmailColumn;
+    } else if (instance[title] instanceof LargeColumn) {
+      type = ColumnType.LargeColumn;
     } else if (instance[title] instanceof SmallColumn) {
       type = ColumnType.SmallColumn;
     } else if (instance[title] instanceof BooleanColumn) {

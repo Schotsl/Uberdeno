@@ -127,6 +127,27 @@ export function validateVarchar(
   return true;
 }
 
+// TODO: Add validate large testing suite
+
+export function validateLarge(
+  input: unknown,
+  label: string,
+  required = true,
+): boolean {
+  if (!validateString(input, label, required)) {
+    return false;
+  }
+
+  const string = input as string;
+  const length = string.length;
+
+  if (length < 3 || length > 4096) {
+    throw new InvalidProperty(label, "large");
+  }
+
+  return true;
+}
+
 export function validateIPv64(
   input: unknown,
   label: string,

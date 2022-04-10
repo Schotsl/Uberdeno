@@ -2,6 +2,7 @@
 import {
   validateEmail,
   validateIPv64,
+  validateLarge,
   validateString,
   validateTime,
   validateTimestamp,
@@ -107,6 +108,18 @@ export class VarcharColumn extends StringColumn {
     }
   }
 }
+
+export class LargeColumn extends StringColumn {
+  setValue(value?: string) {
+    const required = this.required && typeof this.value === "undefined";
+    const result = validateLarge(value, this.title, required);
+
+    if (result) {
+      this.value = value;
+    }
+  }
+}
+
 
 export class IPv64Column extends StringColumn {
   setValue(value?: string) {
