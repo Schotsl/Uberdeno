@@ -120,7 +120,6 @@ export class LargeColumn extends StringColumn {
   }
 }
 
-
 export class IPv64Column extends StringColumn {
   setValue(value?: string) {
     const required = this.required && typeof this.value === "undefined";

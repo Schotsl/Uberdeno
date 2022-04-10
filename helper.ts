@@ -5,9 +5,9 @@ import { ColumnInfo, ColumnType } from "./types.ts";
 import {
   BooleanColumn,
   EmailColumn,
-  LargeColumn,
   IntColumn,
   IPv64Column,
+  LargeColumn,
   NumberColumn,
   SmallColumn,
   StringColumn,
