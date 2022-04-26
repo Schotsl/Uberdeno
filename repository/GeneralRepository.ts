@@ -64,6 +64,10 @@ export default class GeneralRepository implements InterfaceRepository {
     }
   }
 
+  public updateObject(): Promise<BaseEntity> {
+    throw new Error("Method not implemented.");
+  }
+
   public async addObject(object: BaseEntity): Promise<BaseEntity> {
     const insert = this.queryClient.insertQuery();
     const values = this.generalColumns.filter((column) => {
