@@ -38,6 +38,22 @@ export function validateTiny(
   return true;
 }
 
+// export function validateTiny(
+//   input: unknown,
+//   label: string,
+//   required = true,
+// ): boolean {
+//   if (!validateNumber(input, label, required)) {
+//     return false;
+//   }
+
+//   if (input as number < -128 || input as number > 127) {
+//     throw new InvalidProperty(label, "tinyint");
+//   }
+
+//   return true;
+// }
+
 export function validateSmall(
   input: unknown,
   label: string,

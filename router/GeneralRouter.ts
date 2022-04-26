@@ -1,8 +1,5 @@
 import { Router } from "https://deno.land/x/oak@v10.5.1/mod.ts";
 
-// import BaseEntity from "../entity/BaseEntity.ts";
-// import BaseCollection from "../collection/BaseCollection.ts";
-// import InterfaceFilter from "../filter/InterfaceFilter.ts";
 import InterfaceController from "../controller/InterfaceController.ts";
 
 export default class GeneralRouter {

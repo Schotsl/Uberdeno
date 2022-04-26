@@ -10,13 +10,11 @@ import { generateColumns, populateInstance, renderREST } from "../helper.ts";
 
 import BaseEntity from "../entity/BaseEntity.ts";
 import BaseCollection from "../collection/BaseCollection.ts";
-import InterfaceFilter from "../filter/InterfaceFilter.ts";
 import GeneralRepository from "../repository/GeneralRepository.ts";
 import InterfaceController from "./InterfaceController.ts";
 
 export default class GeneralController implements InterfaceController {
   private Entity: { new (): BaseEntity };
-  private filter?: InterfaceFilter;
 
   private generalColumns: ColumnInfo[] = [];
   private generalRepository: GeneralRepository;
@@ -25,10 +23,8 @@ export default class GeneralController implements InterfaceController {
     name: string,
     Entity: { new (): BaseEntity },
     Collection: { new (): BaseCollection },
-    filter?: InterfaceFilter,
   ) {
     this.Entity = Entity;
-    this.filter = filter;
 
     this.generalColumns = generateColumns(Entity);
     this.generalRepository = new GeneralRepository(
@@ -73,6 +69,7 @@ export default class GeneralController implements InterfaceController {
     },
   ) {
     const uuid = params.uuid;
+
     await this.generalRepository.removeObject(uuid);
 
     response.status = 204;
@@ -100,20 +97,12 @@ export default class GeneralController implements InterfaceController {
       value.uuid = uuid;
     }
 
-    let object = new this.Entity();
+    const object = new this.Entity();
 
     populateInstance(value, this.generalColumns, object);
 
-    if (this.filter?.beforeProcessing) {
-      object = await this.filter.beforeProcessing(object);
-    }
-
     const result = await this.generalRepository.addObject(object);
     const parsed = renderREST(result);
-
-    if (this.filter?.beforeResponse) {
-      object = await this.filter.beforeResponse(object);
-    }
 
     response.body = parsed;
 

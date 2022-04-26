@@ -161,6 +161,17 @@ export class NumberColumn {
   }
 }
 
+export class FloatColumn extends NumberColumn {
+  setValue(value?: number) {
+    const required = this.required && typeof this.value === "undefined";
+    const result = validateTiny(value, this.title, required);
+
+    if (result) {
+      this.value = value;
+    }
+  }
+}
+
 export class TinyColumn extends NumberColumn {
   setValue(value?: number) {
     const required = this.required && typeof this.value === "undefined";
