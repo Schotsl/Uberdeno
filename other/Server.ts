@@ -5,6 +5,7 @@ import {
   Application,
   Context,
   Middleware,
+  Router,
   State,
 } from "https://deno.land/x/oak@v10.5.1/mod.ts";
 import { errorHandler, limitHandler, postHandler } from "../middleware.ts";
@@ -23,21 +24,25 @@ export default class Server {
   private application: Application;
 
   constructor() {
-    this.application = new Application();
+    const application = new Application();
 
-    this.application.use(oakCors());
+    application.use(oakCors());
 
-    this.application.use(errorHandler);
-    this.application.use(limitHandler);
-    this.application.use(postHandler);
+    application.use(errorHandler);
+    application.use(limitHandler);
+    application.use(postHandler);
 
-    this.application.use(({ response }) => {
-      response.body = {
-        id,
-        region,
-        version,
-      };
+    const router = new Router();
+
+    // We need a / route to make sure that the server is online
+    router.get("/", ({ response }) => {
+      response.body = { id, region, version };
     });
+
+    application.use(router.routes());
+    application.use(router.allowedMethods());
+
+    this.application = application;
   }
 
   public use(
