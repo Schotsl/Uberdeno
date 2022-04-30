@@ -14,8 +14,8 @@ const id = Deno.env.get("DENO_DEPLOYMENT_ID")
   ? Deno.env.get("DENO_DEPLOYMENT_ID")
   : false;
 
-const region = Deno.env.get("DENO_DEPLOYMENT_ID")
-  ? Deno.env.get("DENO_DEPLOYMENT_ID")
+const region = Deno.env.get("DENO_REGION")
+  ? Deno.env.get("DENO_REGION")
   : false;
 
 const version = "v1.0.0";
