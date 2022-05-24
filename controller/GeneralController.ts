@@ -5,7 +5,7 @@ import {
   Request,
   Response,
   State,
-} from "https://deno.land/x/oak@v10.5.1/mod.ts";
+} from "https://deno.land/x/oak@v10.6.0/mod.ts";
 import { generateColumns, populateInstance, renderREST } from "../helper.ts";
 
 import BaseEntity from "../entity/BaseEntity.ts";
