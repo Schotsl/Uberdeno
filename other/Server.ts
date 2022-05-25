@@ -7,7 +7,7 @@ import {
   Middleware,
   Router,
   State,
-} from "https://deno.land/x/oak@v10.5.1/mod.ts";
+} from "https://deno.land/x/oak@v10.6.0/mod.ts";
 import { errorHandler, limitHandler, postHandler } from "../middleware.ts";
 
 const id = Deno.env.get("DENO_DEPLOYMENT_ID")
