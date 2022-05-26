@@ -43,7 +43,7 @@ Deno.test("UUID validation", () => {
   const validUUID = ["272e1c01-237a-48e3-b88a-96a6fe9d3edb"];
   const invalidUUID = ["272e1c01-237a-48e3-b88a-96a6e9d3edb"];
 
-  validationTester(validUUID, invalidUUID, "uuid", validateUUID);
+  validationTester(validUUID, invalidUUID, "UUID", validateUUID);
 });
 
 Deno.test("varchar validation", () => {
