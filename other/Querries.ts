@@ -1,10 +1,10 @@
 import { ColumnInfo, ColumnType } from "../types.ts";
 
 export default class Querries {
-  private table: string;
-  private names: string;
-  private parse: string;
-  private values: string;
+  public table: string;
+  public names: string;
+  public parse: string;
+  public values: string;
 
   constructor(columns: Array<ColumnInfo>, table: string) {
     const names: string[] = [];
