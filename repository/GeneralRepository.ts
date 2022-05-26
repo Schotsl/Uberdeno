@@ -21,7 +21,7 @@ export default class GeneralRepository implements InterfaceRepository {
   private generalMapper: GeneralMapper;
   private generalColumns: ColumnInfo[] = [];
 
-  private queryClient: Querries;
+  public queryClient: Querries;
 
   constructor(
     name: string,
