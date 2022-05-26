@@ -25,6 +25,11 @@ export async function postHandler(
       throw new MissingBody();
     }
 
+    // We'll transfer every header key to lowercase for easier comparison
+    request.headers.forEach((_value, key) => {
+      key = key.toLowerCase();
+    });
+
     if (request.headers.get("content-type") !== "application/json") {
       throw new InvalidHeader();
     }
