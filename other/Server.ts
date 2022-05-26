@@ -48,7 +48,14 @@ export default class Server {
   public use(
     middleware: Middleware<State, Context<State, Record<string, any>>>,
   ) {
-    return this.application.use(middleware);
+    this.application.use(middleware);
+  }
+
+  public add(
+    router: Router<Record<string, any>>,
+  ) {
+    this.application.use(router.routes());
+    this.application.use(router.allowedMethods());
   }
 
   public listen(port = 8080) {
