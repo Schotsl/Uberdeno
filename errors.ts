@@ -79,19 +79,19 @@ export class LimitExceeded extends UberdenoError {
   }
 }
 
-export class InvalidAuthentication extends UberdenoError {
+export class InvalidAuthorization extends UberdenoError {
   public statusError = 403;
 
   constructor() {
-    super("Request has invalid 'Authentication' header.");
+    super("Request has invalid 'Authorization' header.");
   }
 }
 
-export class MissingAuthentication extends UberdenoError {
+export class MissingAuthorization extends UberdenoError {
   public statusError = 401;
 
   constructor() {
-    super("Request is missing 'Authentication' header.");
+    super("Request is missing 'Authorization' header.");
   }
 }
 
