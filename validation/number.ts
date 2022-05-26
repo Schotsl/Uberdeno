@@ -4,7 +4,13 @@ export function validateNumber(
   input: unknown,
   label: string,
   required = true,
+  array = false,
 ): boolean {
+  // If the input is an array we'll check if every child is valid recursively
+  if (Array.isArray(input)) {
+    return input.every((value) => validateNumber(value, label, required, true));
+  }
+
   if (typeof input === "undefined" || input === null) {
     // If the input isn't required return true and "escape" the parent function
     if (!required) {
@@ -16,7 +22,8 @@ export function validateNumber(
   }
 
   if (typeof input !== "number") {
-    throw new InvalidProperty(label, "number");
+    const datatype = array ? "comma-separated list of numbers" : "number";
+    throw new InvalidProperty(label, datatype);
   }
 
   return true;
@@ -26,45 +33,43 @@ export function validateTiny(
   input: unknown,
   label: string,
   required = true,
+  array = false,
 ): boolean {
+  // If the input is an array we'll check if every child is valid recursively
+  if (Array.isArray(input)) {
+    return input.every((value) => validateNumber(value, label, required, true));
+  }
+
   if (!validateNumber(input, label, required)) {
     return false;
   }
 
   if (input as number < -128 || input as number > 127) {
-    throw new InvalidProperty(label, "tinyint");
+    const datatype = array ? "comma-separated list of tinyint" : "tinyint";
+    throw new InvalidProperty(label, datatype);
   }
 
   return true;
 }
 
-// export function validateTiny(
-//   input: unknown,
-//   label: string,
-//   required = true,
-// ): boolean {
-//   if (!validateNumber(input, label, required)) {
-//     return false;
-//   }
-
-//   if (input as number < -128 || input as number > 127) {
-//     throw new InvalidProperty(label, "tinyint");
-//   }
-
-//   return true;
-// }
-
 export function validateSmall(
   input: unknown,
   label: string,
   required = true,
+  array = false,
 ): boolean {
+  // If the input is an array we'll check if every child is valid recursively
+  if (Array.isArray(input)) {
+    return input.every((value) => validateNumber(value, label, required, true));
+  }
+
   if (!validateNumber(input, label, required)) {
     return false;
   }
 
   if (input as number < -32768 || input as number > 32767) {
-    throw new InvalidProperty(label, "smallint");
+    const datatype = array ? "comma-separated list of smallint" : "smallint";
+    throw new InvalidProperty(label, datatype);
   }
 
   return true;
@@ -74,13 +79,20 @@ export function validateInt(
   input: unknown,
   label: string,
   required = true,
+  array = false,
 ): boolean {
+  // If the input is an array we'll check if every child is valid recursively
+  if (Array.isArray(input)) {
+    return input.every((value) => validateNumber(value, label, required, true));
+  }
+
   if (!validateNumber(input, label, required)) {
     return false;
   }
 
   if (input as number < -2147483648 || input as number > 2147483647) {
-    throw new InvalidProperty(label, "int");
+    const datatype = array ? "comma-separated list of int" : "int";
+    throw new InvalidProperty(label, datatype);
   }
 
   return true;
@@ -90,13 +102,20 @@ export function validateBinary(
   input: unknown,
   label: string,
   required = true,
+  array = false,
 ): boolean {
+  // If the input is an array we'll check if every child is valid recursively
+  if (Array.isArray(input)) {
+    return input.every((value) => validateNumber(value, label, required, true));
+  }
+
   if (!validateNumber(input, label, required)) {
     return false;
   }
 
   if (input !== 0 && input !== 1) {
-    throw new InvalidProperty(label, "binary");
+    const datatype = array ? "comma-separated list of binary" : "binary";
+    throw new InvalidProperty(label, datatype);
   }
 
   return true;

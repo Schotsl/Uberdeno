@@ -4,9 +4,15 @@ export function validateString(
   input: unknown,
   label: string,
   required = true,
+  array = false,
 ): boolean {
+  // If the input is an array we'll check if every child is valid recursively
+  if (Array.isArray(input)) {
+    return input.every((value) => validateString(value, label, required, true));
+  }
+
   if (typeof input === "undefined" || input === null) {
-    // If the input isn't required return true and "escape" the parent function
+    // If the input isn't required return false and "escape" the parent function
     if (!required) {
       return false;
     }
@@ -16,7 +22,8 @@ export function validateString(
   }
 
   if (typeof input !== "string") {
-    throw new InvalidProperty(label, "string");
+    const datatype = array ? "comma-separated list of strings" : "string";
+    throw new InvalidProperty(label, datatype);
   }
 
   return true;
@@ -26,7 +33,13 @@ export function validateTimestamp(
   input: unknown,
   label: string,
   required = true,
+  array = false,
 ): boolean {
+  // If the input is an array we'll check if every child is valid recursively
+  if (Array.isArray(input)) {
+    return input.every((value) => validateTimestamp(value, label, required, true));
+  }
+
   if (!validateString(input, label, required)) {
     return false;
   }
@@ -37,7 +50,8 @@ export function validateTimestamp(
   );
 
   if (!regex.test(input as string)) {
-    throw new InvalidProperty(label, "date");
+    const datatype = array ? "comma-separated list of dates" : "date";
+    throw new InvalidProperty(label, datatype);
   }
 
   return true;
@@ -47,7 +61,13 @@ export function validateUUID(
   input: unknown,
   label: string,
   required = true,
+  array = false,
 ): boolean {
+  // If the input is an array we'll check if every child is valid recursively
+  if (Array.isArray(input)) {
+    return input.every((value) => validateUUID(value, label, required, true));
+  }
+  
   if (!validateString(input, label, required)) {
     return false;
   }
@@ -58,7 +78,8 @@ export function validateUUID(
   );
 
   if (!regex.test(input as string)) {
-    throw new InvalidProperty(label, "uuid");
+    const datatype = array ? "comma-separated list of UUIDs" : "UUID";
+    throw new InvalidProperty(label, datatype);
   }
 
   return true;
@@ -70,7 +91,13 @@ export function validateEmail(
   input: unknown,
   label: string,
   required = true,
+  array = false,
 ): boolean {
+  // If the input is an array we'll check if every child is valid recursively
+  if (Array.isArray(input)) {
+    return input.every((value) => validateEmail(value, label, required, true));
+  }
+
   if (!validateString(input, label, required)) {
     return false;
   }
@@ -81,7 +108,8 @@ export function validateEmail(
   );
 
   if (!regex.test(input as string)) {
-    throw new InvalidProperty(label, "email");
+    const datatype = array ? "comma-separated list of emails" : "email";
+    throw new InvalidProperty(label, datatype);
   }
 
   return true;
@@ -91,7 +119,13 @@ export function validateTime(
   input: unknown,
   label: string,
   required = true,
+  array = false,
 ): boolean {
+  // If the input is an array we'll check if every child is valid recursively
+  if (Array.isArray(input)) {
+    return input.every((value) => validateTime(value, label, required, true));
+  }
+
   if (!validateString(input, label, required)) {
     return false;
   }
@@ -102,7 +136,8 @@ export function validateTime(
   );
 
   if (!regex.test(input as string)) {
-    throw new InvalidProperty(label, "time");
+    const datatype = array ? "comma-separated list of times" : "time";
+    throw new InvalidProperty(label, datatype);
   }
 
   return true;
@@ -112,7 +147,13 @@ export function validateVarchar(
   input: unknown,
   label: string,
   required = true,
+  array = false,
 ): boolean {
+  // If the input is an array we'll check if every child is valid recursively
+  if (Array.isArray(input)) {
+    return input.every((value) => validateVarchar(value, label, required, true));
+  }
+
   if (!validateString(input, label, required)) {
     return false;
   }
@@ -121,7 +162,8 @@ export function validateVarchar(
   const length = string.length;
 
   if (length < 3 || length > 255) {
-    throw new InvalidProperty(label, "varchar");
+    const datatype = array ? "comma-separated list of verchars" : "varchar";
+    throw new InvalidProperty(label, datatype);
   }
 
   return true;
@@ -133,7 +175,13 @@ export function validateLarge(
   input: unknown,
   label: string,
   required = true,
+  array = false,
 ): boolean {
+  // If the input is an array we'll check if every child is valid recursively
+  if (Array.isArray(input)) {
+    return input.every((value) => validateLarge(value, label, required, true));
+  }
+
   if (!validateString(input, label, required)) {
     return false;
   }
@@ -142,7 +190,8 @@ export function validateLarge(
   const length = string.length;
 
   if (length < 3 || length > 4096) {
-    throw new InvalidProperty(label, "large");
+    const datatype = array ? "comma-separated list of larges" : "large";
+    throw new InvalidProperty(label, datatype);
   }
 
   return true;
@@ -152,7 +201,13 @@ export function validateIPv64(
   input: unknown,
   label: string,
   required = true,
+  array = false,
 ): boolean {
+  // If the input is an array we'll check if every child is valid recursively
+  if (Array.isArray(input)) {
+    return input.every((value) => validateIPv64(value, label, required, true));
+  }
+
   if (!validateString(input, label, required)) {
     return false;
   }
@@ -163,7 +218,8 @@ export function validateIPv64(
   );
 
   if (!regex.test(input as string)) {
-    throw new InvalidProperty(label, "IPv64");
+    const datatype = array ? "comma-separated list of IPv64s" : "IPv64";
+    throw new InvalidProperty(label, datatype);
   }
 
   return true;
