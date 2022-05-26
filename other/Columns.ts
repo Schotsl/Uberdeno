@@ -12,10 +12,10 @@ import {
 
 // Number validation
 import {
-  validateLat,
-  validateLng,
   validateBinary,
   validateInt,
+  validateLat,
+  validateLng,
   validateNumber,
   validateSmall,
   validateTiny,
