@@ -3,6 +3,8 @@
 import { config } from "https://deno.land/x/dotenv@v3.2.0/mod.ts";
 import { ColumnInfo, ColumnType } from "./types.ts";
 import {
+  LatColumn,
+  LngColumn,
   BooleanColumn,
   EmailColumn,
   IntColumn,
@@ -81,6 +83,7 @@ export function renderREST(input: any): any {
 
     // Transform the column wrappers back into their strings, number or booleans
     if (
+      value instanceof LatColumn || value instanceof LngColumn ||
       value instanceof IntColumn || value instanceof TinyColumn ||
       value instanceof TimeColumn || value instanceof TimestampColumn ||
       value instanceof UUIDColumn || value instanceof LargeColumn ||
@@ -109,6 +112,10 @@ export function generateColumns(Entity: any): ColumnInfo[] {
       type = ColumnType.TinyColumn;
     } else if (instance[title] instanceof TimeColumn) {
       type = ColumnType.TimeColumn;
+    } else if (instance[title] instanceof LatColumn) {
+      type = ColumnType.LatColumn;
+    } else if (instance[title] instanceof LngColumn) {
+      type = ColumnType.LngColumn;
     } else if (instance[title] instanceof TimestampColumn) {
       type = ColumnType.TimestampColumn;
     } else if (instance[title] instanceof UUIDColumn) {

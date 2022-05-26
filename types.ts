@@ -1,4 +1,6 @@
 export enum ColumnType {
+  LatColumn = "LatColumn",
+  LngColumn = "LngColumn",
   IntColumn = "IntColumn",
   TimestampColumn = "TimestampColumn",
   UUIDColumn = "UUIDColumn",

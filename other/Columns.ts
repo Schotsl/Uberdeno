@@ -12,6 +12,8 @@ import {
 
 // Number validation
 import {
+  validateLat,
+  validateLng,
   validateBinary,
   validateInt,
   validateNumber,
@@ -201,6 +203,28 @@ export class IntColumn extends NumberColumn {
 
     if (result) {
       this.value = value;
+    }
+  }
+}
+
+export class LngColumn extends NumberColumn {
+  setValue(value?: number) {
+    const required = this.required && typeof this.value === "undefined";
+    const result = validateLng(value, this.title, required);
+
+    if (result) {
+      this.value = Math.round(value! * 1000000) / 1000000;
+    }
+  }
+}
+
+export class LatColumn extends NumberColumn {
+  setValue(value?: number) {
+    const required = this.required && typeof this.value === "undefined";
+    const result = validateLat(value, this.title, required);
+
+    if (result) {
+      this.value = Math.round(value! * 1000000) / 1000000;
     }
   }
 }
