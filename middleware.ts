@@ -25,7 +25,7 @@ export async function postHandler(
       throw new MissingBody();
     }
 
-    if (request.headers.get("Content-Type") !== "application/json") {
+    if (request.headers.get("content-type") !== "application/json") {
       throw new InvalidHeader();
     }
 
