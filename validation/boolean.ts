@@ -8,7 +8,9 @@ export function validateBoolean(
 ): boolean {
   // If the input is an array we'll check if every child is valid recursively
   if (Array.isArray(input)) {
-    return input.every((value) => validateBoolean(value, label, required, true));
+    return input.every((value) =>
+      validateBoolean(value, label, required, true)
+    );
   }
 
   if (typeof input === "undefined" || input === null) {

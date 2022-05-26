@@ -37,7 +37,9 @@ export function validateTimestamp(
 ): boolean {
   // If the input is an array we'll check if every child is valid recursively
   if (Array.isArray(input)) {
-    return input.every((value) => validateTimestamp(value, label, required, true));
+    return input.every((value) =>
+      validateTimestamp(value, label, required, true)
+    );
   }
 
   if (!validateString(input, label, required)) {
@@ -67,7 +69,7 @@ export function validateUUID(
   if (Array.isArray(input)) {
     return input.every((value) => validateUUID(value, label, required, true));
   }
-  
+
   if (!validateString(input, label, required)) {
     return false;
   }
@@ -151,7 +153,9 @@ export function validateVarchar(
 ): boolean {
   // If the input is an array we'll check if every child is valid recursively
   if (Array.isArray(input)) {
-    return input.every((value) => validateVarchar(value, label, required, true));
+    return input.every((value) =>
+      validateVarchar(value, label, required, true)
+    );
   }
 
   if (!validateString(input, label, required)) {
