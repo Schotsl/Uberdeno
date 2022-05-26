@@ -159,6 +159,8 @@ export function populateInstance(
     const value = body[title];
     const target = instance[title];
 
+    // TODO: Make sure we convert MySQL number formatted as strings to numbers so the REST API can be strict
+
     if (type !== ColumnType.UnknownColumn) {
       target.setValue(value);
     }

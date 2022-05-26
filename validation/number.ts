@@ -21,7 +21,10 @@ export function validateNumber(
     throw new MissingProperty(label);
   }
 
-  if (typeof input !== "number") {
+  // Transform the input into a Number or NaN for validation
+  input = Number(input);
+
+  if (Number.isNaN(input)) {
     const datatype = array ? "comma-separated list of numbers" : "number";
     throw new InvalidProperty(label, datatype);
   }
