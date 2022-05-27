@@ -1,9 +1,14 @@
-import { Router } from "https://deno.land/x/oak@v10.6.0/mod.ts";
+import { Router, RouterMiddleware } from "https://deno.land/x/oak@v10.6.0/mod.ts";
+
+interface ParamsDictionary {
+  [key: string]: string;
+}
 
 import InterfaceController from "../controller/InterfaceController.ts";
 
 export default class GeneralRouter {
   public router: Router;
+  public controller: InterfaceController;
 
   constructor(
     controller: InterfaceController,
@@ -11,15 +16,36 @@ export default class GeneralRouter {
     version = "v1",
   ) {
     this.router = new Router({ prefix: `/${version}/${path}` });
+    this.controller = controller;
 
     const collection = controller.getCollection.bind(controller);
-    // const object = controller.getObject.bind(controller);
     const remove = controller.removeObject.bind(controller);
+    const object = controller.getObject.bind(controller);
     const post = controller.addObject.bind(controller);
 
     this.router.get("/", collection);
-    // this.router.get("/:uuid", object);
+    this.router.get("/entity/:uuid", object);
     this.router.post("/", post);
     this.router.delete("/:uuid", remove);
+  }
+
+  get(path: string, callback: RouterMiddleware<string, ParamsDictionary, Record<string, any>>) {
+    callback = callback.bind(this.controller);
+    this.router.get(path, callback);
+  }
+
+  post(path: string, callback: RouterMiddleware<string, ParamsDictionary, Record<string, any>>) {
+    callback = callback.bind(this.controller);
+    this.router.post(path, callback);
+  }
+
+  delete(path: string, callback: RouterMiddleware<string, ParamsDictionary, Record<string, any>>) {
+    callback = callback.bind(this.controller);
+    this.router.post(path, callback);
+  }
+
+  put(path: string, callback: RouterMiddleware<string, ParamsDictionary, Record<string, any>>) {
+    callback = callback.bind(this.controller);
+    this.router.put(path, callback);
   }
 }
