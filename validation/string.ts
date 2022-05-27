@@ -145,6 +145,39 @@ export function validateTime(
   return true;
 }
 
+export function validateUrl(
+  input: unknown,
+  label: string,
+  required = true,
+  array = false,
+): boolean {
+  // If the input is an array we'll check if every child is valid recursively
+  if (Array.isArray(input)) {
+    return input.every((value) =>
+      validateVarchar(value, label, required, true)
+    );
+  }
+
+  if (!validateString(input, label, required)) {
+    return false;
+  }
+
+  const string = input as string;
+  const length = string.length;
+
+  // Copied RegExp from https://stackoverflow.com/a/64206393/9615506
+  const regex = new RegExp(
+    /^(http|https):\/\/[^ "]+$/,
+  );
+
+  if (!regex.test(string) || length > 2083) {
+    const datatype = array ? "comma-separated list of URLs" : "URL";
+    throw new InvalidProperty(label, datatype);
+  }
+
+  return true;
+}
+
 export function validateVarchar(
   input: unknown,
   label: string,

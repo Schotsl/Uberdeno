@@ -1,5 +1,6 @@
 // String validation
 import {
+  validateUrl,
   validateEmail,
   validateIPv64,
   validateLarge,
@@ -50,6 +51,17 @@ export class StringColumn {
 
   getValue() {
     return this.value;
+  }
+}
+
+export class UrlColumn extends StringColumn {
+  setValue(value?: string) {
+    const required = this.required && typeof this.value === "undefined";
+    const result = validateUrl(value, this.title, required);
+
+    if (result) {
+      this.value = value;
+    }
   }
 }
 

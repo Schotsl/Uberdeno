@@ -1,4 +1,5 @@
 export enum ColumnType {
+  UrlColumn = "UrlColumn",
   LatColumn = "LatColumn",
   LngColumn = "LngColumn",
   IntColumn = "IntColumn",
