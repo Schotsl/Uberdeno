@@ -1,3 +1,5 @@
+// deno-lint-ignore-file no-explicit-any
+
 import { Router, RouterMiddleware } from "https://deno.land/x/oak@v10.6.0/mod.ts";
 
 interface ParamsDictionary {
