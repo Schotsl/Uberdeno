@@ -21,7 +21,7 @@ export function validateString(
     throw new MissingProperty(label);
   }
 
-  if (typeof input !== "string") {
+  if (typeof input !== "string" || input.length === 0) {
     const datatype = array ? "comma-separated list of strings" : "string";
     throw new InvalidProperty(label, datatype);
   }
