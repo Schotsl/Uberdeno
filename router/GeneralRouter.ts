@@ -1,6 +1,9 @@
 // deno-lint-ignore-file no-explicit-any
 
-import { Router, RouterMiddleware } from "https://deno.land/x/oak@v10.6.0/mod.ts";
+import {
+  Router,
+  RouterMiddleware,
+} from "https://deno.land/x/oak@v10.6.0/mod.ts";
 
 interface ParamsDictionary {
   [key: string]: string;
@@ -31,22 +34,34 @@ export default class GeneralRouter {
     this.router.delete("/:uuid", remove);
   }
 
-  get(path: string, callback: RouterMiddleware<string, ParamsDictionary, Record<string, any>>) {
+  get(
+    path: string,
+    callback: RouterMiddleware<string, ParamsDictionary, Record<string, any>>,
+  ) {
     callback = callback.bind(this.controller);
     this.router.get(path, callback);
   }
 
-  post(path: string, callback: RouterMiddleware<string, ParamsDictionary, Record<string, any>>) {
+  post(
+    path: string,
+    callback: RouterMiddleware<string, ParamsDictionary, Record<string, any>>,
+  ) {
     callback = callback.bind(this.controller);
     this.router.post(path, callback);
   }
 
-  delete(path: string, callback: RouterMiddleware<string, ParamsDictionary, Record<string, any>>) {
+  delete(
+    path: string,
+    callback: RouterMiddleware<string, ParamsDictionary, Record<string, any>>,
+  ) {
     callback = callback.bind(this.controller);
     this.router.post(path, callback);
   }
 
-  put(path: string, callback: RouterMiddleware<string, ParamsDictionary, Record<string, any>>) {
+  put(
+    path: string,
+    callback: RouterMiddleware<string, ParamsDictionary, Record<string, any>>,
+  ) {
     callback = callback.bind(this.controller);
     this.router.put(path, callback);
   }

@@ -5,7 +5,6 @@ import { ColumnInfo, ColumnType } from "./types.ts";
 import {
   BooleanColumn,
   EmailColumn,
-  UrlColumn,
   IntColumn,
   IPv64Column,
   LargeColumn,
@@ -17,6 +16,7 @@ import {
   TimeColumn,
   TimestampColumn,
   TinyColumn,
+  UrlColumn,
   UUIDColumn,
   VarcharColumn,
 } from "./other/Columns.ts";

@@ -1,12 +1,12 @@
 // String validation
 import {
-  validateUrl,
   validateEmail,
   validateIPv64,
   validateLarge,
   validateString,
   validateTime,
   validateTimestamp,
+  validateUrl,
   validateUUID,
   validateVarchar,
 } from "../validation/string.ts";
