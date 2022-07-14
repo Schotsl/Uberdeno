@@ -64,8 +64,30 @@ export default class GeneralRepository implements InterfaceRepository {
     }
   }
 
-  public updateObject(): Promise<BaseEntity> {
-    throw new Error("Method not implemented.");
+  async updateObject(
+    object: Partial<BaseEntity>,
+  ): Promise<BaseEntity> {
+    const values = [];
+    const exclude = ["created", "updated", "uuid"];
+
+    let query = `UPDATE ${this.queryClient.table} SET`;
+
+    for (const [key, value] of Object.entries(object)) {
+      if (value !== null && !exclude.includes(key)) {
+        query += ` ${key}=?,`;
+        values.push(value);
+      }
+    }
+
+    if (values.length > 0) {
+      query = query.slice(0, -1);
+      query += " WHERE uuid = UNHEX(REPLACE(?, '-', ''))";
+
+      await mysqlClient.execute(query, [...values, object.uuid?.getValue()]);
+    }
+
+    const data = await this.getObject(object.uuid!);
+    return data!;
   }
 
   public async addObject(object: BaseEntity): Promise<BaseEntity> {
