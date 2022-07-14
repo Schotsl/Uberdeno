@@ -75,7 +75,7 @@ export default class GeneralRepository implements InterfaceRepository {
     for (const [key, value] of Object.entries(object)) {
       if (value !== null && !exclude.includes(key)) {
         query += ` ${key}=?,`;
-        values.push(value);
+        values.push(value.getValue());
       }
     }
 
