@@ -53,7 +53,7 @@ export default class GeneralController implements InterfaceController {
       response: Response;
       params: { uuid: string };
     },
-  ) {
+  ): Promise<any> {
     const uuid = params.uuid;
 
     const result = await this.generalRepository.getObject(uuid);
