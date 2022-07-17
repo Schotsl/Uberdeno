@@ -60,6 +60,8 @@ export default class GeneralController implements InterfaceController {
     const parsed = renderREST(result);
 
     response.body = parsed;
+
+    return result;
   }
 
   async removeObject(
