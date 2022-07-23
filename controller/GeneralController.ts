@@ -64,6 +64,43 @@ export default class GeneralController implements InterfaceController {
     return result;
   }
 
+  async updateObject(
+    { request, response, value, uuid, params }: {
+      request: Request;
+      response: Response;
+      params: { uuid: string };
+      value?: any;
+      uuid?: string;
+    },
+  ) {
+    // If the body hasn't been consumed will consume it our self
+    if (typeof value === "undefined") {
+      const body = await request.body();
+      const fetch = await body.value;
+
+      value = fetch;
+    }
+
+    value.uuid = params.uuid;
+
+    if (typeof uuid !== "undefined") {
+      value.uuid = uuid;
+    }
+
+    // TODO: Should probably be a single query instead of two
+
+    const object = await this.generalRepository.getObject(params.uuid);
+
+    populateInstance(value, this.generalColumns, object);
+
+    const result = await this.generalRepository.updateObject(object);
+    const parsed = renderREST(result);
+
+    response.body = parsed;
+
+    return result;
+  }
+
   async removeObject(
     { response, params }: {
       response: Response;
