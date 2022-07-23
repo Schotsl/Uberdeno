@@ -68,12 +68,21 @@ export default class GeneralRepository implements InterfaceRepository {
     object: Partial<BaseEntity>,
   ): Promise<BaseEntity> {
     const values = [];
-    const exclude = ["created", "updated", "uuid"];
+    const exclude = [
+      "created",
+      "updated",
+      "uuid",
+      "person",
+      "location",
+      "machine",
+    ];
 
     let query = `UPDATE ${this.queryClient.table} SET`;
 
     for (const [key, value] of Object.entries(object)) {
-      if (value !== null && !exclude.includes(key)) {
+      if (
+        typeof value != "undefined" && value !== null && !exclude.includes(key)
+      ) {
         query += ` ${key}=?,`;
         values.push(value.getValue());
       }
