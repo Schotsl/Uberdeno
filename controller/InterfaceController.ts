@@ -27,9 +27,12 @@ export default interface InterfaceController {
     },
   ): void;
 
-  // updateObject(
-  //   { params, response }: { params: { uuid: string }; response: Response },
-  // ): void;
+  updateObject(
+    { request, response }: {
+      request: Request;
+      response: Response;
+    },
+  ): void;
 
   addObject(
     { request, response }: {
