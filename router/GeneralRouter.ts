@@ -31,7 +31,7 @@ export default class GeneralRouter {
 
     this.router.get("/", collection);
     this.router.get("/entity/:uuid", object);
-    this.router.put("/test/:uuid", put);
+    this.router.put("/:uuid", put);
     this.router.post("/", post);
     this.router.delete("/:uuid", remove);
   }
