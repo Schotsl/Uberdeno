@@ -27,9 +27,11 @@ export default class GeneralRouter {
     const remove = controller.removeObject.bind(controller);
     const object = controller.getObject.bind(controller);
     const post = controller.addObject.bind(controller);
+    const put = controller.updateObject.bind(controller);
 
     this.router.get("/", collection);
     this.router.get("/entity/:uuid", object);
+    this.router.put("/test/:uuid", put);
     this.router.post("/", post);
     this.router.delete("/:uuid", remove);
   }
