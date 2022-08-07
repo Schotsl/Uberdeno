@@ -52,6 +52,10 @@ export default class Querries {
     return `SELECT ${this.parse} FROM ${this.table} WHERE uuid = UNHEX(REPLACE(?, '-', ''))`;
   }
 
+  getQueryBy() {
+    return `SELECT ${this.parse} FROM ${this.table} WHERE ? = ?`;
+  }
+
   countQuery() {
     return `SELECT COUNT(uuid) AS total FROM ${this.table}`;
   }

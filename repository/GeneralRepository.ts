@@ -160,4 +160,16 @@ export default class GeneralRepository implements InterfaceRepository {
     const row = data.rows![0];
     return this.generalMapper.mapObject(row);
   }
+
+  public async getObjectBy(key: string, value: string): Promise<BaseEntity> {
+    const query = this.queryClient.getQuery();
+    const data = await mysqlClient.execute(query, [key, value]);
+
+    if (typeof data.rows === "undefined" || data.rows.length === 0) {
+      throw new MissingResource(this.generalName);
+    }
+
+    const row = data.rows![0];
+    return this.generalMapper.mapObject(row);
+  }
 }
