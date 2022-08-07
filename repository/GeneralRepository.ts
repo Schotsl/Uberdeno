@@ -162,7 +162,7 @@ export default class GeneralRepository implements InterfaceRepository {
   }
 
   public async getObjectBy(key: string, value: string): Promise<BaseEntity> {
-    const query = this.queryClient.getQuery();
+    const query = this.queryClient.getQueryBy();
     const data = await mysqlClient.execute(query, [key, value]);
 
     if (typeof data.rows === "undefined" || data.rows.length === 0) {

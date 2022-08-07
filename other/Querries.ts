@@ -53,7 +53,7 @@ export default class Querries {
   }
 
   getQueryBy() {
-    return `SELECT ${this.parse} FROM ${this.table} WHERE ? = ?`;
+    return `SELECT ${this.parse} FROM ${this.table} WHERE ?? = ?`;
   }
 
   countQuery() {
