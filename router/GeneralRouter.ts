@@ -3,7 +3,7 @@
 import {
   Router,
   RouterMiddleware,
-} from "https://deno.land/x/oak@v10.6.0/mod.ts";
+} from "https://deno.land/x/oak@v11.0.0/mod.ts";
 
 interface ParamsDictionary {
   [key: string]: string;
