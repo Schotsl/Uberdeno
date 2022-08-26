@@ -2,7 +2,7 @@ import {
   Request,
   Response,
   State,
-} from "https://deno.land/x/oak@v11.0.0/mod.ts";
+} from "https://deno.land/x/oak@v11.1.0/mod.ts";
 
 export default interface InterfaceController {
   getCollection(
