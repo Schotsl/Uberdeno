@@ -22,7 +22,7 @@ export function validateNumber(
   }
 
   // Transform the input into a Number or NaN for validation
-  input = Number(input);
+  input = input === false ? NaN : Number(input);
 
   if (Number.isNaN(input)) {
     const datatype = array ? "comma-separated list of numbers" : "number";
