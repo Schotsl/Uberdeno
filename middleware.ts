@@ -3,7 +3,7 @@ import {
   Request,
   Response,
   State,
-} from "https://deno.land/x/oak@v10.6.0/mod.ts";
+} from "https://deno.land/x/oak@v11.1.0/mod.ts";
 
 import {
   InvalidBody,
