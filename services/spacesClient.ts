@@ -23,7 +23,7 @@ const spacesCredentials = {
   region: Deno.env.get("SPACES_REGION")!,
   secretKey: Deno.env.get("SPACES_KEY")!,
   accessKeyID: Deno.env.get("SPACES_ID")!,
-  endpointURL: Deno.env.get("SPACES_ENDPOINT")!,
+  endpointURL: `https://${Deno.env.get("SPACES_ENDPOINT")}!`,
 };
 
 class SpacesClient {
