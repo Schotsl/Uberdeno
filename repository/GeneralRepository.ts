@@ -85,6 +85,11 @@ export default class GeneralRepository implements InterfaceRepository {
       ) {
         query += ` ${key}=?,`;
         values.push(value.getValue());
+      } else if (
+        typeof value != "undefined" && value !== null && key === "reference"
+      ) {
+        query += ` ${key}=UNHEX(REPLACE(?, '-', '')),`;
+        values.push(value.getValue());
       }
     }
 
