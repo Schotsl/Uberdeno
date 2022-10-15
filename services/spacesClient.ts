@@ -1,4 +1,4 @@
-import { S3Bucket } from "https://deno.land/x/s3@0.4.1/mod.ts";
+import { S3Bucket } from "https://deno.land/x/s3@0.5.0/mod.ts";
 import { getSignedUrl } from "https://deno.land/x/aws_s3_presign@1.3.0/mod.ts";
 import { initializeEnv } from "../helper.ts";
 
