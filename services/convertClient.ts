@@ -29,7 +29,7 @@ class ConvertClient {
 
   }
 
-  async convertPPTX(input: string) {
+  async convertPPTX(uuid: string) {
     const {
       bucket,
       region,
@@ -49,7 +49,7 @@ class ConvertClient {
     const query = {
       tasks: {
         import: {
-          key: input,
+          key: `${uuid}.pptx`,
           region,
           bucket,
           endpoint,
@@ -63,6 +63,7 @@ class ConvertClient {
           width: 1920,
           height: 1080,
           engine: "office",
+          filename: `${uuid}/%d.pdf`,
           operation: "convert",
           output_type: "slides",
           output_format: "png",
@@ -84,7 +85,6 @@ class ConvertClient {
     };
 
     const body = JSON.stringify(query);
-
     const response = await fetch(url, {
       method,
       headers,
@@ -92,9 +92,24 @@ class ConvertClient {
     });
 
     const data = await response.json();
-    const uuid = data.data.id;
-    
-    return uuid;
+    return data.data.id;
+  }
+
+  async convertPPTXStatus(uuid: string) {
+    const url = `https://api.cloudconvert.com/v2/jobs/${uuid}`;
+    const method = "GET";
+    const headers = {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${this.convert_access_key}`,
+    };
+
+    const response = await fetch(url, {
+      method,
+      headers,
+    });
+
+    const data = await response.json();
+    return data.data.status;
   }
 }
 
