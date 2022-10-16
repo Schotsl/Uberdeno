@@ -26,7 +26,6 @@ class ConvertClient {
     this.access_key_id = Deno.env.get("SPACES_ID")!;
     this.secret_access_key = Deno.env.get("SPACES_KEY")!;
     this.convert_access_key = Deno.env.get("CONVERT_KEY")!;
-
   }
 
   async convertPPTX(uuid: string) {
@@ -39,7 +38,7 @@ class ConvertClient {
       convert_access_key,
     } = this;
 
-    const url = "https://api.cloudconvert.com/v2/jobs"
+    const url = "https://api.cloudconvert.com/v2/jobs";
     const method = "POST";
     const headers = {
       "Content-Type": "application/json",
