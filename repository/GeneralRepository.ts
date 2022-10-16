@@ -74,6 +74,7 @@ export default class GeneralRepository implements InterfaceRepository {
       "uuid",
       "person",
       "location",
+      "reference",
       "machine",
     ];
 
@@ -96,7 +97,6 @@ export default class GeneralRepository implements InterfaceRepository {
     if (values.length > 0) {
       query = query.slice(0, -1);
       query += " WHERE uuid = UNHEX(REPLACE(?, '-', ''))";
-
       await mysqlClient.execute(query, [...values, object.uuid?.getValue()]);
     }
 
