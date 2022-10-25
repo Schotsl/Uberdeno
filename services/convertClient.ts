@@ -44,7 +44,15 @@ class ConvertClient {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${convert_access_key}`,
     };
-
+    console.log({
+      key: `${uuid}.pptx`,
+      region,
+      bucket,
+      endpoint,
+      operation: "import/s3",
+      access_key_id,
+      secret_access_key,
+    });
     const query = {
       tasks: {
         import: {
@@ -62,7 +70,6 @@ class ConvertClient {
           width: 1920,
           height: 1080,
           engine: "office",
-          filename: `${uuid}/%d.pdf`,
           operation: "convert",
           output_type: "slides",
           output_format: "png",
@@ -71,6 +78,7 @@ class ConvertClient {
           hidden_slides: false,
         },
         export: {
+          key: `${uuid}/%d.png`,
           input: "convert",
           region,
           bucket,
