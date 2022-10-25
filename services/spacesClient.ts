@@ -23,7 +23,7 @@ const spacesCredentials = {
   region: Deno.env.get("SPACES_REGION")!,
   secretKey: Deno.env.get("SPACES_KEY")!,
   accessKeyID: Deno.env.get("SPACES_ID")!,
-  endpointURL: `https://${Deno.env.get("SPACES_ENDPOINT")}!`,
+  endpointURL: `https://${Deno.env.get("SPACES_ENDPOINT")}`,
 };
 
 class SpacesClient {
@@ -49,8 +49,12 @@ class SpacesClient {
     });
   }
 
-  deleteFile(filename: string) {
-    return this.bucket.deleteObject(filename);
+  async deleteFile(filename: string) {
+    return await this.bucket.deleteObject(filename);
+  }
+
+  async listFiles(directory: string) {
+    return await this.bucket.listObjects({ prefix: directory });
   }
 }
 
