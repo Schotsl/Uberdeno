@@ -1,6 +1,6 @@
 import { testMysql } from "../testing.ts";
 import { initializeEnv } from "../helper.ts";
-import { Client, configLogger } from "https://deno.land/x/mysql@v2.10.2/mod.ts";
+import { Client, configLogger } from "https://deno.land/x/mysql@v2.10.3/mod.ts";
 
 initializeEnv([
   "MYSQL_PORT",
