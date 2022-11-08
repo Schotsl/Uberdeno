@@ -1,6 +1,9 @@
 import { testMysql } from "../testing.ts";
 import { initializeEnv } from "../helper.ts";
-import { Client, configLogger } from "https://raw.githubusercontent.com/wouterdebruijn/mysql/v2.10.4/mod.ts";
+import {
+  Client,
+  configLogger,
+} from "https://raw.githubusercontent.com/wouterdebruijn/mysql/v2.10.4/mod.ts";
 
 initializeEnv([
   "MYSQL_PORT",
