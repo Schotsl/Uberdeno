@@ -1,4 +1,4 @@
-import { assertThrows } from "https://deno.land/std@0.162.0/testing/asserts.ts";
+import { assertThrows } from "https://deno.land/std@0.163.0/testing/asserts.ts";
 
 export function validationTester(
   valid: unknown[],
