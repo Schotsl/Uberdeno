@@ -3,7 +3,7 @@ import { initializeEnv } from "../helper.ts";
 import {
   Client,
   configLogger,
-} from "https://raw.githubusercontent.com/wouterdebruijn/mysql/v2.10.4/mod.ts";
+} from "https://deno.land/x/mysql@v2.10.2/mod.ts";
 
 initializeEnv([
   "MYSQL_PORT",
