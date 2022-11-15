@@ -73,6 +73,7 @@ export default class GeneralRepository implements InterfaceRepository {
       "updated",
       "uuid",
       "person",
+      "network",
       "location",
       "reference",
       "machine",
