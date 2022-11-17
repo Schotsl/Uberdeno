@@ -162,7 +162,7 @@ export function populateInstance(
 
     // TODO: Make sure we convert MySQL number formatted as strings to numbers so the REST API can be strict
 
-    if (type !== ColumnType.UnknownColumn) {
+    if (type !== ColumnType.UnknownColumn && title in body) {
       instance[title].setValue(value);
     } else {
       instance[title] = value;
