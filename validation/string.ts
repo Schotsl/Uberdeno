@@ -192,7 +192,7 @@ export function validateVarchar(
   }
 
   if (!validateString(input, label, required)) {
-    return false;
+    return true;
   }
 
   const string = input as string;
