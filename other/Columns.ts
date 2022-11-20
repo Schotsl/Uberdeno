@@ -41,7 +41,8 @@ export class StringColumn {
   }
 
   setValue(value?: string) {
-    const required = this.required && (typeof this.value === "undefined" || this.value == null);
+    const required = this.required &&
+      (typeof this.value === "undefined" || this.value == null);
     const result = validateString(value, this.title, required);
 
     if (result) {
@@ -56,7 +57,8 @@ export class StringColumn {
 
 export class UrlColumn extends StringColumn {
   setValue(value?: string) {
-    const required = this.required && (typeof this.value === "undefined" || this.value == null);
+    const required = this.required &&
+      (typeof this.value === "undefined" || this.value == null);
     const result = validateUrl(value, this.title, required);
 
     if (result) {
@@ -67,7 +69,8 @@ export class UrlColumn extends StringColumn {
 
 export class EmailColumn extends StringColumn {
   setValue(value?: string) {
-    const required = this.required && (typeof this.value === "undefined" || this.value == null);
+    const required = this.required &&
+      (typeof this.value === "undefined" || this.value == null);
     const result = validateEmail(value, this.title, required);
 
     if (result) {
@@ -78,7 +81,8 @@ export class EmailColumn extends StringColumn {
 
 export class TimeColumn extends StringColumn {
   setValue(value?: string) {
-    const required = this.required && (typeof this.value === "undefined" || this.value == null);
+    const required = this.required &&
+      (typeof this.value === "undefined" || this.value == null);
     const result = validateTime(value, this.title, required);
 
     if (result) {
@@ -102,7 +106,8 @@ export class UUIDColumn extends StringColumn {
       value = restoreUUID(value);
     }
 
-    const required = this.required && (typeof this.value === "undefined" || this.value == null);
+    const required = this.required &&
+      (typeof this.value === "undefined" || this.value == null);
     const result = validateUUID(value, this.title, required);
 
     if (result) {
@@ -114,7 +119,8 @@ export class UUIDColumn extends StringColumn {
 
 export class VarcharColumn extends StringColumn {
   setValue(value?: string) {
-    const required = this.required && (typeof this.value === "undefined" || this.value == null);
+    const required = this.required &&
+      (typeof this.value === "undefined" || this.value == null);
     const result = validateVarchar(value, this.title, required);
 
     if (result) {
@@ -125,7 +131,8 @@ export class VarcharColumn extends StringColumn {
 
 export class LargeColumn extends StringColumn {
   setValue(value?: string) {
-    const required = this.required && (typeof this.value === "undefined" || this.value == null);
+    const required = this.required &&
+      (typeof this.value === "undefined" || this.value == null);
     const result = validateLarge(value, this.title, required);
 
     if (result) {
@@ -136,7 +143,8 @@ export class LargeColumn extends StringColumn {
 
 export class IPv64Column extends StringColumn {
   setValue(value?: string) {
-    const required = this.required && (typeof this.value === "undefined" || this.value == null);
+    const required = this.required &&
+      (typeof this.value === "undefined" || this.value == null);
     const result = validateIPv64(value, this.title, required);
 
     if (result) {
@@ -162,7 +170,8 @@ export class NumberColumn {
   }
 
   setValue(value?: number) {
-    const required = this.required && (typeof this.value === "undefined" || this.value == null);
+    const required = this.required &&
+      (typeof this.value === "undefined" || this.value == null);
     const result = validateNumber(value, this.title, required);
 
     if (result) {
@@ -177,7 +186,8 @@ export class NumberColumn {
 
 export class FloatColumn extends NumberColumn {
   setValue(value?: number) {
-    const required = this.required && (typeof this.value === "undefined" || this.value == null);
+    const required = this.required &&
+      (typeof this.value === "undefined" || this.value == null);
     const result = validateTiny(value, this.title, required);
 
     if (result) {
@@ -188,7 +198,8 @@ export class FloatColumn extends NumberColumn {
 
 export class TinyColumn extends NumberColumn {
   setValue(value?: number) {
-    const required = this.required && (typeof this.value === "undefined" || this.value == null);
+    const required = this.required &&
+      (typeof this.value === "undefined" || this.value == null);
     const result = validateTiny(value, this.title, required);
 
     if (result) {
@@ -199,7 +210,8 @@ export class TinyColumn extends NumberColumn {
 
 export class SmallColumn extends NumberColumn {
   setValue(value?: number) {
-    const required = this.required && (typeof this.value === "undefined" || this.value == null);
+    const required = this.required &&
+      (typeof this.value === "undefined" || this.value == null);
     const result = validateSmall(value, this.title, required);
 
     if (result) {
@@ -210,7 +222,8 @@ export class SmallColumn extends NumberColumn {
 
 export class IntColumn extends NumberColumn {
   setValue(value?: number) {
-    const required = this.required && (typeof this.value === "undefined" || this.value == null);
+    const required = this.required &&
+      (typeof this.value === "undefined" || this.value == null);
     const result = validateInt(value, this.title, required);
 
     if (result) {
@@ -221,7 +234,8 @@ export class IntColumn extends NumberColumn {
 
 export class LngColumn extends NumberColumn {
   setValue(value?: number) {
-    const required = this.required && (typeof this.value === "undefined" || this.value == null);
+    const required = this.required &&
+      (typeof this.value === "undefined" || this.value == null);
     const result = validateLng(value, this.title, required);
 
     if (result) {
@@ -232,7 +246,8 @@ export class LngColumn extends NumberColumn {
 
 export class LatColumn extends NumberColumn {
   setValue(value?: number) {
-    const required = this.required && (typeof this.value === "undefined" || this.value == null);
+    const required = this.required &&
+      (typeof this.value === "undefined" || this.value == null);
     const result = validateLat(value, this.title, required);
 
     if (result) {
@@ -263,7 +278,8 @@ export class TimestampColumn {
       return;
     }
 
-    const required = this.required && (typeof this.value === "undefined" || this.value == null);
+    const required = this.required &&
+      (typeof this.value === "undefined" || this.value == null);
     const result = validateTimestamp(value, this.title, required);
 
     if (result) {
@@ -302,7 +318,8 @@ export class BooleanColumn {
       return;
     }
 
-    const required = this.required && (typeof this.value === "undefined" || this.value == null);
+    const required = this.required &&
+      (typeof this.value === "undefined" || this.value == null);
     const result = validateBinary(value, this.title, required);
 
     if (result) {
