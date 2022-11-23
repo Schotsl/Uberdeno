@@ -164,6 +164,15 @@ export function populateInstance(
     // TODO: Make sure we convert MySQL number formatted as strings to numbers so the REST API can be strict
 
     if (type !== ColumnType.UnknownColumn && (!updating || title in body)) {
+
+      // Make sure we don't overwrite the default value when we're inserting
+      
+      if (!updating) {
+        if (instance[title].getValue() !== undefined && value === undefined) {
+          return;
+        }
+      }
+
       instance[title].setValue(value);
     } else {
       instance[title] = value;
