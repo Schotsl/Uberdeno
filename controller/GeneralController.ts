@@ -91,7 +91,7 @@ export default class GeneralController implements InterfaceController {
 
     const object = await this.generalRepository.getObject(params.uuid);
 
-    populateInstance(value, this.generalColumns, object);
+    populateInstance(value, this.generalColumns, object, true);
 
     const result = await this.generalRepository.updateObject(object);
     const parsed = renderREST(result);

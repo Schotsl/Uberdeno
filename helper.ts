@@ -154,6 +154,7 @@ export function populateInstance(
   body: Record<string, never>,
   columns: ColumnInfo[],
   instance: BaseEntity,
+  updating = false,
 ) {
   columns.forEach((column: ColumnInfo) => {
     const type = column.type;
@@ -162,7 +163,7 @@ export function populateInstance(
 
     // TODO: Make sure we convert MySQL number formatted as strings to numbers so the REST API can be strict
 
-    if (type !== ColumnType.UnknownColumn && title in body) {
+    if (type !== ColumnType.UnknownColumn && (!updating || title in body)) {
       instance[title].setValue(value);
     } else {
       instance[title] = value;
