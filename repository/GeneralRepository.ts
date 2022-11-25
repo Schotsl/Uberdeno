@@ -1,12 +1,12 @@
-import { ColumnInfo } from "../types.ts";
 import { generateColumns } from "../helper.ts";
 import { UUIDColumn } from "../other/Columns.ts";
-import { ColumnType } from "../types.ts";
 import {
   DuplicateResource,
   InvalidProperty,
   MissingResource,
 } from "../errors.ts";
+
+import { ColumnInfo, ColumnType, Filter } from "../types.ts";
 
 import BaseEntity from "../entity/BaseEntity.ts";
 import BaseCollection from "../collection/BaseCollection.ts";
@@ -38,13 +38,21 @@ export default class GeneralRepository implements InterfaceRepository {
   public async getCollection(
     offset: number,
     limit: number,
+    filter?: Filter,
   ): Promise<BaseCollection> {
-    const fetch = this.queryClient.fetchQuery();
-    const count = this.queryClient.countQuery();
+    const fetch = this.queryClient.fetchQuery(filter);
+    const count = this.queryClient.countQuery(filter);
 
     const promises = [
-      mysqlClient.execute(fetch, [limit, offset]),
-      mysqlClient.execute(count),
+      mysqlClient.execute(
+        fetch,
+        filter ? [filter.key, filter.value, limit, offset] : [limit, offset],
+      ),
+
+      mysqlClient.execute(
+        count,
+        filter ? [filter.key, filter.value] : [],
+      ),
     ];
 
     const data = await Promise.all(promises);
@@ -54,10 +62,16 @@ export default class GeneralRepository implements InterfaceRepository {
     return this.generalMapper.mapCollection(rows, offset, limit, total);
   }
 
-  public async removeObject(uuid: UUIDColumn | string): Promise<void> {
+  public async removeObject(
+    uuid: UUIDColumn | string,
+    filter?: Filter,
+  ): Promise<void> {
     const parsed = typeof uuid === "string" ? uuid : uuid.getValue()!;
-    const query = this.queryClient.removeQuery();
-    const data = await mysqlClient.execute(query, [parsed]);
+    const query = this.queryClient.removeQuery(filter);
+    const data = await mysqlClient.execute(
+      query,
+      filter ? [parsed, filter.key, filter.value] : [parsed],
+    );
 
     if (data.affectedRows === 0) {
       throw new MissingResource(this.generalName);
@@ -66,7 +80,19 @@ export default class GeneralRepository implements InterfaceRepository {
 
   async updateObject(
     object: Partial<BaseEntity>,
+    filter?: Filter,
   ): Promise<BaseEntity> {
+    if (filter) {
+      const key = filter.key as keyof BaseEntity;
+      const type = filter.type;
+      const value = filter.value;
+
+      if (object[key] === undefined || object[key]!.getValue() !== value) {
+        // TODO: Add enum instead of type string
+        throw new InvalidProperty(key, type);
+      }
+    }
+
     const values = [];
     const exclude = [
       "created",
@@ -101,11 +127,25 @@ export default class GeneralRepository implements InterfaceRepository {
       await mysqlClient.execute(query, [...values, object.uuid?.getValue()]);
     }
 
-    const data = await this.getObject(object.uuid!);
+    const data = await this.getObject(object.uuid!, filter);
     return data!;
   }
 
-  public async addObject(object: BaseEntity): Promise<BaseEntity> {
+  public async addObject(
+    object: BaseEntity,
+    filter?: Filter,
+  ): Promise<BaseEntity> {
+    if (filter) {
+      const key = filter.key as keyof BaseEntity;
+      const type = filter.type;
+      const value = filter.value;
+
+      if (object[key] === undefined || object[key]!.getValue() !== value) {
+        // TODO: Add enum instead of type string
+        throw new InvalidProperty(key, type);
+      }
+    }
+
     const insert = this.queryClient.insertQuery();
     const values = this.generalColumns.filter((column) => {
       const { title, type } = column;
@@ -148,16 +188,22 @@ export default class GeneralRepository implements InterfaceRepository {
       throw error;
     });
 
-    const result = await this.getObject(object.uuid);
+    const result = await this.getObject(object.uuid, filter);
     return result!;
   }
 
   // TODO: Add uid: UUIDColumn | string to remove function
 
-  public async getObject(uuid: UUIDColumn | string): Promise<BaseEntity> {
+  public async getObject(
+    uuid: UUIDColumn | string,
+    filter?: Filter,
+  ): Promise<BaseEntity> {
     const parsed = typeof uuid === "string" ? uuid : uuid.getValue()!;
-    const query = this.queryClient.getQuery();
-    const data = await mysqlClient.execute(query, [parsed]);
+    const query = this.queryClient.getQuery(filter);
+    const data = await mysqlClient.execute(
+      query,
+      filter ? [parsed, filter.key, filter.value] : [parsed],
+    );
 
     if (typeof data.rows === "undefined" || data.rows.length === 0) {
       throw new MissingResource(this.generalName);
@@ -167,9 +213,16 @@ export default class GeneralRepository implements InterfaceRepository {
     return this.generalMapper.mapObject(row);
   }
 
-  public async getObjectBy(key: string, value: string): Promise<BaseEntity> {
+  public async getObjectBy(
+    key: string,
+    value: string,
+    filter?: Filter,
+  ): Promise<BaseEntity> {
     const query = this.queryClient.getQueryBy();
-    const data = await mysqlClient.execute(query, [key, value]);
+    const data = await mysqlClient.execute(
+      query,
+      filter ? [key, value, filter.key, filter.value] : [key, value],
+    );
 
     if (typeof data.rows === "undefined" || data.rows.length === 0) {
       throw new MissingResource(this.generalName);

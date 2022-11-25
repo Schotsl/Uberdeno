@@ -1,6 +1,7 @@
 // deno-lint-ignore-file no-explicit-any
 
 import { ColumnInfo } from "../types.ts";
+import { Filter } from "../types.ts";
 import {
   Request,
   Response,
@@ -16,6 +17,7 @@ import InterfaceController from "./InterfaceController.ts";
 export default class GeneralController implements InterfaceController {
   private Entity: { new (): BaseEntity };
 
+  private generalFilter?: Filter;
   private generalColumns: ColumnInfo[] = [];
   private generalRepository: GeneralRepository;
 
@@ -23,15 +25,35 @@ export default class GeneralController implements InterfaceController {
     name: string,
     Entity: { new (): BaseEntity },
     Collection: { new (): BaseCollection },
+    filter?: Filter,
   ) {
     this.Entity = Entity;
 
+    this.generalFilter = filter;
     this.generalColumns = generateColumns(Entity);
     this.generalRepository = new GeneralRepository(
       name,
       Entity,
       Collection,
     );
+  }
+
+  private generateFilter(state: State): Filter | undefined {
+    if (typeof this.generalFilter === "undefined") {
+      return undefined;
+    }
+
+    const {
+      key,
+      type,
+      value,
+    } = this.generalFilter;
+
+    return {
+      key,
+      type,
+      value: state[value],
+    };
   }
 
   async getCollection(
@@ -42,21 +64,28 @@ export default class GeneralController implements InterfaceController {
   ) {
     const { offset, limit } = state;
 
-    const result = await this.generalRepository.getCollection(offset, limit);
+    const filter = this.generateFilter(state);
+    const result = await this.generalRepository.getCollection(
+      offset,
+      limit,
+      filter,
+    );
     const parsed = renderREST(result);
 
     response.body = parsed;
   }
 
   async getObject(
-    { response, params }: {
+    { response, params, state }: {
       response: Response;
       params: { uuid: string };
+      state: State;
     },
   ): Promise<any> {
     const uuid = params.uuid;
 
-    const result = await this.generalRepository.getObject(uuid);
+    const filter = this.generateFilter(state);
+    const result = await this.generalRepository.getObject(uuid, filter);
     const parsed = renderREST(result);
 
     response.body = parsed;
@@ -65,10 +94,11 @@ export default class GeneralController implements InterfaceController {
   }
 
   async updateObject(
-    { request, response, value, uuid, params }: {
+    { request, response, value, state, uuid, params }: {
       request: Request;
       response: Response;
       params: { uuid: string };
+      state: State;
       value?: any;
       uuid?: string;
     },
@@ -88,12 +118,12 @@ export default class GeneralController implements InterfaceController {
     }
 
     // TODO: Should probably be a single query instead of two
-
-    const object = await this.generalRepository.getObject(params.uuid);
+    const filter = this.generateFilter(state);
+    const object = await this.generalRepository.getObject(params.uuid, filter);
 
     populateInstance(value, this.generalColumns, object, true);
 
-    const result = await this.generalRepository.updateObject(object);
+    const result = await this.generalRepository.updateObject(object, filter);
     const parsed = renderREST(result);
 
     response.body = parsed;
@@ -102,22 +132,25 @@ export default class GeneralController implements InterfaceController {
   }
 
   async removeObject(
-    { response, params }: {
+    { response, params, state }: {
       response: Response;
       params: { uuid: string };
+      state: State;
     },
   ) {
     const uuid = params.uuid;
+    const filter = this.generateFilter(state);
 
-    await this.generalRepository.removeObject(uuid);
+    await this.generalRepository.removeObject(uuid, filter);
 
     response.status = 204;
   }
 
   async addObject<T>(
-    { request, response, value, uuid }: {
+    { request, response, state, value, uuid }: {
       request: Request;
       response: Response;
+      state: State;
       value?: any;
       uuid?: string;
     },
@@ -140,7 +173,8 @@ export default class GeneralController implements InterfaceController {
 
     populateInstance(value, this.generalColumns, object);
 
-    const result = await this.generalRepository.addObject(object);
+    const filter = this.generateFilter(state);
+    const result = await this.generalRepository.addObject(object, filter);
     const parsed = renderREST(result);
 
     response.body = parsed;

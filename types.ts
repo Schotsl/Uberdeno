@@ -22,3 +22,9 @@ export interface ColumnInfo {
   type: ColumnType;
   title: string;
 }
+
+export interface Filter {
+  key: string;
+  type: string;
+  value: string;
+}

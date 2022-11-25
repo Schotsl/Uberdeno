@@ -14,30 +14,34 @@ export default interface InterfaceController {
   ): void;
 
   getObject(
-    { response, params }: {
+    { response, params, state }: {
       response: Response;
       params: { uuid: string };
+      state: State;
     },
   ): void;
 
   removeObject(
-    { response, params }: {
+    { response, params, state }: {
       response: Response;
       params: { uuid: string };
+      state: State;
     },
   ): void;
 
   updateObject(
-    { request, response }: {
+    { request, response, state }: {
       request: Request;
       response: Response;
+      state: State;
     },
   ): void;
 
   addObject(
-    { request, response }: {
+    { request, response, state }: {
       request: Request;
       response: Response;
+      state: State;
     },
   ): void;
 }

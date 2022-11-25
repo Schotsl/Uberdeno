@@ -1,4 +1,4 @@
-import { ColumnInfo, ColumnType } from "../types.ts";
+import { ColumnInfo, ColumnType, Filter } from "../types.ts";
 
 export default class Querries {
   public table: string;
@@ -48,23 +48,58 @@ export default class Querries {
     this.values = values.join(", ");
   }
 
-  getQuery() {
+  getQuery(filter?: Filter) {
+    if (filter) {
+      const type = filter.type;
+      const value = type === "uuidv4" ? `UNHEX(REPLACE(?, '-', ''))` : `?`;
+
+      return `SELECT ${this.parse} FROM ${this.table} WHERE uuid = UNHEX(REPLACE(?, '-', '')) AND ?? = ${value}`;
+    }
+
     return `SELECT ${this.parse} FROM ${this.table} WHERE uuid = UNHEX(REPLACE(?, '-', ''))`;
   }
 
-  getQueryBy() {
+  getQueryBy(filter?: Filter) {
+    if (filter) {
+      const type = filter.type;
+      const value = type === "uuidv4" ? `UNHEX(REPLACE(?, '-', ''))` : `?`;
+
+      return `SELECT ${this.parse} FROM ${this.table} WHERE ?? = ? AND ?? = ${value}`;
+    }
+
     return `SELECT ${this.parse} FROM ${this.table} WHERE ?? = ?`;
   }
 
-  countQuery() {
+  countQuery(filter?: Filter) {
+    if (filter) {
+      const type = filter.type;
+      const value = type === "uuidv4" ? `UNHEX(REPLACE(?, '-', ''))` : `?`;
+
+      return `SELECT COUNT(uuid) AS total FROM ${this.table} WHERE ?? = ${value}`;
+    }
+
     return `SELECT COUNT(uuid) AS total FROM ${this.table}`;
   }
 
-  fetchQuery() {
+  fetchQuery(filter?: Filter) {
+    if (filter) {
+      const type = filter.type;
+      const value = type === "uuidv4" ? `UNHEX(REPLACE(?, '-', ''))` : `?`;
+
+      return `SELECT ${this.parse} FROM ${this.table} WHERE ?? = ${value} ORDER BY created DESC LIMIT ? OFFSET ?`;
+    }
+
     return `SELECT ${this.parse} FROM ${this.table} ORDER BY created DESC LIMIT ? OFFSET ?`;
   }
 
-  removeQuery() {
+  removeQuery(filter?: Filter) {
+    if (filter) {
+      const type = filter.type;
+      const value = type === "uuidv4" ? `UNHEX(REPLACE(?, '-', ''))` : `?`;
+
+      return `DELETE FROM ${this.table} WHERE uuid = UNHEX(REPLACE(?, '-', '')) AND ?? = ${value}`;
+    }
+
     return `DELETE FROM ${this.table} WHERE uuid = UNHEX(REPLACE(?, '-', ''))`;
   }
 
