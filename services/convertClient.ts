@@ -29,8 +29,6 @@ class ConvertClient {
   }
 
   async convertPPTX(filepath: string, directory: string) {
-    console.log(filepath);
-    console.log(directory);
     if (!filepath.endsWith(".pptx")) {
       throw new Error("Input file must be a .pptx file");
     }
