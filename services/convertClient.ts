@@ -28,7 +28,17 @@ class ConvertClient {
     this.convert_access_key = Deno.env.get("CONVERT_KEY")!;
   }
 
-  async convertPPTX(uuid: string) {
+  async convertPPTX(filepath: string, directory: string) {
+    console.log(filepath);
+    console.log(directory);
+    if (!filepath.endsWith(".pptx")) {
+      throw new Error("Input file must be a .pptx file");
+    }
+
+    if (directory.endsWith(".pptx")) {
+      throw new Error("Directory must not end with a file extension");
+    }
+
     const {
       bucket,
       region,
@@ -48,7 +58,7 @@ class ConvertClient {
     const query = {
       tasks: {
         import: {
-          key: `${uuid}.pptx`,
+          key: filepath,
           region,
           bucket,
           endpoint,
@@ -70,7 +80,7 @@ class ConvertClient {
           hidden_slides: false,
         },
         export: {
-          key: `${uuid}/%d.png`,
+          key: `${directory}/%d.png`,
           input: "convert",
           region,
           bucket,
