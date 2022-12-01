@@ -49,6 +49,43 @@ class SpacesClient {
     });
   }
 
+  async getFile(filename: string) {
+    const response = await this.bucket.listObjects({ prefix: filename });
+    const contents = response?.contents;
+
+    if (!contents || contents.length === 0) {
+      return null;
+    }
+
+    return {
+      name: contents[0].key!.replace(/^.*\/(.*)$/, "$1"),
+      size: contents[0].size!,
+      updated: contents[0].lastModified!,
+      download: spacesClient.signedGET(contents[0].key!),
+    };
+  }
+
+  async getFiles(directory: string) {
+    const response = await this.bucket.listObjects({ prefix: directory });
+    const contents = response?.contents;
+
+    if (!contents || contents.length === 0) {
+      return null;
+    }
+
+    // The first item is just the directory instead of a file so we'll remove it
+    contents.shift();
+
+    return contents.map((content) => {
+      return {
+        name: content.key!.replace(/^.*\/(.*)$/, "$1"),
+        size: content.size!,
+        updated: content.lastModified!,
+        download: spacesClient.signedGET(content.key!),
+      };
+    });
+  }
+
   async deleteFile(filename: string) {
     return await this.bucket.deleteObject(filename);
   }
