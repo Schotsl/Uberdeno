@@ -123,7 +123,7 @@ export default class GeneralController implements InterfaceController {
 
     populateInstance(value, this.generalColumns, object, true);
 
-    const result = await this.generalRepository.updateObject(object, filter);
+    const result = await this.generalRepository.updateObject(object);
     const parsed = renderREST(result);
 
     response.body = parsed;
