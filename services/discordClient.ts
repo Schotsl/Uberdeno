@@ -6,7 +6,7 @@ import {
   CreateMessage,
   sendMessage,
   startBot,
-} from "https://deno.land/x/discordeno@18.0.0/mod.ts";
+} from "https://deno.land/x/discordeno@18.0.1/mod.ts";
 
 initializeEnv([
   "DISCORD_ID",
